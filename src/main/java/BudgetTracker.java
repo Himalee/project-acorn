@@ -9,7 +9,7 @@ public class BudgetTracker {
     public void start() {
         welcomeUser();
         displayMenu();
-        userMenuChoice();
+        getUserMenuChoice();
         goodbye();
     }
 
@@ -21,7 +21,7 @@ public class BudgetTracker {
         display.present("Menu:\n1. Quit\nPlease enter your choice:");
     }
 
-    private void userMenuChoice() {
+    private void getUserMenuChoice() {
         display.receiveString();
     }
 
