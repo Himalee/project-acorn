@@ -11,14 +11,13 @@ public class DisplayTest {
 
     @Before
     public void setUp() {
-        display = new Display();
+        ByteArrayInputStream userInput = new ByteArrayInputStream("FooBar".getBytes());
+        display = new Display(userInput);
     }
 
     @Test
     public void getUserInput_fooBar() {
-        ByteArrayInputStream input = new ByteArrayInputStream("FooBar".getBytes());
-
-        Assert.assertEquals("FooBar", display.receive(input));
+        Assert.assertEquals("FooBar", display.receiveString());
     }
 
     @Test
