@@ -26,3 +26,7 @@ jar {
 }
 
 mainClassName = 'ProjectAcorn'
+
+run {
+    standardInput = System.in
+}
