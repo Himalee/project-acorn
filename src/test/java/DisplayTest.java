@@ -1,13 +1,21 @@
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class DisplayTest {
+
+    private Display display;
+
+    @Before
+    public void setUp() {
+        display = new Display();
+    }
+
     @Test
     public void getUserInput_fooBar() {
-        Display display = new Display();
         ByteArrayInputStream input = new ByteArrayInputStream("FooBar".getBytes());
 
         Assert.assertEquals("FooBar", display.receive(input));
@@ -15,7 +23,6 @@ public class DisplayTest {
 
     @Test
     public void display_helloWorld() {
-        Display display = new Display();
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
