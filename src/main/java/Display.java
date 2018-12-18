@@ -1,16 +1,19 @@
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Display {
 
+    public PrintStream output;
     public InputStream input;
 
-    public Display(InputStream input) {
+    public Display(PrintStream output, InputStream input) {
+        this.output = output;
         this.input = input;
     }
 
     public void present(String message) {
-        System.out.println(message);
+        output.println(message);
     }
 
     public String receiveString() {

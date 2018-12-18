@@ -8,11 +8,12 @@ import java.io.PrintStream;
 public class DisplayTest {
 
     private Display display;
+    private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before
     public void setUp() {
         ByteArrayInputStream userInput = new ByteArrayInputStream("FooBar".getBytes());
-        display = new Display(userInput);
+        display = new Display(new PrintStream(outContent), userInput);
     }
 
     @Test
@@ -22,14 +23,9 @@ public class DisplayTest {
 
     @Test
     public void display_helloWorld() {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         String message = "Hello, World";
         display.present(message);
 
-        String expectedOutput = "Hello, World\n";
-
-        Assert.assertEquals(expectedOutput, outContent.toString());
+        Assert.assertEquals("Hello, World\n", outContent.toString());
     }
 }
