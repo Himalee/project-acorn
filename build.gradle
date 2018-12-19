@@ -14,3 +14,19 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+apply plugin: 'application'
+
+jar {
+    baseName = "ProjectAcorn"
+    version = "0.1.0"
+    manifest {
+        attributes 'Main-Class': 'ProjectAcorn'
+    }
+}
+
+mainClassName = 'ProjectAcorn'
+
+run {
+    standardInput = System.in
+}
