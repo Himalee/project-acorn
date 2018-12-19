@@ -1,17 +1,19 @@
 public class Display {
 
     public CommandLineInterface cli;
+    public Message message;
 
-    public Display(CommandLineInterface cli) {
+    public Display(CommandLineInterface cli, Message message) {
         this.cli = cli;
+        this.message = message;
     }
 
     public void welcomeUser() {
-        cli.present("Welcome to Project Acorn");
+        cli.present(message.welcome());
     }
 
     public void menu() {
-        cli.present("Menu:\n1. Quit\nPlease enter your choice:");
+        cli.present(message.userMenu());
     }
 
     public void getUserMenuChoice() {
@@ -19,8 +21,7 @@ public class Display {
     }
 
     public void goodbye() {
-        cli.present("Goodbye");
+        cli.present(message.closeApp());
     }
-
 }
 
