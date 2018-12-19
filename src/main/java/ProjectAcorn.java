@@ -1,7 +1,8 @@
 public class ProjectAcorn {
 
     public static void main(String[] args) {
-        Display display = new Display(System.out, System.in);
+        CommandLineInterface cli = new CommandLineInterface(System.out, System.in);
+        Display display = new Display(cli);
         BudgetTracker budgetTracker = new BudgetTracker(display);
         budgetTracker.start();
     }

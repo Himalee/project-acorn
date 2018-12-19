@@ -10,7 +10,8 @@ public class BudgetTrackerTest {
     public void createNewBudgetTracker_welcomesUser() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         ByteArrayInputStream userInput = new ByteArrayInputStream("1".getBytes());
-        Display display = new Display(new PrintStream(outContent), userInput);
+        CommandLineInterface cli = new CommandLineInterface(new PrintStream(outContent), userInput);
+        Display display = new Display(cli);
 
         BudgetTracker budgetTracker = new BudgetTracker(display);
 

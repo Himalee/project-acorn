@@ -1,25 +1,26 @@
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
-
 public class Display {
 
-    public PrintStream output;
-    public InputStream input;
+    public CommandLineInterface cli;
 
-    public Display(PrintStream output, InputStream input) {
-        this.output = output;
-        this.input = input;
+    public Display(CommandLineInterface cli) {
+        this.cli = cli;
     }
 
-    public void present(String message) {
-        output.println(message);
+    public void welcomeUser() {
+        cli.present("Welcome to Project Acorn");
     }
 
-    public String receiveString() {
-        Scanner userInput = new Scanner(input);
-        String result = userInput.next();
-        return result;
+    public void menu() {
+        cli.present("Menu:\n1. Quit\nPlease enter your choice:");
     }
+
+    public void getUserMenuChoice() {
+        cli.receiveString();
+    }
+
+    public void goodbye() {
+        cli.present("Goodbye");
+    }
+
 }
 

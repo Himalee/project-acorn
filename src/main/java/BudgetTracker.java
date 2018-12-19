@@ -7,25 +7,9 @@ public class BudgetTracker {
     }
 
     public void start() {
-        welcomeUser();
-        displayMenu();
-        getUserMenuChoice();
-        goodbye();
-    }
-
-    private void welcomeUser() {
-        display.present("Welcome to Project Acorn");
-    }
-
-    private void displayMenu() {
-        display.present("Menu:\n1. Quit\nPlease enter your choice:");
-    }
-
-    private void getUserMenuChoice() {
-        display.receiveString();
-    }
-
-    private void goodbye() {
-        display.present("Goodbye");
+       display.welcomeUser();
+       display.menu();
+       display.getUserMenuChoice();
+       display.goodbye();
     }
 }
