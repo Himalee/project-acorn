@@ -1,27 +1,33 @@
 public class Display {
 
     public CommandLineInterface cli;
-    public Message message;
 
-    public Display(CommandLineInterface cli, Message message) {
+    public Display(CommandLineInterface cli) {
         this.cli = cli;
-        this.message = message;
     }
 
     public void welcomeUser() {
-        cli.present(message.welcome());
+        cli.present(Message.welcome());
     }
 
     public void menu() {
-        cli.present(message.userMenu());
+        cli.present(Message.userMenu());
     }
 
-    public void getUserMenuChoice() {
-        cli.receiveString();
+    public String getUserInput() {
+        return cli.receiveString();
+    }
+
+    public void getOpportunityName() {
+        cli.present(Message.enterOpportunityName());
+    }
+
+    public void opportunityWrittenToDatabase() {
+        cli.present(Message.opportunitySaved());
     }
 
     public void goodbye() {
-        cli.present(message.closeApp());
+        cli.present(Message.closeApp());
     }
 }
 
