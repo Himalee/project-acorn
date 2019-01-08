@@ -1,10 +1,13 @@
+import java.sql.SQLException;
+
 public class ProjectAcorn {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         CommandLineInterface cli = new CommandLineInterface(System.out, System.in);
-        Message message = new Message();
-        Display display = new Display(cli, message);
-        BudgetTracker budgetTracker = new BudgetTracker(display);
+        Display display = new Display(cli);
+        String databaseURL = System.getenv("DBURL");
+        DatabaseCommunicator databaseCommunicator = new DatabaseCommunicator(databaseURL);
+        BudgetTracker budgetTracker = new BudgetTracker(display, databaseCommunicator);
         budgetTracker.start();
     }
 }
