@@ -24,6 +24,10 @@ class DatabaseCommunicator {
 
         return DriverManager.getConnection(databaseURL, username, password);
     }
+
+    public String convertUserInputToSqlQuery(String userInput) {
+        return String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", userInput);
+    }
 }
 
 
