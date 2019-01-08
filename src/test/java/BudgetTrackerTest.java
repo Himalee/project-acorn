@@ -49,8 +49,14 @@ public class BudgetTrackerTest {
 
         String output = outContent.toString();
         Assert.assertThat(output, containsString("saved"));
+
+        Connection connection = databaseCommunicator.getConnection();
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        rs.next();
+        String lastSavedOpportunityUUID = rs.getString("uuid");
+        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
+        connection.close();
     }
-
-
 }
 

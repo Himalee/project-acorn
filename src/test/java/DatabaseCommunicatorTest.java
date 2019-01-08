@@ -34,14 +34,12 @@ public class DatabaseCommunicatorTest {
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
         rs.next();
-
         String lastSavedOpportunityName = rs.getString("name");
 
         Assert.assertEquals(newOpportunityName, lastSavedOpportunityName);
 
         String lastSavedOpportunityUUID = rs.getString("uuid");
         stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
-
         connection.close();
     }
 }
