@@ -21,7 +21,7 @@ public class PostgresCommunicatorTest {
     public void input_convertToInsertSqlQuery() {
         String userInput = "Host code retreat at office";
 
-        Assert.assertEquals("INSERT INTO OPPORTUNITIES (name) VALUES ('Host code retreat at office');", databaseCommunicator.convertUserInputToSqlQuery(userInput));
+        Assert.assertEquals("INSERT INTO OPPORTUNITIES (name) VALUES ('Host code retreat at office');", databaseCommunicator.convertUserInputToInsertSqlQuery(userInput));
     }
 
     @Test

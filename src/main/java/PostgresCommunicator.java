@@ -25,7 +25,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
         return DriverManager.getConnection(databaseURL);
     }
 
-    public String convertUserInputToSqlQuery(String userInput) {
+    public String convertUserInputToInsertSqlQuery(String userInput) {
         return String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", userInput);
     }
 }

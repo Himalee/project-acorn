@@ -27,7 +27,7 @@ public class BudgetTracker {
     private void writeUserInputToDatabase() throws SQLException, ClassNotFoundException {
         display.getOpportunityName();
         String opportunityName = display.getUserInput();
-        String sqlQuery = databaseCommunicator.convertUserInputToSqlQuery(opportunityName);
+        String sqlQuery = databaseCommunicator.convertUserInputToInsertSqlQuery(opportunityName);
         databaseCommunicator.writeToDatabase(sqlQuery);
         display.opportunityWrittenToDatabase();
     }
