@@ -7,14 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DatabaseCommunicatorTest {
+public class PostgresCommunicatorTest {
 
     private DatabaseCommunicator databaseCommunicator;
 
     @Before
     public void setUp() {
         String databaseURL = System.getenv("DBURL");
-        databaseCommunicator = new DatabaseCommunicator(databaseURL);
+        databaseCommunicator = new PostgresCommunicator(databaseURL);
     }
 
     @Test
