@@ -19,8 +19,6 @@ class PostgresCommunicator implements DatabaseCommunicator {
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
-        String username = System.getenv("DBUSERNAME");
-        String password = System.getenv("DBPASSWORD");
 
         return DriverManager.getConnection(databaseURL);
     }

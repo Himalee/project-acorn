@@ -17,7 +17,7 @@ public class BudgetTrackerTest {
 
     @Before
     public void setUp() {
-        String databaseURL = System.getenv("DBURL");
+        String databaseURL = System.getenv("TESTDBURL");
         databaseCommunicator = new PostgresCommunicator(databaseURL);
     }
 
