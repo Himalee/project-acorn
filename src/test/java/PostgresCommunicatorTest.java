@@ -42,4 +42,12 @@ public class PostgresCommunicatorTest {
         stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
         connection.close();
     }
+
+    @Test
+    public void columnNames_convertToReadSqlQuery() {
+        String columnNames = "id, name";
+        String readSqlQuery = databaseCommunicator.readOpportunitiesSqlQuery(columnNames);
+
+        Assert.assertEquals("SELECT id, name FROM opportunities;", readSqlQuery);
+    }
 }

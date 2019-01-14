@@ -26,6 +26,10 @@ class PostgresCommunicator implements DatabaseCommunicator {
     public String convertUserInputToInsertSqlQuery(String userInput) {
         return String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", userInput);
     }
+
+    public String readOpportunitiesSqlQuery(String columnNames) {
+        return String.format("SELECT %s FROM opportunities;", columnNames);
+    }
 }
 
 
