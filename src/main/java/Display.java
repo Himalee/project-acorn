@@ -1,6 +1,6 @@
 public class Display {
 
-    public CommandLineInterface cli;
+    private CommandLineInterface cli;
 
     public Display(CommandLineInterface cli) {
         this.cli = cli;
