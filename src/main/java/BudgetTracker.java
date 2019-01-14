@@ -2,8 +2,8 @@ import java.sql.SQLException;
 
 public class BudgetTracker {
 
-    public Display display;
-    public DatabaseCommunicator databaseCommunicator;
+    private Display display;
+    private DatabaseCommunicator databaseCommunicator;
     public static final int ADD_NEW_OPPORTUNITY = 2;
 
     public BudgetTracker(Display display, DatabaseCommunicator databaseCommunicator) {

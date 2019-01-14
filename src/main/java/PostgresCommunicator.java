@@ -2,7 +2,7 @@ import java.sql.*;
 
 class PostgresCommunicator implements DatabaseCommunicator {
 
-    public String databaseURL;
+    private String databaseURL;
 
     public PostgresCommunicator(String databaseURL) {
         this.databaseURL = databaseURL;

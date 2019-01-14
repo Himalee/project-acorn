@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class CommandLineInterface {
 
-    public PrintStream output;
-    public InputStream input;
+    private PrintStream output;
+    private InputStream input;
     private final Scanner userInput;
 
     public CommandLineInterface(PrintStream output, InputStream input) {
