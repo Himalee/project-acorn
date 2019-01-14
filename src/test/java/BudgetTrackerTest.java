@@ -13,6 +13,8 @@ public class BudgetTrackerTest {
 
     private BudgetTracker budgetTracker;
     private DatabaseCommunicator databaseCommunicator;
+    private static final String QUIT_APP = "1";
+    private static final String ADD_NEW_OPP_TO_DB = "2";
 
 
     @Before
@@ -21,12 +23,18 @@ public class BudgetTrackerTest {
         databaseCommunicator = new PostgresCommunicator(databaseURL);
     }
 
+    public Display createNewDisplay(ByteArrayOutputStream outContent, String simulatedUserInput) {
+        ByteArrayInputStream userInput = new ByteArrayInputStream(simulatedUserInput.getBytes());
+        CommandLineInterface cli = new CommandLineInterface(new PrintStream(outContent), userInput);
+        return new Display(cli);
+    }
+
     @Test
     public void createNewBudgetTracker_welcomesUser() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        ByteArrayInputStream userInput = new ByteArrayInputStream("1".getBytes());
-        CommandLineInterface cli = new CommandLineInterface(new PrintStream(outContent), userInput);
-        Display display = new Display(cli);
+        String simulatedUserInput = String.format("%s", QUIT_APP);
+        Display display = createNewDisplay(outContent, simulatedUserInput);
+
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
 
         budgetTracker.start();
@@ -37,12 +45,11 @@ public class BudgetTrackerTest {
 
     @Test
     public void createNewBudgetTracker_saveNewOpportunityToDatabase() throws SQLException, ClassNotFoundException {
-        String newOpportunityName = "Black girl tech sponsorship";
-        String simulatedUserInput = String.format("2\n%s\n", newOpportunityName);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        ByteArrayInputStream userInput = new ByteArrayInputStream(simulatedUserInput.getBytes());
-        CommandLineInterface cli = new CommandLineInterface(new PrintStream(outContent), userInput);
-        Display display = new Display(cli);
+        String newOpportunityName = "Black girl tech sponsorship";
+        String simulatedUserInput = String.format("%s\n%s\n", ADD_NEW_OPP_TO_DB, newOpportunityName);
+        Display display = createNewDisplay(outContent, simulatedUserInput);
+
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
 
         budgetTracker.start();
