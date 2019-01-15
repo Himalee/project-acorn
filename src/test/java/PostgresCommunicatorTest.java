@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static org.hamcrest.CoreMatchers.containsString;
+
 public class PostgresCommunicatorTest {
 
     private DatabaseCommunicator databaseCommunicator;
@@ -49,5 +51,23 @@ public class PostgresCommunicatorTest {
         String readSqlQuery = databaseCommunicator.readOpportunitiesSqlQuery(columnNames);
 
         Assert.assertEquals("SELECT id, name FROM opportunities;", readSqlQuery);
+    }
+
+    @Test
+    public void allOpportunities_readFromDatabase() throws SQLException, ClassNotFoundException {
+        String newOpportunityName = "Socrates 2019";
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", newOpportunityName);
+        databaseCommunicator.writeToDatabase(sqlQuery);
+        String opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+
+        Assert.assertThat(opportunities, containsString(newOpportunityName));
+
+        Connection connection = databaseCommunicator.getConnection();
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        rs.next();
+        String lastSavedOpportunityUUID = rs.getString("uuid");
+        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
+        connection.close();
     }
 }

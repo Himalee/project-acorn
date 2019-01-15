@@ -29,5 +29,9 @@ public class Display {
     public void goodbye() {
         cli.present(Message.closeApp());
     }
+
+    public void listAllOpportunities(String opportunities) {
+        cli.present(opportunities);
+    }
 }
 

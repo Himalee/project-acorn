@@ -6,4 +6,5 @@ public interface DatabaseCommunicator {
     Connection getConnection() throws ClassNotFoundException, SQLException;
     String convertUserInputToInsertSqlQuery(String userInput);
     String readOpportunitiesSqlQuery(String columnNames);
+    String readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException;
 }

@@ -17,6 +17,21 @@ class PostgresCommunicator implements DatabaseCommunicator {
         db.close();
     }
 
+    public String readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
+        String readSqlQuery = readOpportunitiesSqlQuery("id, name");
+        StringBuilder opportunities = new StringBuilder();
+        Connection db = getConnection();
+        Statement stmt = db.createStatement();
+        ResultSet rs = stmt.executeQuery(readSqlQuery);
+        while (rs.next()) {
+            opportunities.append(rs.getString("id"));
+            opportunities.append(". ");
+            opportunities.append(rs.getString("name"));
+            opportunities.append("\n");
+        }
+        return opportunities.toString();
+    }
+
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
 
@@ -31,5 +46,4 @@ class PostgresCommunicator implements DatabaseCommunicator {
         return String.format("SELECT %s FROM opportunities;", columnNames);
     }
 }
-
 
