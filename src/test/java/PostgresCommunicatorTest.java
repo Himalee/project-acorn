@@ -6,8 +6,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import static org.hamcrest.CoreMatchers.containsString;
+import java.util.HashMap;
+import java.util.List;
 
 public class PostgresCommunicatorTest {
 
@@ -17,6 +17,28 @@ public class PostgresCommunicatorTest {
     public void setUp() {
         String databaseURL = System.getenv("TESTDBURL");
         databaseCommunicator = new PostgresCommunicator(databaseURL);
+    }
+
+    public void writeToDatabase(String newOpportunityName) throws SQLException, ClassNotFoundException {
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", newOpportunityName);
+        databaseCommunicator.writeToDatabase(sqlQuery);
+    }
+
+    public ResultSet getLastSavedOpportunity() throws SQLException, ClassNotFoundException {
+        Connection connection = databaseCommunicator.getConnection();
+        Statement stmt = connection.createStatement();
+        return stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+    }
+
+    public String getUUIDofLastSavedOpportunity(ResultSet rs) throws SQLException {
+        return rs.getString("uuid");
+    }
+
+    public void deleteLastSavedOpportunity(String lastSavedOpportunityUUID) throws SQLException, ClassNotFoundException {
+        Connection connection = databaseCommunicator.getConnection();
+        Statement stmt = connection.createStatement();
+        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
+        connection.close();
     }
 
     @Test
@@ -29,20 +51,14 @@ public class PostgresCommunicatorTest {
     @Test
     public void newOpportunity_writeToDatabase() throws SQLException, ClassNotFoundException {
         String newOpportunityName = "AWS Training - 2019 conference";
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", newOpportunityName);
-        databaseCommunicator.writeToDatabase(sqlQuery);
-
-        Connection connection = databaseCommunicator.getConnection();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        writeToDatabase(newOpportunityName);
+        ResultSet rs = getLastSavedOpportunity();
         rs.next();
         String lastSavedOpportunityName = rs.getString("name");
 
         Assert.assertEquals(newOpportunityName, lastSavedOpportunityName);
 
-        String lastSavedOpportunityUUID = rs.getString("uuid");
-        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
-        connection.close();
+        deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
 
     @Test
@@ -55,19 +71,16 @@ public class PostgresCommunicatorTest {
 
     @Test
     public void allOpportunities_readFromDatabase() throws SQLException, ClassNotFoundException {
-        String newOpportunityName = "Socrates 2019";
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", newOpportunityName);
-        databaseCommunicator.writeToDatabase(sqlQuery);
-        String opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
-
-        Assert.assertThat(opportunities, containsString(newOpportunityName));
-
-        Connection connection = databaseCommunicator.getConnection();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        String newOpportunityName = "Socrates 2019 travel expenses";
+        writeToDatabase(newOpportunityName);
+        HashMap<String, List> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        ResultSet rs = getLastSavedOpportunity();
         rs.next();
-        String lastSavedOpportunityUUID = rs.getString("uuid");
-        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
-        connection.close();
+        String lastSavedOpportunityID = rs.getString("id");
+        List<String> opportunityDetails = opportunities.get(String.format("%s", lastSavedOpportunityID));
+
+        Assert.assertTrue(opportunityDetails.contains(newOpportunityName));
+
+        deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
 }
