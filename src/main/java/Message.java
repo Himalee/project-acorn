@@ -5,7 +5,7 @@ public class Message {
     }
 
     public static String userMenu() {
-        return "Menu:\n1. Quit\n2. Add new opportunity\nPlease enter your choice:";
+        return "Menu:\n1. Quit\n2. Add new opportunity\n3. Display all opportunities\nPlease enter your choice:";
     }
 
     public static String closeApp() {

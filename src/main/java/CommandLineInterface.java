@@ -4,12 +4,10 @@ import java.util.Scanner;
 public class CommandLineInterface {
 
     private PrintStream output;
-    private InputStream input;
     private final Scanner userInput;
 
     public CommandLineInterface(PrintStream output, InputStream input) {
         this.output = output;
-        this.input = input;
         userInput = new Scanner(input);
     }
 
@@ -18,7 +16,6 @@ public class CommandLineInterface {
     }
 
     public String receiveString() {
-        String result = userInput.nextLine();
-        return result;
+        return userInput.nextLine();
     }
 }
