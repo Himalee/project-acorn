@@ -6,7 +6,7 @@ import java.util.HashMap;
 public interface DatabaseCommunicator {
     void writeToDatabase(String sqlQuery) throws SQLException, ClassNotFoundException;
     Connection getConnection() throws ClassNotFoundException, SQLException;
-    String convertUserInputToInsertSqlQuery(String userInput);
+    String convertUserInputToInsertSqlQuery(Opportunity opportunity);
     String readOpportunitiesSqlQuery(String columnNames);
     HashMap<String, ArrayList> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException;
 }

@@ -55,5 +55,9 @@ public class Display {
         }
         cli.present(formattedMenu.toString());
     }
+
+    public void getOpportunityDescription() {
+        cli.present(Message.enterOpportunityDescription());
+    }
 }
 

@@ -46,7 +46,8 @@ public class BudgetTrackerTest {
     public void createNewBudgetTracker_saveNewOpportunityToDatabase() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         String newOpportunityName = "Black girl tech sponsorship";
-        String simulatedUserInput = String.format("%s\n%s\n", ADD_NEW_OPP_TO_DB, newOpportunityName);
+        String newOpportunityDescription = "Offer paid internships";
+        String simulatedUserInput = String.format("%s\n%s\n%s\n", ADD_NEW_OPP_TO_DB, newOpportunityName, newOpportunityDescription);
         Display display = createNewDisplay(outContent, simulatedUserInput);
 
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
