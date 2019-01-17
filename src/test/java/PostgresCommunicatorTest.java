@@ -41,29 +41,27 @@ public class PostgresCommunicatorTest {
         connection.close();
     }
 
-    public Opportunity exampleOpportunity(String name, String description) {
+    public Opportunity exampleOpportunity() {
+        String name = "Host code retreat at office";
+        String description = "To be held on annual code retreat day";
         return new Opportunity(name, description);
     }
 
     @Test
     public void input_convertToInsertSqlQuery() {
-        String name = "Host code retreat at office";
-        String description = "To be held on annual code retreat day";
-
         String expectedSqlQuery = "INSERT INTO OPPORTUNITIES (name, description) VALUES ('Host code retreat at office', 'To be held on annual code retreat day');";
-        Assert.assertEquals(expectedSqlQuery, databaseCommunicator.convertUserInputToInsertSqlQuery(exampleOpportunity(name, description)));
+        Assert.assertEquals(expectedSqlQuery, databaseCommunicator.convertUserInputToInsertSqlQuery(exampleOpportunity()));
     }
 
     @Test
     public void newOpportunity_writeToDatabase() throws SQLException, ClassNotFoundException {
-        String name = "AWS Training - 2019 conference";
-        String description = "Costs for travel arrangements";
-        writeToDatabase(exampleOpportunity(name, description));
+        Opportunity opportunity = exampleOpportunity();
+        writeToDatabase(opportunity);
         ResultSet rs = getLastSavedOpportunity();
         rs.next();
         String lastSavedOpportunityName = rs.getString("name");
 
-        Assert.assertEquals(name, lastSavedOpportunityName);
+        Assert.assertEquals(opportunity.name, lastSavedOpportunityName);
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
@@ -78,16 +76,15 @@ public class PostgresCommunicatorTest {
 
     @Test
     public void allOpportunities_readFromDatabase() throws SQLException, ClassNotFoundException {
-        String name = "Socrates 2019 travel expenses";
-        String description = "Costs for travel expenses";
-        writeToDatabase(exampleOpportunity(name, description));
+        Opportunity opportunity = exampleOpportunity();
+        writeToDatabase(opportunity);
         HashMap<String, ArrayList> allOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         ResultSet rs = getLastSavedOpportunity();
         rs.next();
         String lastSavedOpportunityID = rs.getString("id");
         List<String> opportunityDetails = allOpportunities.get(String.format("%s", lastSavedOpportunityID));
 
-        Assert.assertTrue(opportunityDetails.contains(name));
+        Assert.assertTrue(opportunityDetails.contains(opportunity.name));
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
