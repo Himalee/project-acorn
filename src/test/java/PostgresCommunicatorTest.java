@@ -19,8 +19,8 @@ public class PostgresCommunicatorTest {
         databaseCommunicator = new PostgresCommunicator(databaseURL);
     }
 
-    public void writeToDatabase(String newOpportunityName) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", newOpportunityName);
+    public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description) VALUES ('%s', '%s');", opportunity.name, opportunity.description);
         databaseCommunicator.writeToDatabase(sqlQuery);
     }
 
@@ -41,22 +41,29 @@ public class PostgresCommunicatorTest {
         connection.close();
     }
 
+    public Opportunity exampleOpportunity(String name, String description) {
+        return new Opportunity(name, description);
+    }
+
     @Test
     public void input_convertToInsertSqlQuery() {
-        String userInput = "Host code retreat at office";
+        String name = "Host code retreat at office";
+        String description = "To be held on annual code retreat day";
 
-        Assert.assertEquals("INSERT INTO OPPORTUNITIES (name) VALUES ('Host code retreat at office');", databaseCommunicator.convertUserInputToInsertSqlQuery(userInput));
+        String expectedSqlQuery = "INSERT INTO OPPORTUNITIES (name, description) VALUES ('Host code retreat at office', 'To be held on annual code retreat day');";
+        Assert.assertEquals(expectedSqlQuery, databaseCommunicator.convertUserInputToInsertSqlQuery(exampleOpportunity(name, description)));
     }
 
     @Test
     public void newOpportunity_writeToDatabase() throws SQLException, ClassNotFoundException {
-        String newOpportunityName = "AWS Training - 2019 conference";
-        writeToDatabase(newOpportunityName);
+        String name = "AWS Training - 2019 conference";
+        String description = "Costs for travel arrangements";
+        writeToDatabase(exampleOpportunity(name, description));
         ResultSet rs = getLastSavedOpportunity();
         rs.next();
         String lastSavedOpportunityName = rs.getString("name");
 
-        Assert.assertEquals(newOpportunityName, lastSavedOpportunityName);
+        Assert.assertEquals(name, lastSavedOpportunityName);
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
@@ -71,15 +78,16 @@ public class PostgresCommunicatorTest {
 
     @Test
     public void allOpportunities_readFromDatabase() throws SQLException, ClassNotFoundException {
-        String newOpportunityName = "Socrates 2019 travel expenses";
-        writeToDatabase(newOpportunityName);
-        HashMap<String, ArrayList> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        String name = "Socrates 2019 travel expenses";
+        String description = "Costs for travel expenses";
+        writeToDatabase(exampleOpportunity(name, description));
+        HashMap<String, ArrayList> allOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         ResultSet rs = getLastSavedOpportunity();
         rs.next();
         String lastSavedOpportunityID = rs.getString("id");
-        List<String> opportunityDetails = opportunities.get(String.format("%s", lastSavedOpportunityID));
+        List<String> opportunityDetails = allOpportunities.get(String.format("%s", lastSavedOpportunityID));
 
-        Assert.assertTrue(opportunityDetails.contains(newOpportunityName));
+        Assert.assertTrue(opportunityDetails.contains(name));
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
