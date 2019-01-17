@@ -19,7 +19,7 @@ public class BudgetTracker {
        if (menuChoice == ADD_NEW_OPPORTUNITY) {
            writeUserInputToDatabase();
        } else if (menuChoice == DISPLAY_ALL_OPPORTUNITIES) {
-           display.listAllOpportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
+          display.formatOpportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
        } else {
            display.goodbye();
        }

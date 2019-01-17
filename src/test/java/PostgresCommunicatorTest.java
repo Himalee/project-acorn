@@ -1,11 +1,11 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -73,7 +73,7 @@ public class PostgresCommunicatorTest {
     public void allOpportunities_readFromDatabase() throws SQLException, ClassNotFoundException {
         String newOpportunityName = "Socrates 2019 travel expenses";
         writeToDatabase(newOpportunityName);
-        HashMap<String, List> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        HashMap<String, ArrayList> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         ResultSet rs = getLastSavedOpportunity();
         rs.next();
         String lastSavedOpportunityID = rs.getString("id");

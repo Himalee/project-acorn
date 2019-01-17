@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 class PostgresCommunicator implements DatabaseCommunicator {
 
@@ -17,19 +19,18 @@ class PostgresCommunicator implements DatabaseCommunicator {
         db.close();
     }
 
-    public String readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
+    public HashMap<String, ArrayList> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
         String readSqlQuery = readOpportunitiesSqlQuery("id, name");
-        StringBuilder opportunities = new StringBuilder();
+        HashMap<String, ArrayList> opportunities = new HashMap<>();
         Connection db = getConnection();
         Statement stmt = db.createStatement();
         ResultSet rs = stmt.executeQuery(readSqlQuery);
         while (rs.next()) {
-            opportunities.append(rs.getString("id"));
-            opportunities.append(". ");
-            opportunities.append(rs.getString("name"));
-            opportunities.append("\n");
+            ArrayList<String> opportunityDetails = new ArrayList<>();
+            opportunityDetails.add(rs.getString("name"));
+            opportunities.put(rs.getString("id"), opportunityDetails);
         }
-        return opportunities.toString();
+        return opportunities;
     }
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
