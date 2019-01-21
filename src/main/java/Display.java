@@ -68,7 +68,7 @@ public class Display {
         cli.present(Message.enterOpportunityDescription());
     }
 
-    public void getOpportunityCost() {
+    public void getOpportunityProposedCost() {
         cli.present(Message.enterProposedOpportunityCost());
     }
 }
