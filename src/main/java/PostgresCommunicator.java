@@ -20,7 +20,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
     }
 
     public HashMap<String, ArrayList> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
-        String readSqlQuery = readOpportunitiesSqlQuery("id, name, description");
+        String readSqlQuery = readOpportunitiesSqlQuery("id, name, description, proposed_cost");
         HashMap<String, ArrayList> opportunities = new HashMap<>();
         Connection db = getConnection();
         Statement stmt = db.createStatement();
@@ -29,6 +29,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
             ArrayList<String> opportunityDetails = new ArrayList<>();
             opportunityDetails.add(rs.getString("name"));
             opportunityDetails.add(rs.getString("description"));
+            opportunityDetails.add(Integer.toString(rs.getInt("proposed_cost")));
             opportunities.put(rs.getString("id"), opportunityDetails);
         }
         return opportunities;

@@ -20,7 +20,7 @@ public class PostgresCommunicatorTest {
     }
 
     public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description) VALUES ('%s', '%s');", opportunity.name, opportunity.description);
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost) VALUES ('%s', '%s', %d);", opportunity.name, opportunity.description, opportunity.proposedCost);
         databaseCommunicator.writeToDatabase(sqlQuery);
     }
 
@@ -69,10 +69,10 @@ public class PostgresCommunicatorTest {
 
     @Test
     public void columnNames_convertToReadSqlQuery() {
-        String columnNames = "id, name";
+        String columnNames = "id, name, proposed_cost";
         String readSqlQuery = databaseCommunicator.readOpportunitiesSqlQuery(columnNames);
 
-        Assert.assertEquals("SELECT id, name FROM opportunities;", readSqlQuery);
+        Assert.assertEquals("SELECT id, name, proposed_cost FROM opportunities;", readSqlQuery);
     }
 
     @Test
@@ -86,6 +86,10 @@ public class PostgresCommunicatorTest {
         List<String> opportunityDetails = allOpportunities.get(String.format("%s", lastSavedOpportunityID));
 
         Assert.assertTrue(opportunityDetails.contains(opportunity.name));
+        Assert.assertTrue(opportunityDetails.contains(opportunity.description));
+        String proposedCost = Integer.toString(opportunity.proposedCost);
+        Assert.assertTrue(opportunityDetails.contains(proposedCost));
+
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
