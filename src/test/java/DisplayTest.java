@@ -28,4 +28,17 @@ public class DisplayTest {
 
         Assert.assertEquals(expectedOutput, outContent.toString());
     }
+
+    @Test
+    public void menuChoices_convertToUserFriendlyDisplay() {
+        ByteArrayInputStream userInput = new ByteArrayInputStream("".getBytes());
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        CommandLineInterface cli = new CommandLineInterface(new PrintStream(outContent), userInput);
+        Display display = new Display(cli);
+
+        String expectedOutput = "Quit (select q)\nAdd new opportunity (select a)\nDisplay all opportunities (select d)\n\n";
+        display.formatMenu();
+
+        Assert.assertEquals(expectedOutput, outContent.toString());
+    }
 }

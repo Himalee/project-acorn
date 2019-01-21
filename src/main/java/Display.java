@@ -1,5 +1,7 @@
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Display {
@@ -12,10 +14,6 @@ public class Display {
 
     public void welcomeUser() {
         cli.present(Message.welcome());
-    }
-
-    public void menu() {
-        cli.present(Message.userMenu());
     }
 
     public String getUserInput() {
@@ -44,6 +42,20 @@ public class Display {
             values.stream().forEach(elem -> opportunities.append(elem + "\n"));
         }
         cli.present(opportunities.toString());
+    }
+
+    public void formatMenu() {
+        MenuOptions[] menuOptions = MenuOptions.values();
+        StringBuilder formattedMenu = new StringBuilder();
+        for (MenuOptions menuOption : menuOptions) {
+            formattedMenu.append(menuOption.getName());
+            formattedMenu.append(" (select ");
+            formattedMenu.append(menuOption.getCommand());
+            formattedMenu.append(")");
+            formattedMenu.append("\n");
+
+        }
+        cli.present(formattedMenu.toString());
     }
 }
 

@@ -12,8 +12,8 @@ public class BudgetTrackerTest {
 
     private BudgetTracker budgetTracker;
     private DatabaseCommunicator databaseCommunicator;
-    private static final String QUIT_APP = "1";
-    private static final String ADD_NEW_OPP_TO_DB = "2";
+    private static final String QUIT_APP = "q";
+    private static final String ADD_NEW_OPP_TO_DB = "a";
 
 
     @Before

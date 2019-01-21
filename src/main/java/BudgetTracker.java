@@ -4,8 +4,6 @@ public class BudgetTracker {
 
     private Display display;
     private DatabaseCommunicator databaseCommunicator;
-    public static final int ADD_NEW_OPPORTUNITY = 2;
-    public static final int DISPLAY_ALL_OPPORTUNITIES = 3;
 
     public BudgetTracker(Display display, DatabaseCommunicator databaseCommunicator) {
         this.display = display;
@@ -14,19 +12,16 @@ public class BudgetTracker {
 
     public void start() throws SQLException, ClassNotFoundException {
        display.welcomeUser();
-       display.menu();
-       int menuChoice = getMenuChoice();
-       if (menuChoice == ADD_NEW_OPPORTUNITY) {
+       display.formatMenu();
+       String menuChoice = display.getUserInput();
+       MenuOptions option = MenuOptions.findChoice(menuChoice);
+       if (option == MenuOptions.ADD_NEW_OPP) {
            writeUserInputToDatabase();
-       } else if (menuChoice == DISPLAY_ALL_OPPORTUNITIES) {
+       } else if (option == MenuOptions.DISPLAY_ALL_OPP) {
           display.formatOpportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
        } else {
            display.goodbye();
        }
-    }
-
-    private int getMenuChoice() {
-        return Integer.parseInt(display.getUserInput());
     }
 
     private void writeUserInputToDatabase() throws SQLException, ClassNotFoundException {
