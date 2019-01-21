@@ -47,7 +47,8 @@ public class BudgetTrackerTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         String newOpportunityName = "Black girl tech sponsorship";
         String newOpportunityDescription = "Offer paid internships";
-        String simulatedUserInput = String.format("%s\n%s\n%s\n", ADD_NEW_OPP_TO_DB, newOpportunityName, newOpportunityDescription);
+        int newOpportunityCost = 30000;
+        String simulatedUserInput = String.format("%s\n%s\n%s\n%d\n", ADD_NEW_OPP_TO_DB, newOpportunityName, newOpportunityDescription, newOpportunityCost);
         Display display = createNewDisplay(outContent, simulatedUserInput);
 
         budgetTracker = new BudgetTracker(display, databaseCommunicator);

@@ -19,4 +19,8 @@ public class Message {
     public static String enterOpportunityDescription() {
         return "Please enter opportunity description";
     }
+
+    public static String enterProposedOpportunityCost() {
+        return "Please enter the proposed cost of the opportunity";
+    }
 }

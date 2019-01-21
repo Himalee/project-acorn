@@ -24,14 +24,25 @@ public class BudgetTracker {
        }
     }
 
+    private int getMenuChoice() {
+        return Integer.parseInt(display.getUserInputString());
+    }
+
     private void writeUserInputToDatabase() throws SQLException, ClassNotFoundException {
-        display.getOpportunityName();
-        String name = display.getUserInput();
-        display.getOpportunityDescription();
-        String description = display.getUserInput();
-        Opportunity opportunity = new Opportunity(name, description);
-        String sqlQuery = databaseCommunicator.convertUserInputToInsertSqlQuery(opportunity);
+        String sqlQuery = databaseCommunicator.convertUserInputToInsertSqlQuery(createNewOpportunity());
         databaseCommunicator.writeToDatabase(sqlQuery);
         display.opportunityWrittenToDatabase();
     }
+
+    private Opportunity createNewOpportunity() {
+        display.getOpportunityName();
+        String name = display.getUserInputString();
+        display.getOpportunityDescription();
+        String description = display.getUserInputString();
+        display.getOpportunityCost();
+        int cost = display.getUserInputInteger();
+        return new Opportunity(name, description, cost);
+    }
 }
+
+

@@ -14,8 +14,16 @@ public class Display {
         cli.present(Message.welcome());
     }
 
-    public String getUserInput() {
+    public void menu() {
+        cli.present(Message.userMenu());
+    }
+
+    public String getUserInputString() {
         return cli.receiveString();
+    }
+
+    public int getUserInputInteger() {
+        return cli.receiveInteger();
     }
 
     public void getOpportunityName() {
@@ -58,6 +66,10 @@ public class Display {
 
     public void getOpportunityDescription() {
         cli.present(Message.enterOpportunityDescription());
+    }
+
+    public void getOpportunityCost() {
+        cli.present(Message.enterProposedOpportunityCost());
     }
 }
 

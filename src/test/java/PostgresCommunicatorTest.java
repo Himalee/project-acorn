@@ -44,12 +44,13 @@ public class PostgresCommunicatorTest {
     public Opportunity exampleOpportunity() {
         String name = "Host code retreat at office";
         String description = "To be held on annual code retreat day";
-        return new Opportunity(name, description);
+        int cost = 12000;
+        return new Opportunity(name, description, cost);
     }
 
     @Test
     public void input_convertToInsertSqlQuery() {
-        String expectedSqlQuery = "INSERT INTO OPPORTUNITIES (name, description) VALUES ('Host code retreat at office', 'To be held on annual code retreat day');";
+        String expectedSqlQuery = "INSERT INTO OPPORTUNITIES (name, description, proposed_cost) VALUES ('Host code retreat at office', 'To be held on annual code retreat day', 12000);";
         Assert.assertEquals(expectedSqlQuery, databaseCommunicator.convertUserInputToInsertSqlQuery(exampleOpportunity()));
     }
 
