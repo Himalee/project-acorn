@@ -33,8 +33,6 @@ logfile
 .idea/**/libraries
 .gradle
 gradle/
-gradlew
-gradlew.bat
 
 /build/
 
