@@ -7,11 +7,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DisplayTest {
+
+    public CommandLineInterface createNewCLI(ByteArrayOutputStream outContent) {
+        ByteArrayInputStream userInput = new ByteArrayInputStream("".getBytes());
+        return new CommandLineInterface(new PrintStream(outContent), userInput);
+    }
+
     @Test
     public void opportunities_convertToUserFriendlyDisplay() {
-        ByteArrayInputStream userInput = new ByteArrayInputStream("".getBytes());
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        CommandLineInterface cli = new CommandLineInterface(new PrintStream(outContent), userInput);
+        CommandLineInterface cli = createNewCLI(outContent);
         Display display = new Display(cli);
         HashMap<String, ArrayList> names = new HashMap<>();
         ArrayList<String> helloWorld = new ArrayList<>();
@@ -25,6 +30,18 @@ public class DisplayTest {
         String expectedOutput = "1. Hello\nWorld\n2. Foo\nBar\n\n";
 
         display.formatOpportunities(names);
+
+        Assert.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    public void menuChoices_convertToUserFriendlyDisplay() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        CommandLineInterface cli = createNewCLI(outContent);
+        Display display = new Display(cli);
+        String expectedOutput = "Quit (select q)\nAdd new opportunity (select a)\nDisplay all opportunities (select d)\n\n";
+
+        display.formatMenu();
 
         Assert.assertEquals(expectedOutput, outContent.toString());
     }

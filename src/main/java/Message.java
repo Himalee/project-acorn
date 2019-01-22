@@ -4,10 +4,6 @@ public class Message {
         return "Welcome to Acorn";
     }
 
-    public static String userMenu() {
-        return "Menu:\n1. Quit\n2. Add new opportunity\n3. Display all opportunities\nPlease enter your choice:";
-    }
-
     public static String closeApp() {
         return "Goodbye";
     }
