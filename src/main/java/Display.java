@@ -14,10 +14,6 @@ public class Display {
         cli.present(Message.welcome());
     }
 
-    public void menu() {
-        cli.present(Message.userMenu());
-    }
-
     public String getUserInputString() {
         return cli.receiveString();
     }
