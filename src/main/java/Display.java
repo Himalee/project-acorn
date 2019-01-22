@@ -5,9 +5,11 @@ import java.util.Map;
 public class Display {
 
     private CommandLineInterface cli;
+    private Validator validator;
 
-    public Display(CommandLineInterface cli) {
+    public Display(CommandLineInterface cli, Validator validator) {
         this.cli = cli;
+        this.validator = validator;
     }
 
     public void welcomeUser() {
@@ -66,6 +68,15 @@ public class Display {
 
     public void getOpportunityProposedCost() {
         cli.present(Message.enterProposedOpportunityCost());
+    }
+
+    public String getMenuChoice() {
+        String menuChoice = getUserInputString();
+        while (!validator.menuChoice(menuChoice)) {
+            cli.present(Message.invalidMenuChoice());
+            menuChoice = getUserInputString();
+        }
+        return menuChoice;
     }
 }
 

@@ -23,4 +23,8 @@ public class Message {
     public static String enterProposedOpportunityCost() {
         return "Please enter the proposed cost of the opportunity";
     }
+
+    public static String invalidMenuChoice() {
+        return "Invalid menu choice, please try again";
+    }
 }

@@ -14,7 +14,7 @@ public class BudgetTrackerTest {
     private DatabaseCommunicator databaseCommunicator;
     private static final String QUIT_APP = "q";
     private static final String ADD_NEW_OPP_TO_DB = "a";
-
+    private Validator validator;
 
     @Before
     public void setUp() {
@@ -25,7 +25,8 @@ public class BudgetTrackerTest {
     public Display createNewDisplay(ByteArrayOutputStream outContent, String simulatedUserInput) {
         ByteArrayInputStream userInput = new ByteArrayInputStream(simulatedUserInput.getBytes());
         CommandLineInterface cli = new CommandLineInterface(new PrintStream(outContent), userInput);
-        return new Display(cli);
+        validator = new Validator();
+        return new Display(cli, validator);
     }
 
     @Test
