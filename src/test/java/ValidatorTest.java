@@ -26,4 +26,14 @@ public class ValidatorTest {
         assertFalse(validator.menuChoice("y"));
         assertFalse(validator.menuChoice("z"));
     }
+
+    @Test
+    public void nonEmptyInput_false() {
+        assertFalse(validator.empty("HelloWorld"));
+    }
+
+    @Test
+    public void emptyInput_true() {
+        assertTrue(validator.empty(""));
+    }
 }

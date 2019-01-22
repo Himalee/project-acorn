@@ -27,4 +27,8 @@ public class Message {
     public static String invalidMenuChoice() {
         return "Invalid menu choice, please try again";
     }
+
+    public static String emptyInput() {
+        return "Please enter input";
+    }
 }

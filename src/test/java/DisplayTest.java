@@ -65,4 +65,14 @@ public class DisplayTest {
         display.getMenuChoice();
         Assert.assertThat(outContent.toString(), containsString("Invalid"));
     }
+
+    @Test
+    public void emptyUserInput_displayErrorMessage() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        CommandLineInterface cli = createNewCLI(outContent, "\nq\n");
+        Display display = new Display(cli, validator);
+
+        display.getNonEmptyInput();
+        Assert.assertThat(outContent.toString(), containsString("Please enter input"));
+    }
 }

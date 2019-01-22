@@ -32,9 +32,9 @@ public class BudgetTracker {
 
     private Opportunity createNewOpportunity() {
         display.getOpportunityName();
-        String name = display.getUserInputString();
+        String name = display.getNonEmptyInput();
         display.getOpportunityDescription();
-        String description = display.getUserInputString();
+        String description = display.getNonEmptyInput();
         display.getOpportunityProposedCost();
         int cost = display.getUserInputInteger();
         return new Opportunity(name, description, cost);

@@ -15,4 +15,8 @@ public class Validator {
            return false;
        }
     }
+
+    public boolean empty(String userInput) {
+        return userInput == null || userInput.trim().isEmpty();
+    }
 }

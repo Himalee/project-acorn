@@ -78,5 +78,14 @@ public class Display {
         }
         return menuChoice;
     }
+
+    public String getNonEmptyInput() {
+        String userInput = getUserInputString();
+        while (validator.empty(userInput)) {
+            cli.present(Message.emptyInput());
+            userInput = getUserInputString();
+        }
+        return userInput;
+    }
 }
 
