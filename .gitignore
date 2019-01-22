@@ -6,6 +6,7 @@
 
 # Log file
 *.log
+logfile
 
 # User-specific stuff
 .idea/**/workspace.xml
@@ -27,9 +28,14 @@
 .idea/**/dbnavigator.xml
 
 # Gradle
+.idea/
 .idea/**/gradle.xml
 .idea/**/libraries
 .gradle
+gradle/
+gradlew
+gradlew.bat
+
 /build/
 
 # Gradle and Maven with auto-import
