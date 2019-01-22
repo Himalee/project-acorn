@@ -75,4 +75,14 @@ public class DisplayTest {
         display.getNonEmptyInput();
         Assert.assertThat(outContent.toString(), containsString("Please enter input"));
     }
+
+    @Test
+    public void invalidCostUserInput_displayCostPrompt() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        CommandLineInterface cli = createNewCLI(outContent, "123\n123.45\n");
+        Display display = new Display(cli, validator);
+
+        display.getCost();
+        Assert.assertThat(outContent.toString(), containsString("Please enter the proposed cost"));
+    }
 }

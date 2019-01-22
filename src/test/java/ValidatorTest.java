@@ -36,4 +36,17 @@ public class ValidatorTest {
     public void emptyInput_true() {
         assertTrue(validator.empty(""));
     }
+
+    @Test
+    public void incorrectlyFormattedCostInput_false() {
+        assertFalse(validator.cost("123"));
+        assertFalse(validator.cost("123.0"));
+        assertFalse(validator.cost("123.123"));
+
+    }
+
+    @Test
+    public void correctlyFormattedCostInput_true() {
+        assertTrue(validator.cost("123.45"));
+    }
 }

@@ -21,7 +21,7 @@ public class Message {
     }
 
     public static String enterProposedOpportunityCost() {
-        return "Please enter the proposed cost of the opportunity";
+        return "Please enter the proposed cost of the opportunity e.g. if it £531.29 enter 531.29";
     }
 
     public static String invalidMenuChoice() {

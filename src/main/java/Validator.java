@@ -19,4 +19,14 @@ public class Validator {
     public boolean empty(String userInput) {
         return userInput == null || userInput.trim().isEmpty();
     }
+
+    public boolean cost(String userInput) {
+        double input = Double.parseDouble(userInput);
+        int numberOfDecimalPlaces = String.valueOf(input).split("\\.")[1].length();
+        if (numberOfDecimalPlaces == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

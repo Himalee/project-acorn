@@ -20,10 +20,6 @@ public class Display {
         return cli.receiveString();
     }
 
-    public int getUserInputInteger() {
-        return cli.receiveInteger();
-    }
-
     public void getOpportunityName() {
         cli.present(Message.enterOpportunityName());
     }
@@ -86,6 +82,17 @@ public class Display {
             userInput = getUserInputString();
         }
         return userInput;
+    }
+
+    public int getCost() {
+        String userInput = getUserInputString();
+        while (!validator.cost(userInput)) {
+            cli.present(Message.enterProposedOpportunityCost());
+            userInput = getUserInputString();
+        }
+        String inputWithRemovedDecimal = userInput.replace(".", "");
+        int cost = Integer.parseInt(inputWithRemovedDecimal);
+        return cost;
     }
 }
 
