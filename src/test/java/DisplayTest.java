@@ -49,7 +49,7 @@ public class DisplayTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         CommandLineInterface cli = createNewCLI(outContent, "");
         Display display = new Display(cli, validator);
-        String expectedOutput = "Quit (select q)\nAdd new opportunity (select a)\nDisplay all opportunities (select d)\n\n";
+        String expectedOutput = "Add new opportunity (select a)\nDisplay all opportunities (select d)\nQuit (select q)\n\n";
 
         display.formatMenu();
 
