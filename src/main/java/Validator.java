@@ -21,9 +21,7 @@ public class Validator {
     }
 
     public boolean cost(String userInput) {
-        double input = Double.parseDouble(userInput);
-        int numberOfDecimalPlaces = String.valueOf(input).split("\\.")[1].length();
-        if (numberOfDecimalPlaces == 2) {
+        if (userInput.matches("[0-9]+.[0-9][0-9]")) {
             return true;
         } else {
             return false;

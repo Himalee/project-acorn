@@ -79,7 +79,7 @@ public class DisplayTest {
     @Test
     public void invalidCostUserInput_displayCostPrompt() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        CommandLineInterface cli = createNewCLI(outContent, "123\n123.45\n");
+        CommandLineInterface cli = createNewCLI(outContent, "hello\n123\n12.1\n123.34");
         Display display = new Display(cli, validator);
 
         display.getCost();
