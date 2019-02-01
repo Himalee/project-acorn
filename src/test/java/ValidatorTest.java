@@ -49,4 +49,21 @@ public class ValidatorTest {
     public void correctlyFormattedCostInput_true() {
         assertTrue(validator.cost("123.45"));
     }
+
+    @Test
+    public void onlyLettersInput_true() {
+        assertTrue(validator.onlyLetters("abcDEF"));
+        assertTrue(validator.onlyLetters("abc"));
+        assertTrue(validator.onlyLetters(""));
+    }
+
+
+    @Test
+    public void onlyLettersInput_false() {
+        assertFalse(validator.onlyLetters("abc123"));
+        assertFalse(validator.onlyLetters("123"));
+        assertFalse(validator.onlyLetters("A123Bb"));
+        assertFalse(validator.onlyLetters("Aabc./"));
+    }
+
 }

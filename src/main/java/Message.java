@@ -31,4 +31,8 @@ public class Message {
     public static String emptyInput() {
         return "Please enter input";
     }
+
+    public static String enterUserName() {
+        return "Please enter your name";
+    }
 }

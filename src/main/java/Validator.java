@@ -27,4 +27,13 @@ public class Validator {
             return false;
         }
     }
+
+    public boolean onlyLetters(String userInput) {
+        if (userInput.matches("[a-zA-Z]+") || userInput.length() == 0) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
 }

@@ -31,13 +31,15 @@ public class BudgetTracker {
     }
 
     private Opportunity createNewOpportunity() {
+        display.getUserName();
+        String userName = display.getOnlyLettersInput();
         display.getOpportunityName();
         String name = display.getNonEmptyInput();
         display.getOpportunityDescription();
         String description = display.getNonEmptyInput();
         display.getOpportunityProposedCost();
         int cost = display.getCost();
-        return new Opportunity(name, description, cost);
+        return new Opportunity(name, description, cost, userName);
     }
 }
 

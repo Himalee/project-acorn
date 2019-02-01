@@ -85,4 +85,14 @@ public class DisplayTest {
         display.getCost();
         Assert.assertThat(outContent.toString(), containsString("Please enter the proposed cost"));
     }
+
+    @Test
+    public void invalidUserNameInput_displayUserInputPrompt() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        CommandLineInterface cli = createNewCLI(outContent, "123\nHello 123\nHimalee");
+        Display display = new Display(cli, validator);
+
+        display.getOnlyLettersInput();
+        Assert.assertThat(outContent.toString(), containsString("Please enter your name"));
+    }
 }

@@ -94,5 +94,18 @@ public class Display {
         int cost = Integer.parseInt(inputWithRemovedDecimal);
         return cost;
     }
+
+    public String getOnlyLettersInput() {
+        String userInput = getUserInputString();
+        while (!validator.onlyLetters(userInput)) {
+            cli.present(Message.enterUserName());
+            userInput = getUserInputString();
+        }
+        return userInput;
+    }
+
+    public void getUserName() {
+        cli.present(Message.enterUserName());
+    }
 }
 

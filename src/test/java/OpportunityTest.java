@@ -11,7 +11,8 @@ public class OpportunityTest {
         String name = "Clojure MeetUp";
         String description = "Covering the Accessibility and Inclusion Options at ClojureBridge Meetup";
         int proposedCost = 30000;
-        opportunity = new Opportunity(name, description, proposedCost);
+        String userName = "Himalee";
+        opportunity = new Opportunity(name, description, proposedCost, userName);
 
     }
 
@@ -29,5 +30,10 @@ public class OpportunityTest {
     @Test
     public void getOpportunity_proposedCost() {
         Assert.assertEquals(30000, opportunity.proposedCost);
+    }
+
+    @Test
+    public void getOpportunity_userName() {
+        Assert.assertEquals("Himalee", opportunity.userName);
     }
 }

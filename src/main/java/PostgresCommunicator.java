@@ -19,9 +19,9 @@ class PostgresCommunicator implements DatabaseCommunicator {
         db.close();
     }
 
-    public HashMap<String, ArrayList> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
-        String readSqlQuery = readOpportunitiesSqlQuery("id, name, description, proposed_cost");
-        HashMap<String, ArrayList> opportunities = new HashMap<>();
+    public Map<Integer, ArrayList> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
+        String readSqlQuery = readOpportunitiesSqlQuery("id, name, description, proposed_cost, user_name");
+        HashMap<Integer, ArrayList> opportunities = new HashMap<>();
         Connection db = getConnection();
         Statement stmt = db.createStatement();
         ResultSet rs = stmt.executeQuery(readSqlQuery);
@@ -30,7 +30,8 @@ class PostgresCommunicator implements DatabaseCommunicator {
             opportunityDetails.add(rs.getString("name"));
             opportunityDetails.add(rs.getString("description"));
             opportunityDetails.add(Integer.toString(rs.getInt("proposed_cost")));
-            opportunities.put(rs.getString("id"), opportunityDetails);
+            opportunityDetails.add(rs.getString("user_name"));
+            opportunities.put(Integer.parseInt(rs.getString("id")), opportunityDetails);
         }
         return opportunities;
     }
@@ -42,7 +43,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
     }
 
     public String convertUserInputToInsertSqlQuery(Opportunity opportunity) {
-        return String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost) VALUES ('%s', '%s', %d);", opportunity.name, opportunity.description, opportunity.proposedCost);
+        return String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name) VALUES ('%s', '%s', %d, '%s');", opportunity.name, opportunity.description, opportunity.proposedCost, opportunity.userName);
     }
 
     public String readOpportunitiesSqlQuery(String columnNames) {
