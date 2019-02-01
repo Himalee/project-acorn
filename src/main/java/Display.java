@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Display {
 
@@ -32,10 +32,11 @@ public class Display {
         cli.present(Message.closeApp());
     }
 
-    public void formatOpportunities(HashMap<String, ArrayList> opportunitiesData) {
+    public void formatOpportunities(Map<Integer, ArrayList> opportunitiesData) {
         StringBuilder opportunities = new StringBuilder();
-        for (Map.Entry<String, ArrayList> entry : opportunitiesData.entrySet()) {
-            String key = entry.getKey();
+        Map<Integer,ArrayList> sortedMap = new TreeMap<>(opportunitiesData);
+        for (Map.Entry<Integer, ArrayList> entry : sortedMap.entrySet()) {
+            Integer key = entry.getKey();
             opportunities.append(key);
             opportunities.append(". ");
             ArrayList values = entry.getValue();

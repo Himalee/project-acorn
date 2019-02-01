@@ -28,16 +28,20 @@ public class DisplayTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         CommandLineInterface cli = createNewCLI(outContent, "");
         Display display = new Display(cli, validator);
-        HashMap<String, ArrayList> names = new HashMap<>();
+        HashMap<Integer, ArrayList> names = new HashMap<>();
         ArrayList<String> helloWorld = new ArrayList<>();
         helloWorld.add("Hello");
         helloWorld.add("World");
         ArrayList<String> fooBar = new ArrayList<>();
         fooBar.add("Foo");
         fooBar.add("Bar");
-        names.put("1", helloWorld);
-        names.put("2", fooBar);
-        String expectedOutput = "1. Hello\nWorld\n2. Foo\nBar\n\n";
+        ArrayList<String> anotherList = new ArrayList<>();
+        anotherList.add("Another");
+        anotherList.add("List");
+        names.put(1, helloWorld);
+        names.put(2, fooBar);
+        names.put(11, anotherList);
+        String expectedOutput = "1. Hello\nWorld\n2. Foo\nBar\n11. Another\nList\n\n";
 
         display.formatOpportunities(names);
 
