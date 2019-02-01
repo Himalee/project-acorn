@@ -92,8 +92,7 @@ public class Display {
             userInput = getUserInputString();
         }
         String inputWithRemovedDecimal = userInput.replace(".", "");
-        int cost = Integer.parseInt(inputWithRemovedDecimal);
-        return cost;
+        return Integer.parseInt(inputWithRemovedDecimal);
     }
 
     public String getOnlyLettersInput() {
