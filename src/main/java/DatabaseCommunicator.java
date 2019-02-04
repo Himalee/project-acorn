@@ -1,12 +1,10 @@
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 public interface DatabaseCommunicator {
-    void writeToDatabase(String sqlQuery) throws SQLException, ClassNotFoundException;
+    void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException;
     Connection getConnection() throws ClassNotFoundException, SQLException;
-    String convertUserInputToInsertSqlQuery(String userInput);
-    String readOpportunitiesSqlQuery(String columnNames);
-    HashMap<String, ArrayList> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException;
+    Map<Integer, ArrayList> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException;
 }

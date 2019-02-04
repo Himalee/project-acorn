@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostgresCommunicatorTest {
 
@@ -19,9 +19,8 @@ public class PostgresCommunicatorTest {
         databaseCommunicator = new PostgresCommunicator(databaseURL);
     }
 
-    public void writeToDatabase(String newOpportunityName) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name) VALUES ('%s');", newOpportunityName);
-        databaseCommunicator.writeToDatabase(sqlQuery);
+    public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
+        databaseCommunicator.writeToDatabase(opportunity);
     }
 
     public ResultSet getLastSavedOpportunity() throws SQLException, ClassNotFoundException {
@@ -41,45 +40,43 @@ public class PostgresCommunicatorTest {
         connection.close();
     }
 
-    @Test
-    public void input_convertToInsertSqlQuery() {
-        String userInput = "Host code retreat at office";
-
-        Assert.assertEquals("INSERT INTO OPPORTUNITIES (name) VALUES ('Host code retreat at office');", databaseCommunicator.convertUserInputToInsertSqlQuery(userInput));
+    public Opportunity exampleOpportunity() {
+        String name = "Host code retreat at office";
+        String description = "To be held on annual code retreat day";
+        int cost = 12000;
+        String userName = "Himalee";
+        return new Opportunity(name, description, cost, userName);
     }
 
     @Test
     public void newOpportunity_writeToDatabase() throws SQLException, ClassNotFoundException {
-        String newOpportunityName = "AWS Training - 2019 conference";
-        writeToDatabase(newOpportunityName);
+        Opportunity opportunity = exampleOpportunity();
+        writeToDatabase(opportunity);
         ResultSet rs = getLastSavedOpportunity();
         rs.next();
         String lastSavedOpportunityName = rs.getString("name");
 
-        Assert.assertEquals(newOpportunityName, lastSavedOpportunityName);
+        Assert.assertEquals(opportunity.name, lastSavedOpportunityName);
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
 
     @Test
-    public void columnNames_convertToReadSqlQuery() {
-        String columnNames = "id, name";
-        String readSqlQuery = databaseCommunicator.readOpportunitiesSqlQuery(columnNames);
-
-        Assert.assertEquals("SELECT id, name FROM opportunities;", readSqlQuery);
-    }
-
-    @Test
     public void allOpportunities_readFromDatabase() throws SQLException, ClassNotFoundException {
-        String newOpportunityName = "Socrates 2019 travel expenses";
-        writeToDatabase(newOpportunityName);
-        HashMap<String, ArrayList> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        Opportunity opportunity = exampleOpportunity();
+        writeToDatabase(opportunity);
+        Map<Integer, ArrayList> allOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         ResultSet rs = getLastSavedOpportunity();
         rs.next();
-        String lastSavedOpportunityID = rs.getString("id");
-        List<String> opportunityDetails = opportunities.get(String.format("%s", lastSavedOpportunityID));
+        int lastSavedOpportunityID = Integer.parseInt(rs.getString("id"));
+        List<String> opportunityDetails = allOpportunities.get(lastSavedOpportunityID);
 
-        Assert.assertTrue(opportunityDetails.contains(newOpportunityName));
+        Assert.assertTrue(opportunityDetails.contains(opportunity.name));
+        Assert.assertTrue(opportunityDetails.contains(opportunity.description));
+        String proposedCost = Integer.toString(opportunity.proposedCost);
+        Assert.assertTrue(opportunityDetails.contains(proposedCost));
+        Assert.assertTrue(opportunityDetails.contains(opportunity.userName));
+
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }

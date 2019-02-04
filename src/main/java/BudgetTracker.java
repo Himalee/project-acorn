@@ -13,7 +13,7 @@ public class BudgetTracker {
     public void start() throws SQLException, ClassNotFoundException {
        display.welcomeUser();
        display.formatMenu();
-       String menuChoice = display.getUserInput();
+       String menuChoice = display.getMenuChoice();
        MenuOptions option = MenuOptions.findChoice(menuChoice);
        if (option == MenuOptions.ADD_NEW_OPP) {
            writeUserInputToDatabase();
@@ -25,10 +25,21 @@ public class BudgetTracker {
     }
 
     private void writeUserInputToDatabase() throws SQLException, ClassNotFoundException {
-        display.getOpportunityName();
-        String opportunityName = display.getUserInput();
-        String sqlQuery = databaseCommunicator.convertUserInputToInsertSqlQuery(opportunityName);
-        databaseCommunicator.writeToDatabase(sqlQuery);
+        databaseCommunicator.writeToDatabase(createNewOpportunity());
         display.opportunityWrittenToDatabase();
     }
+
+    private Opportunity createNewOpportunity() {
+        display.getUserName();
+        String userName = display.getOnlyLettersInput();
+        display.getOpportunityName();
+        String name = display.getNonEmptyInput();
+        display.getOpportunityDescription();
+        String description = display.getNonEmptyInput();
+        display.getOpportunityProposedCost();
+        int cost = display.getCost();
+        return new Opportunity(name, description, cost, userName);
+    }
 }
+
+

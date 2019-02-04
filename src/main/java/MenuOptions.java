@@ -1,8 +1,8 @@
 public enum MenuOptions {
 
-    QUIT("q", "Quit"),
     ADD_NEW_OPP("a", "Add new opportunity"),
-    DISPLAY_ALL_OPP("d", "Display all opportunities");
+    DISPLAY_ALL_OPP("d", "Display all opportunities"),
+    QUIT("q", "Quit");
 
     private String command;
     private String name;
