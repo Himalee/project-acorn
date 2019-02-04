@@ -9,11 +9,7 @@ public class Validator {
         for (MenuOptions menuOption : menuOptions) {
             possibleMenuCommands.add(menuOption.getCommand());
         }
-       if (possibleMenuCommands.contains(choice)) {
-           return true;
-       } else {
-           return false;
-       }
+       return possibleMenuCommands.contains(choice);
     }
 
     public boolean empty(String userInput) {
@@ -21,19 +17,10 @@ public class Validator {
     }
 
     public boolean cost(String userInput) {
-        if (userInput.matches("[0-9]+.[0-9][0-9]")) {
-            return true;
-        } else {
-            return false;
-        }
+        return userInput.matches("[0-9]+.[0-9][0-9]");
     }
 
     public boolean onlyLetters(String userInput) {
-        if (userInput.matches("[a-zA-Z]+") || userInput.length() == 0) {
-            return true;
-
-        } else {
-            return false;
-        }
+        return userInput.matches("[a-zA-Z]+") || userInput.length() == 0;
     }
 }
