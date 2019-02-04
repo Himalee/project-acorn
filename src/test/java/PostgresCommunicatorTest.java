@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +20,7 @@ public class PostgresCommunicatorTest {
     }
 
     public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name) VALUES ('%s', '%s', %d, '%s');", opportunity.name, opportunity.description, opportunity.proposedCost, opportunity.userName);
-        databaseCommunicator.writeToDatabase(sqlQuery);
+        databaseCommunicator.writeToDatabase(opportunity);
     }
 
     public ResultSet getLastSavedOpportunity() throws SQLException, ClassNotFoundException {
@@ -51,12 +49,6 @@ public class PostgresCommunicatorTest {
     }
 
     @Test
-    public void input_convertToInsertSqlQuery() {
-        String expectedSqlQuery = "INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name) VALUES ('Host code retreat at office', 'To be held on annual code retreat day', 12000, 'Himalee');";
-        Assert.assertEquals(expectedSqlQuery, databaseCommunicator.convertUserInputToInsertSqlQuery(exampleOpportunity()));
-    }
-
-    @Test
     public void newOpportunity_writeToDatabase() throws SQLException, ClassNotFoundException {
         Opportunity opportunity = exampleOpportunity();
         writeToDatabase(opportunity);
@@ -67,14 +59,6 @@ public class PostgresCommunicatorTest {
         Assert.assertEquals(opportunity.name, lastSavedOpportunityName);
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
-    }
-
-    @Test
-    public void columnNames_convertToReadSqlQuery() {
-        String columnNames = "id, name, proposed_cost, user_name";
-        String readSqlQuery = databaseCommunicator.readOpportunitiesSqlQuery(columnNames);
-
-        Assert.assertEquals("SELECT id, name, proposed_cost, user_name FROM opportunities;", readSqlQuery);
     }
 
     @Test
