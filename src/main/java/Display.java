@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Display {
 
@@ -32,17 +30,30 @@ public class Display {
         cli.present(Message.closeApp());
     }
 
-    public void formatOpportunities(Map<Integer, ArrayList> opportunitiesData) {
-        StringBuilder opportunities = new StringBuilder();
-        Map<Integer,ArrayList> sortedMap = new TreeMap<>(opportunitiesData);
+    public void formatOpportunities(List<Opportunity> opportunities) {
+        StringBuilder presentableOpportunities = new StringBuilder();
+        Map<Integer,ArrayList> sortedMap = new TreeMap<>(formattedOpportunitiesData(opportunities));
         for (Map.Entry<Integer, ArrayList> entry : sortedMap.entrySet()) {
             Integer key = entry.getKey();
-            opportunities.append(key);
-            opportunities.append(". ");
+            presentableOpportunities.append(key);
+            presentableOpportunities.append(". ");
             ArrayList values = entry.getValue();
-            values.stream().forEach(elem -> opportunities.append(elem + "\n"));
+            values.stream().forEach(elem -> presentableOpportunities.append(elem + "\n"));
         }
-        cli.present(opportunities.toString());
+        cli.present(presentableOpportunities.toString());
+    }
+
+    public HashMap<Integer, ArrayList> formattedOpportunitiesData(List<Opportunity> opportunities) {
+        HashMap<Integer, ArrayList> formattedOpportunities = new HashMap<>();
+        for (Opportunity opp : opportunities) {
+            ArrayList<String> opportunityDetails = new ArrayList<>();
+            opportunityDetails.add(opp.getName());
+            opportunityDetails.add(opp.getDescription());
+            opportunityDetails.add(Integer.toString(opp.getProposedCost()));
+            opportunityDetails.add(opp.getUserName());
+            formattedOpportunities.put(opp.getId(), opportunityDetails);
+        }
+        return formattedOpportunities;
     }
 
     public void formatMenu() {

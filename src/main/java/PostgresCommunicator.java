@@ -1,7 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 class PostgresCommunicator implements DatabaseCommunicator {
 
@@ -21,19 +20,20 @@ class PostgresCommunicator implements DatabaseCommunicator {
         db.close();
     }
 
-    public Map<Integer, ArrayList> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
+    public List<Opportunity> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
+        List<Opportunity> opportunities = new ArrayList<>();
         String readSqlQuery = "SELECT * FROM opportunities";
-        HashMap<Integer, ArrayList> opportunities = new HashMap<>();
         Connection db = getConnection();
         Statement stmt = db.createStatement();
         ResultSet rs = stmt.executeQuery(readSqlQuery);
         while (rs.next()) {
-            ArrayList<String> opportunityDetails = new ArrayList<>();
-            opportunityDetails.add(rs.getString("name"));
-            opportunityDetails.add(rs.getString("description"));
-            opportunityDetails.add(Integer.toString(rs.getInt("proposed_cost")));
-            opportunityDetails.add(rs.getString("user_name"));
-            opportunities.put(Integer.parseInt(rs.getString("id")), opportunityDetails);
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            int proposedCost = rs.getInt("proposed_cost");
+            String userName = rs.getString("user_name");
+            Opportunity opportunity = new Opportunity(name, description, proposedCost, userName);
+            opportunity.setId(Integer.parseInt(rs.getString("id")));
+            opportunities.add(opportunity);
         }
         return opportunities;
     }

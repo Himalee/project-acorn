@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -28,22 +29,20 @@ public class DisplayTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         CommandLineInterface cli = createNewCLI(outContent, "");
         Display display = new Display(cli, validator);
-        HashMap<Integer, ArrayList> names = new HashMap<>();
-        ArrayList<String> helloWorld = new ArrayList<>();
-        helloWorld.add("Hello");
-        helloWorld.add("World");
-        ArrayList<String> fooBar = new ArrayList<>();
-        fooBar.add("Foo");
-        fooBar.add("Bar");
-        ArrayList<String> anotherList = new ArrayList<>();
-        anotherList.add("Another");
-        anotherList.add("List");
-        names.put(1, helloWorld);
-        names.put(2, fooBar);
-        names.put(11, anotherList);
-        String expectedOutput = "1. Hello\nWorld\n2. Foo\nBar\n11. Another\nList\n\n";
 
-        display.formatOpportunities(names);
+        List<Opportunity> opportunities = new ArrayList<>();
+        Opportunity oppOne = new Opportunity("hello", "world", 120, "himalee");
+        oppOne.setId(1);
+        Opportunity oppTwo = new Opportunity("foo", "bar", 140, "tailor");
+        oppTwo.setId(2);
+        Opportunity oppThree = new Opportunity("goodbye", "world", 150, "becca");
+        oppThree.setId(11);
+        opportunities.add(oppOne);
+        opportunities.add(oppTwo);
+        opportunities.add(oppThree);
+
+        display.formatOpportunities(opportunities);
+        String expectedOutput = "1. hello\nworld\n120\nhimalee\n2. foo\nbar\n140\ntailor\n11. goodbye\nworld\n150\nbecca\n\n";
 
         Assert.assertEquals(expectedOutput, outContent.toString());
     }
