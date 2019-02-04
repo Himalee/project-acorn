@@ -64,7 +64,7 @@ public class PostgresCommunicatorTest {
         rs.next();
         String lastSavedOpportunityName = rs.getString("name");
 
-        Assert.assertEquals(opportunity.name, lastSavedOpportunityName);
+        Assert.assertEquals(opportunity.getName(), lastSavedOpportunityName);
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }

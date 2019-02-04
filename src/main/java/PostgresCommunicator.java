@@ -14,7 +14,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
         Statement stmt = null;
         Connection db = getConnection();
         stmt = db.createStatement();
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name) VALUES ('%s', '%s', %d, '%s');", opportunity.name, opportunity.description, opportunity.proposedCost, opportunity.userName);
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name) VALUES ('%s', '%s', %d, '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName());
         stmt.executeUpdate(sqlQuery);
         stmt.close();
         db.close();

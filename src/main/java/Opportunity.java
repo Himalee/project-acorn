@@ -1,10 +1,10 @@
 public class Opportunity {
 
     private int id;
-    public String name;
-    public String description;
-    public int proposedCost;
-    public String userName;
+    private String name;
+    private String description;
+    private int proposedCost;
+    private String userName;
 
     public Opportunity(String name, String description, int proposedCost, String userName) {
         this.name = name;

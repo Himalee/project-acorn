@@ -18,22 +18,22 @@ public class OpportunityTest {
 
     @Test
     public void getOpportunity_name() {
-        Assert.assertEquals("Clojure MeetUp", opportunity.name);
+        Assert.assertEquals("Clojure MeetUp", opportunity.getName());
     }
 
     @Test
     public void getOpportunity_description() {
         String opportunityDescription = "Covering the Accessibility and Inclusion Options at ClojureBridge Meetup";
-        Assert.assertEquals(opportunityDescription, opportunity.description);
+        Assert.assertEquals(opportunityDescription, opportunity.getDescription());
     }
 
     @Test
     public void getOpportunity_proposedCost() {
-        Assert.assertEquals(30000, opportunity.proposedCost);
+        Assert.assertEquals(30000, opportunity.getProposedCost());
     }
 
     @Test
     public void getOpportunity_userName() {
-        Assert.assertEquals("Himalee", opportunity.userName);
+        Assert.assertEquals("Himalee", opportunity.getUserName());
     }
 }
