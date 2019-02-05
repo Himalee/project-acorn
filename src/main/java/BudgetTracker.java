@@ -12,7 +12,7 @@ public class BudgetTracker {
 
     public void start() throws SQLException, ClassNotFoundException {
        display.welcomeUser();
-       display.formatMenu();
+       display.startingMenu();
        String menuChoice = display.getMenuChoice();
        MenuOptions option = MenuOptions.findChoice(menuChoice);
        if (option == MenuOptions.ADD_NEW_OPP) {
@@ -38,7 +38,11 @@ public class BudgetTracker {
         String description = display.getNonEmptyInput();
         display.getOpportunityProposedCost();
         int cost = display.getCost();
-        return new Opportunity(name, description, cost, userName);
+        display.getStage();
+        display.opportunityStagesMenu();
+        String stageChoice = display.getOpportunityStage();
+        OpportunityStages stage = OpportunityStages.findStage(stageChoice);
+        return new Opportunity(name, description, cost, userName, stage.getName());
     }
 }
 

@@ -14,7 +14,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
         Statement stmt = null;
         Connection db = getConnection();
         stmt = db.createStatement();
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name) VALUES ('%s', '%s', %d, '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName());
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name, stage) VALUES ('%s', '%s', %d, '%s', '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName(), opportunity.getStage());
         stmt.executeUpdate(sqlQuery);
         stmt.close();
         db.close();
@@ -31,7 +31,8 @@ class PostgresCommunicator implements DatabaseCommunicator {
             String description = rs.getString("description");
             int proposedCost = rs.getInt("proposed_cost");
             String userName = rs.getString("user_name");
-            Opportunity opportunity = new Opportunity(name, description, proposedCost, userName);
+            String stage = rs.getString("stage");
+            Opportunity opportunity = new Opportunity(name, description, proposedCost, userName, stage);
             opportunity.setId(Integer.parseInt(rs.getString("id")));
             opportunities.add(opportunity);
         }

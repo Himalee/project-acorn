@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -31,30 +30,32 @@ public class DisplayTest {
         Display display = new Display(cli, validator);
 
         List<Opportunity> opportunities = new ArrayList<>();
-        Opportunity oppOne = new Opportunity("hello", "world", 120, "himalee");
+        Opportunity oppOne = new Opportunity("hello", "world", 120, "himalee", "approved");
         oppOne.setId(1);
-        Opportunity oppTwo = new Opportunity("foo", "bar", 140, "tailor");
+        Opportunity oppTwo = new Opportunity("foo", "bar", 140, "tailor", "approved");
         oppTwo.setId(2);
-        Opportunity oppThree = new Opportunity("goodbye", "world", 150, "becca");
+        Opportunity oppThree = new Opportunity("goodbye", "world", 150, "becca", "approved");
         oppThree.setId(11);
         opportunities.add(oppOne);
         opportunities.add(oppTwo);
         opportunities.add(oppThree);
 
         display.formatOpportunities(opportunities);
-        String expectedOutput = "1. hello\nworld\n120\nhimalee\n2. foo\nbar\n140\ntailor\n11. goodbye\nworld\n150\nbecca\n\n";
+        String expectedOutput = "1. hello\nworld\n120\nhimalee\napproved\n2. foo\nbar\n140\ntailor\napproved\n11. goodbye\nworld\n150\nbecca\napproved\n\n";
 
         Assert.assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
-    public void menuChoices_convertToUserFriendlyDisplay() {
+    public void startingMenuChoices_convertToUserFriendlyDisplay() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         CommandLineInterface cli = createNewCLI(outContent, "");
         Display display = new Display(cli, validator);
-        String expectedOutput = "Add new opportunity (select a)\nDisplay all opportunities (select d)\nQuit (select q)\n\n";
+        String expectedOutput = "Add new opportunity (select a)\n" +
+                "Display all opportunities (select d)\n" +
+                "Quit (select q)\n\n";
 
-        display.formatMenu();
+        display.startingMenu();
 
         Assert.assertEquals(expectedOutput, outContent.toString());
     }
@@ -97,5 +98,21 @@ public class DisplayTest {
 
         display.getOnlyLettersInput();
         Assert.assertThat(outContent.toString(), containsString("Please enter your name"));
+    }
+
+    @Test
+    public void opportunityStagesMenuChoices_convertToUserFriendlyDisplay() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        CommandLineInterface cli = createNewCLI(outContent, "");
+        Display display = new Display(cli, validator);
+        String expectedOutput = "To be discussed (select t)\n" +
+                "In discussion (select i)\n" +
+                "Approved (select a)\n" +
+                "Declined (select d)\n" +
+                "Expired (select x)\n\n";
+
+        display.opportunityStagesMenu();
+
+        Assert.assertEquals(expectedOutput, outContent.toString());
     }
 }

@@ -5,12 +5,14 @@ public class Opportunity {
     private String description;
     private int proposedCost;
     private String userName;
+    private String stage;
 
-    public Opportunity(String name, String description, int proposedCost, String userName) {
+    public Opportunity(String name, String description, int proposedCost, String userName, String stage) {
         this.name = name;
         this.description = description;
         this.proposedCost = proposedCost;
         this.userName = userName;
+        this.stage = stage;
     }
 
     public int getId() {
@@ -35,5 +37,9 @@ public class Opportunity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getStage() {
+        return stage;
     }
 }

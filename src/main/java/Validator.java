@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Validator {
 
-    public boolean menuChoice(String choice) {
+    public boolean startingMenuChoice(String choice) {
         List possibleMenuCommands = new ArrayList();
         MenuOptions[] menuOptions = MenuOptions.values();
         for (MenuOptions menuOption : menuOptions) {
@@ -22,5 +22,14 @@ public class Validator {
 
     public boolean onlyLetters(String userInput) {
         return userInput.matches("[a-zA-Z]+") || userInput.length() == 0;
+    }
+
+    public boolean opportunityStageChoice(String choice) {
+        List possibleMenuCommands = new ArrayList();
+        OpportunityStages[] opportunityStages = OpportunityStages.values();
+        for (OpportunityStages stage : opportunityStages) {
+            possibleMenuCommands.add(stage.getCommand());
+        }
+        return possibleMenuCommands.contains(choice);
     }
 }

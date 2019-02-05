@@ -12,7 +12,8 @@ public class OpportunityTest {
         String description = "Covering the Accessibility and Inclusion Options at ClojureBridge Meetup";
         int proposedCost = 30000;
         String userName = "Himalee";
-        opportunity = new Opportunity(name, description, proposedCost, userName);
+        String stage = "approved";
+        opportunity = new Opportunity(name, description, proposedCost, userName, stage);
 
     }
 

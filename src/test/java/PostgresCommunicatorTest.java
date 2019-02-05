@@ -43,7 +43,8 @@ public class PostgresCommunicatorTest {
         String description = "To be held on annual code retreat day";
         int cost = 12000;
         String userName = "Himalee";
-        return new Opportunity(name, description, cost, userName);
+        String stage = "Approved";
+        return new Opportunity(name, description, cost, userName, stage);
     }
 
     public Opportunity getOpportunity(List<Opportunity> opportunities, int lastSavedOpportunityId) {
@@ -84,6 +85,7 @@ public class PostgresCommunicatorTest {
         Assert.assertEquals(opportunity.getDescription(), lastSavedOpportunity.getDescription());
         Assert.assertEquals(opportunity.getProposedCost(), lastSavedOpportunity.getProposedCost());
         Assert.assertEquals(opportunity.getUserName(), lastSavedOpportunity.getUserName());
+        Assert.assertEquals(opportunity.getStage(), lastSavedOpportunity.getStage());
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }

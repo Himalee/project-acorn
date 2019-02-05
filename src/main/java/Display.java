@@ -43,32 +43,17 @@ public class Display {
         cli.present(presentableOpportunities.toString());
     }
 
-    public HashMap<Integer, ArrayList> formattedOpportunitiesData(List<Opportunity> opportunities) {
-        HashMap<Integer, ArrayList> formattedOpportunities = new HashMap<>();
-        for (Opportunity opp : opportunities) {
-            ArrayList<String> opportunityDetails = new ArrayList<>();
-            opportunityDetails.add(opp.getName());
-            opportunityDetails.add(opp.getDescription());
-            opportunityDetails.add(Integer.toString(opp.getProposedCost()));
-            opportunityDetails.add(opp.getUserName());
-            formattedOpportunities.put(opp.getId(), opportunityDetails);
-        }
-        return formattedOpportunities;
-    }
 
-    public void formatMenu() {
+    public void startingMenu() {
         MenuOptions[] menuOptions = MenuOptions.values();
-        StringBuilder formattedMenu = new StringBuilder();
-        for (MenuOptions menuOption : menuOptions) {
-            formattedMenu.append(menuOption.getName());
-            formattedMenu.append(" (select ");
-            formattedMenu.append(menuOption.getCommand());
-            formattedMenu.append(")");
-            formattedMenu.append("\n");
-
-        }
-        cli.present(formattedMenu.toString());
+        cli.present(formatMenu(menuOptions));
     }
+
+    public void opportunityStagesMenu() {
+        OpportunityStages[] opportunityStages = OpportunityStages.values();
+        cli.present(formatMenu(opportunityStages));
+    }
+
 
     public void getOpportunityDescription() {
         cli.present(Message.enterOpportunityDescription());
@@ -80,7 +65,7 @@ public class Display {
 
     public String getMenuChoice() {
         String menuChoice = getUserInputString();
-        while (!validator.menuChoice(menuChoice)) {
+        while (!validator.startingMenuChoice(menuChoice)) {
             cli.present(Message.invalidMenuChoice());
             menuChoice = getUserInputString();
         }
@@ -117,6 +102,46 @@ public class Display {
 
     public void getUserName() {
         cli.present(Message.enterUserName());
+    }
+
+    public void getStage() {
+        cli.present(Message.enterOpportunityStage());
+    }
+
+    public String getOpportunityStage() {
+        String stageChoice = getUserInputString();
+        while (!validator.opportunityStageChoice(stageChoice)) {
+            cli.present(Message.invalidMenuChoice());
+            stageChoice = getUserInputString();
+        }
+        return stageChoice;
+    }
+
+    private HashMap<Integer, ArrayList> formattedOpportunitiesData(List<Opportunity> opportunities) {
+        HashMap<Integer, ArrayList> formattedOpportunities = new HashMap<>();
+        for (Opportunity opp : opportunities) {
+            ArrayList<String> opportunityDetails = new ArrayList<>();
+            opportunityDetails.add(opp.getName());
+            opportunityDetails.add(opp.getDescription());
+            opportunityDetails.add(Integer.toString(opp.getProposedCost()));
+            opportunityDetails.add(opp.getUserName());
+            opportunityDetails.add(opp.getStage());
+            formattedOpportunities.put(opp.getId(), opportunityDetails);
+        }
+        return formattedOpportunities;
+    }
+
+    private String formatMenu(Menu[] menu) {
+        StringBuilder formattedMenu = new StringBuilder();
+        for (Menu menuOption : menu) {
+            formattedMenu.append(menuOption.getName());
+            formattedMenu.append(" (select ");
+            formattedMenu.append(menuOption.getCommand());
+            formattedMenu.append(")");
+            formattedMenu.append("\n");
+
+        }
+        return formattedMenu.toString();
     }
 }
 
