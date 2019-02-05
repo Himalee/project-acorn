@@ -79,4 +79,19 @@ public class ValidatorTest {
         assertFalse(validator.opportunityStageChoice("f"));
         assertFalse(validator.opportunityStageChoice("g"));
     }
+
+    @Test
+    public void onlyNumbersInput_true() {
+        assertTrue(validator.onlyNumbers("1"));
+        assertTrue(validator.onlyNumbers("123"));
+        assertTrue(validator.onlyNumbers("100"));
+    }
+
+    @Test
+    public void onlyNumbersInput_false() {
+        assertFalse(validator.onlyNumbers("1.00"));
+        assertFalse(validator.onlyNumbers("123abc"));
+        assertFalse(validator.onlyNumbers("abc"));
+        assertFalse(validator.onlyNumbers("//.."));
+    }
 }

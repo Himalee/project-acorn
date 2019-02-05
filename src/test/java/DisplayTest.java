@@ -53,6 +53,7 @@ public class DisplayTest {
         Display display = new Display(cli, validator);
         String expectedOutput = "Add new opportunity (select a)\n" +
                 "Display all opportunities (select d)\n" +
+                "Search by id (select i)\n" +
                 "Quit (select q)\n\n";
 
         display.startingMenu();

@@ -1,4 +1,6 @@
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BudgetTracker {
 
@@ -19,6 +21,9 @@ public class BudgetTracker {
            writeUserInputToDatabase();
        } else if (option == MenuOptions.DISPLAY_ALL_OPP) {
           display.formatOpportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
+       } else if(option == MenuOptions.SEARCH_BY_ID) {
+          List<Opportunity> filteredList = searchById();
+          display.formatOpportunities(filteredList);
        } else {
            display.goodbye();
        }
@@ -59,6 +64,20 @@ public class BudgetTracker {
         String stageChoice = display.getOpportunityStage();
         OpportunityStages stage = OpportunityStages.findStage(stageChoice);
         return stage.getName();
+    }
+
+    private List<Opportunity> searchById() throws SQLException, ClassNotFoundException {
+        List<Opportunity> opportunityList = new ArrayList<>();
+        display.getId();
+        int userChoiceId = display.getOnlyNumbersInput();
+        List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        for (Opportunity opp : opportunities) {
+            int id = opp.getId();
+            if (id == userChoiceId) {
+                opportunityList.add(opp);
+            }
+        }
+        return opportunityList;
     }
 }
 

@@ -117,6 +117,19 @@ public class Display {
         return stageChoice;
     }
 
+    public void getId() {
+        cli.present(Message.enterOpportunityId());
+    }
+
+    public int getOnlyNumbersInput() {
+        String userInput = getUserInputString();
+        while(!validator.onlyNumbers(userInput)) {
+            cli.present(Message.enterOpportunityId());
+            userInput = getUserInputString();
+        }
+        return Integer.parseInt(userInput);
+    }
+
     private HashMap<Integer, ArrayList> formattedOpportunitiesData(List<Opportunity> opportunities) {
         HashMap<Integer, ArrayList> formattedOpportunities = new HashMap<>();
         for (Opportunity opp : opportunities) {

@@ -32,4 +32,8 @@ public class Validator {
         }
         return possibleMenuCommands.contains(choice);
     }
+
+    public boolean onlyNumbers(String userInput) {
+        return userInput.matches("[0-9]+");
+    }
 }
