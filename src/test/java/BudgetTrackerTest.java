@@ -50,7 +50,7 @@ public class BudgetTrackerTest {
         String newUserName = "Himalee";
         String newOpportunityName = "Black girl tech sponsorship";
         String newOpportunityDescription = "Offer paid internships";
-        String simulatedUserInput = String.format("%s\n%s\n%s\n%s\n123.45\n%s\n", ADD_NEW_OPP_TO_DB, newUserName, newOpportunityName, newOpportunityDescription, TO_BE_DISCUSSED);
+        String simulatedUserInput = String.format("%s\n%s\n%s\n123.45\n%s\n%s\n", ADD_NEW_OPP_TO_DB, newOpportunityName, newOpportunityDescription, newUserName, TO_BE_DISCUSSED);
         Display display = createNewDisplay(outContent, simulatedUserInput);
 
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
