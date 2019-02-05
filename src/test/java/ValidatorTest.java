@@ -15,16 +15,16 @@ public class ValidatorTest {
 
     @Test
     public void validMenuChoice_true() {
-        assertTrue(validator.menuChoice("q"));
-        assertTrue(validator.menuChoice("a"));
-        assertTrue(validator.menuChoice("d"));
+        assertTrue(validator.startingMenuChoice("q"));
+        assertTrue(validator.startingMenuChoice("a"));
+        assertTrue(validator.startingMenuChoice("d"));
     }
 
     @Test
     public void invalidMenuChoice_false() {
-        assertFalse(validator.menuChoice("x"));
-        assertFalse(validator.menuChoice("y"));
-        assertFalse(validator.menuChoice("z"));
+        assertFalse(validator.startingMenuChoice("x"));
+        assertFalse(validator.startingMenuChoice("y"));
+        assertFalse(validator.startingMenuChoice("z"));
     }
 
     @Test
@@ -66,4 +66,17 @@ public class ValidatorTest {
         assertFalse(validator.onlyLetters("Aabc./"));
     }
 
+    @Test
+    public void validOpportunityStageChoice_true() {
+        assertTrue(validator.opportunityStageChoice("t"));
+        assertTrue(validator.opportunityStageChoice("i"));
+        assertTrue(validator.opportunityStageChoice("a"));
+    }
+
+    @Test
+    public void invalidOpportunityStageChoice_false() {
+        assertFalse(validator.opportunityStageChoice("e"));
+        assertFalse(validator.opportunityStageChoice("f"));
+        assertFalse(validator.opportunityStageChoice("g"));
+    }
 }

@@ -1,4 +1,4 @@
-public enum MenuOptions {
+public enum MenuOptions implements Menu {
 
     ADD_NEW_OPP("a", "Add new opportunity"),
     DISPLAY_ALL_OPP("d", "Display all opportunities"),

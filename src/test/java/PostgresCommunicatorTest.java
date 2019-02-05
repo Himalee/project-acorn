@@ -5,9 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class PostgresCommunicatorTest {
 
@@ -45,7 +43,18 @@ public class PostgresCommunicatorTest {
         String description = "To be held on annual code retreat day";
         int cost = 12000;
         String userName = "Himalee";
-        return new Opportunity(name, description, cost, userName);
+        String stage = "Approved";
+        return new Opportunity(name, description, cost, userName, stage);
+    }
+
+    public Opportunity getOpportunity(List<Opportunity> opportunities, int lastSavedOpportunityId) {
+        for (Opportunity opp : opportunities) {
+            int id = opp.getId();
+            if (lastSavedOpportunityId == id) {
+                return opp;
+            }
+        }
+        return null;
     }
 
     @Test
@@ -56,7 +65,7 @@ public class PostgresCommunicatorTest {
         rs.next();
         String lastSavedOpportunityName = rs.getString("name");
 
-        Assert.assertEquals(opportunity.name, lastSavedOpportunityName);
+        Assert.assertEquals(opportunity.getName(), lastSavedOpportunityName);
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
@@ -65,18 +74,18 @@ public class PostgresCommunicatorTest {
     public void allOpportunities_readFromDatabase() throws SQLException, ClassNotFoundException {
         Opportunity opportunity = exampleOpportunity();
         writeToDatabase(opportunity);
-        Map<Integer, ArrayList> allOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         ResultSet rs = getLastSavedOpportunity();
         rs.next();
         int lastSavedOpportunityID = Integer.parseInt(rs.getString("id"));
-        List<String> opportunityDetails = allOpportunities.get(lastSavedOpportunityID);
 
-        Assert.assertTrue(opportunityDetails.contains(opportunity.name));
-        Assert.assertTrue(opportunityDetails.contains(opportunity.description));
-        String proposedCost = Integer.toString(opportunity.proposedCost);
-        Assert.assertTrue(opportunityDetails.contains(proposedCost));
-        Assert.assertTrue(opportunityDetails.contains(opportunity.userName));
+        Opportunity lastSavedOpportunity = getOpportunity(opportunities, lastSavedOpportunityID);
 
+        Assert.assertEquals(opportunity.getName(), lastSavedOpportunity.getName());
+        Assert.assertEquals(opportunity.getDescription(), lastSavedOpportunity.getDescription());
+        Assert.assertEquals(opportunity.getProposedCost(), lastSavedOpportunity.getProposedCost());
+        Assert.assertEquals(opportunity.getUserName(), lastSavedOpportunity.getUserName());
+        Assert.assertEquals(opportunity.getStage(), lastSavedOpportunity.getStage());
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }

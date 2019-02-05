@@ -25,7 +25,7 @@ public class Message {
     }
 
     public static String invalidMenuChoice() {
-        return "Invalid menu choice, please try again";
+        return "Invalid choice, please try again";
     }
 
     public static String emptyInput() {
@@ -34,5 +34,9 @@ public class Message {
 
     public static String enterUserName() {
         return "Please enter your name";
+    }
+
+    public static String enterOpportunityStage() {
+        return "Please enter the opportunity stage";
     }
 }
