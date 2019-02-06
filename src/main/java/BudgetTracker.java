@@ -21,7 +21,7 @@ public class BudgetTracker {
            writeUserInputToDatabase();
        } else if (option == MenuOptions.DISPLAY_ALL_OPP) {
           display.formatOpportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
-       } else if(option == MenuOptions.SEARCH_BY_ID) {
+       } else if (option == MenuOptions.SEARCH_BY_ID) {
           List<Opportunity> filteredList = searchById();
           display.formatOpportunities(filteredList);
        } else {
