@@ -69,12 +69,12 @@ public class BudgetTracker {
     private List<Opportunity> searchBy(int userChoiceId) throws SQLException, ClassNotFoundException {
         List<Opportunity> opportunityList = new ArrayList<>();
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
-        for (Opportunity opp : opportunities) {
-            int id = opp.getId();
+        for (Opportunity opportunity : opportunities) {
+            int id = opportunity.getId();
             if (id != userChoiceId) {
                 continue;
             }
-            opportunityList.add(opp);
+            opportunityList.add(opportunity);
         }
         return opportunityList;
     }

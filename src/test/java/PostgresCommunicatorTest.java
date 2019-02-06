@@ -48,10 +48,10 @@ public class PostgresCommunicatorTest {
     }
 
     public Opportunity getOpportunity(List<Opportunity> opportunities, int lastSavedOpportunityId) {
-        for (Opportunity opp : opportunities) {
-            int id = opp.getId();
+        for (Opportunity opportunity : opportunities) {
+            int id = opportunity.getId();
             if (lastSavedOpportunityId == id) {
-                return opp;
+                return opportunity;
             }
         }
         return null;
