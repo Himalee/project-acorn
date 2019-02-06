@@ -40,7 +40,7 @@ public class DisplayTest {
         opportunities.add(oppTwo);
         opportunities.add(oppThree);
 
-        display.formatOpportunities(opportunities);
+        display.opportunities(opportunities);
         String expectedOutput = "1. hello\nworld\n120\nhimalee\napproved\n2. foo\nbar\n140\ntailor\napproved\n11. goodbye\nworld\n150\nbecca\napproved\n\n";
 
         Assert.assertEquals(expectedOutput, outContent.toString());

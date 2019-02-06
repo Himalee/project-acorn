@@ -20,10 +20,10 @@ public class BudgetTracker {
        if (option == MenuOptions.ADD_NEW_OPP) {
            writeUserInputToDatabase();
        } else if (option == MenuOptions.DISPLAY_ALL_OPP) {
-          display.formatOpportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
+          display.opportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
        } else if (option == MenuOptions.SEARCH_BY_ID) {
           List<Opportunity> filteredList = searchBy(userChoiceId());
-          display.formatOpportunities(filteredList);
+          display.opportunities(filteredList);
        } else {
            display.goodbye();
        }

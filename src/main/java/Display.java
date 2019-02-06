@@ -30,17 +30,24 @@ public class Display {
         cli.present(Message.closeApp());
     }
 
-    public void formatOpportunities(List<Opportunity> opportunities) {
+    public void opportunities(List<Opportunity> opportunities) {
+        cli.present(formatOpportunities(opportunities));
+    }
+
+    public String formatOpportunities(List<Opportunity> opportunities) {
+        Collections.sort(opportunities);
         StringBuilder presentableOpportunities = new StringBuilder();
-        Map<Integer,ArrayList> sortedMap = new TreeMap<>(formattedOpportunitiesData(opportunities));
-        for (Map.Entry<Integer, ArrayList> entry : sortedMap.entrySet()) {
-            Integer key = entry.getKey();
-            presentableOpportunities.append(key);
+        for (Opportunity opportunity : opportunities) {
+            presentableOpportunities.append(opportunity.getId());
             presentableOpportunities.append(". ");
-            ArrayList values = entry.getValue();
-            values.stream().forEach(elem -> presentableOpportunities.append(elem + "\n"));
+            presentableOpportunities.append(opportunity.getName() + "\n");
+            presentableOpportunities.append(opportunity.getDescription() + "\n");
+            presentableOpportunities.append(opportunity.getProposedCost() + "\n");
+            presentableOpportunities.append(opportunity.getUserName() + "\n");
+            presentableOpportunities.append(opportunity.getStage() + "\n");
+
         }
-        cli.present(presentableOpportunities.toString());
+        return presentableOpportunities.toString();
     }
 
 
@@ -128,20 +135,6 @@ public class Display {
             userInput = getUserInputString();
         }
         return Integer.parseInt(userInput);
-    }
-
-    private HashMap<Integer, ArrayList> formattedOpportunitiesData(List<Opportunity> opportunities) {
-        HashMap<Integer, ArrayList> formattedOpportunities = new HashMap<>();
-        for (Opportunity opp : opportunities) {
-            ArrayList<String> opportunityDetails = new ArrayList<>();
-            opportunityDetails.add(opp.getName());
-            opportunityDetails.add(opp.getDescription());
-            opportunityDetails.add(Integer.toString(opp.getProposedCost()));
-            opportunityDetails.add(opp.getUserName());
-            opportunityDetails.add(opp.getStage());
-            formattedOpportunities.put(opp.getId(), opportunityDetails);
-        }
-        return formattedOpportunities;
     }
 
     private String formatMenu(Menu[] menu) {
