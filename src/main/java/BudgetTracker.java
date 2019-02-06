@@ -22,7 +22,7 @@ public class BudgetTracker {
        } else if (option == MenuOptions.DISPLAY_ALL_OPP) {
           display.formatOpportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
        } else if (option == MenuOptions.SEARCH_BY_ID) {
-          List<Opportunity> filteredList = searchById();
+          List<Opportunity> filteredList = searchBy(userChoiceId());
           display.formatOpportunities(filteredList);
        } else {
            display.goodbye();
@@ -66,18 +66,22 @@ public class BudgetTracker {
         return stage.getName();
     }
 
-    private List<Opportunity> searchById() throws SQLException, ClassNotFoundException {
+    private List<Opportunity> searchBy(int userChoiceId) throws SQLException, ClassNotFoundException {
         List<Opportunity> opportunityList = new ArrayList<>();
-        display.getId();
-        int userChoiceId = display.getOnlyNumbersInput();
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         for (Opportunity opp : opportunities) {
             int id = opp.getId();
-            if (id == userChoiceId) {
-                opportunityList.add(opp);
+            if (id != userChoiceId) {
+                continue;
             }
+            opportunityList.add(opp);
         }
         return opportunityList;
+    }
+
+    private int userChoiceId() {
+        display.getId();
+        return display.getOnlyNumbersInput();
     }
 }
 
