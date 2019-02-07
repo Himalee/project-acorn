@@ -39,4 +39,8 @@ public class Message {
     public static String enterOpportunityStage() {
         return "Please enter the opportunity stage";
     }
+
+    public static String enterOpportunityId() {
+        return "Please enter the opportunity id";
+    }
 }

@@ -1,4 +1,4 @@
-public class Opportunity {
+public class Opportunity implements Comparable<Opportunity> {
 
     private int id;
     private String name;
@@ -41,5 +41,10 @@ public class Opportunity {
 
     public String getStage() {
         return stage;
+    }
+
+    @Override
+    public int compareTo(Opportunity o) {
+        return this.getId() - o.getId();
     }
 }

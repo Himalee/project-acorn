@@ -18,9 +18,4 @@ public class CommandLineInterface {
     public String receiveString() {
         return userInput.nextLine();
     }
-
-    public int receiveInteger() {
-        String input = receiveString();
-        return Integer.parseInt(input);
-    }
 }

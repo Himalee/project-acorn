@@ -2,6 +2,7 @@ public enum MenuOptions implements Menu {
 
     ADD_NEW_OPP("a", "Add new opportunity"),
     DISPLAY_ALL_OPP("d", "Display all opportunities"),
+    SEARCH_BY_ID("i", "Search by id"),
     QUIT("q", "Quit");
 
     private String command;

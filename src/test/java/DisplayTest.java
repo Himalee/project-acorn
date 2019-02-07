@@ -40,7 +40,7 @@ public class DisplayTest {
         opportunities.add(oppTwo);
         opportunities.add(oppThree);
 
-        display.formatOpportunities(opportunities);
+        display.opportunities(opportunities);
         String expectedOutput = "1. hello\nworld\n120\nhimalee\napproved\n2. foo\nbar\n140\ntailor\napproved\n11. goodbye\nworld\n150\nbecca\napproved\n\n";
 
         Assert.assertEquals(expectedOutput, outContent.toString());
@@ -53,6 +53,7 @@ public class DisplayTest {
         Display display = new Display(cli, validator);
         String expectedOutput = "Add new opportunity (select a)\n" +
                 "Display all opportunities (select d)\n" +
+                "Search by id (select i)\n" +
                 "Quit (select q)\n\n";
 
         display.startingMenu();
