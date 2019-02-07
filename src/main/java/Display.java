@@ -50,7 +50,6 @@ public class Display {
         return presentableOpportunities.toString();
     }
 
-
     public void startingMenu() {
         MenuOptions[] menuOptions = MenuOptions.values();
         cli.present(formatMenu(menuOptions));

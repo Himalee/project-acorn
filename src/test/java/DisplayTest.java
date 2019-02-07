@@ -54,6 +54,7 @@ public class DisplayTest {
         String expectedOutput = "Add new opportunity (select a)\n" +
                 "Display all opportunities (select d)\n" +
                 "Search by id (select i)\n" +
+                "Update an opportunity (select u)\n" +
                 "Quit (select q)\n\n";
 
         display.startingMenu();
