@@ -94,4 +94,14 @@ public class ValidatorTest {
         assertFalse(validator.onlyNumbers("abc"));
         assertFalse(validator.onlyNumbers("//.."));
     }
+
+    @Test
+    public void validUpdateOpportunityChoice_true() {
+        assertTrue(validator.updateOpportunityChoice("n"));
+    }
+
+    @Test
+    public void invalidUpdateOpportunityChoice_false() {
+        assertFalse(validator.updateOpportunityChoice("a"));
+    }
 }

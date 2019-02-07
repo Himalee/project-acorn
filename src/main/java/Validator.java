@@ -36,4 +36,13 @@ public class Validator {
     public boolean onlyNumbers(String userInput) {
         return userInput.matches("[0-9]+");
     }
+
+    public boolean updateOpportunityChoice(String choice) {
+        List possibleMenuCommands = new ArrayList();
+        UpdateOpportunityOptions[] updateOpportunityOptions = UpdateOpportunityOptions.values();
+        for (UpdateOpportunityOptions updateOpportunityOption : updateOpportunityOptions) {
+            possibleMenuCommands.add(updateOpportunityOption.getCommand());
+        }
+        return possibleMenuCommands.contains(choice);
+    }
 }

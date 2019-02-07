@@ -60,6 +60,11 @@ public class Display {
         cli.present(formatMenu(opportunityStages));
     }
 
+    public void updateOpportunityMenu() {
+        UpdateOpportunityOptions[] updateOpportunityOptions = UpdateOpportunityOptions.values();
+        cli.present(formatMenu(updateOpportunityOptions));
+    }
+
 
     public void getOpportunityDescription() {
         cli.present(Message.enterOpportunityDescription());
@@ -147,6 +152,15 @@ public class Display {
 
         }
         return formattedMenu.toString();
+    }
+
+    public String getUpdateOpportunityChoice() {
+        String updateChoice = getUserInputString();
+        while (!validator.updateOpportunityChoice(updateChoice)) {
+            cli.present(Message.invalidMenuChoice());
+            updateChoice = getUserInputString();
+        }
+        return updateChoice;
     }
 }
 
