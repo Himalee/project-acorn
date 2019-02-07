@@ -89,4 +89,25 @@ public class PostgresCommunicatorTest {
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }
+
+    @Test
+    public void getOpportunityFromDatabase_updateName() throws SQLException, ClassNotFoundException {
+        Opportunity opportunity = exampleOpportunity();
+        writeToDatabase(opportunity);
+        List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        ResultSet rs = getLastSavedOpportunity();
+        rs.next();
+        int lastSavedOpportunityID = Integer.parseInt(rs.getString("id"));
+        Opportunity lastSavedOpportunity = getOpportunity(opportunities, lastSavedOpportunityID);
+        String newName = "Host GOL code retreat at office";
+
+        databaseCommunicator.updateName(lastSavedOpportunity, newName);
+
+        List<Opportunity> updatedOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        Opportunity updatedOpportunity = getOpportunity(updatedOpportunities, lastSavedOpportunityID);
+
+        Assert.assertEquals(newName, updatedOpportunity.getName());
+
+        deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
+    }
 }
