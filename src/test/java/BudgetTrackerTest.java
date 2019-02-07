@@ -17,6 +17,8 @@ public class BudgetTrackerTest {
     private static final String ADD_NEW_OPP_TO_DB = "a";
     private static final String TO_BE_DISCUSSED = "t";
     private static final String SEARCH_BY_ID = "i";
+    private static final String UPDATE_OPPORTUNITY = "u";
+    private static final String UPDATE_NAME = "n";
     private Validator validator;
 
     @Before
@@ -78,10 +80,10 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_displayOpportunityBasedOnId() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Hello", "World", 1400, "HimaleeTailor", "Approved");
+        Opportunity opportunity = new Opportunity("Hello", "World", 1400, "HelloWorld", "Approved");
         databaseCommunicator.writeToDatabase(opportunity);
 
-        Opportunity savedOpportunity = getOpportunityByUserName("HimaleeTailor");
+        Opportunity savedOpportunity = getOpportunityByUserName("HelloWorld");
         int id = savedOpportunity.getId();
 
         String simulatedUserInput = String.format("%s\n%d\n", SEARCH_BY_ID, id);
@@ -92,7 +94,29 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        Assert.assertThat(output, containsString("Hello\nWorld\n1400\nHimaleeTailor\nApproved"));
+        Assert.assertThat(output, containsString("Hello\nWorld\n1400\nHelloWorld\nApproved"));
+
+        tearDown();
+    }
+
+    @Test
+    public void createNewBudgetTracker_updateOpportunityName() throws SQLException, ClassNotFoundException {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        Opportunity opportunity = new Opportunity("Foo", "Bar", 1200, "FooBar", "Expired");
+        databaseCommunicator.writeToDatabase(opportunity);
+        Opportunity savedOpportunity = getOpportunityByUserName("FooBar");
+        int id = savedOpportunity.getId();
+        String newName = "GoodbyeWorld";
+        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\n", UPDATE_OPPORTUNITY, id, UPDATE_NAME, newName);
+        Display display = createNewDisplay(outContent, simulatedUserInput);
+        budgetTracker = new BudgetTracker(display, databaseCommunicator);
+
+        budgetTracker.start();
+
+        String output = outContent.toString();
+        String expectedOutput = String.format("%d. GoodbyeWorld\nBar\n1200\nFooBar\nExpired", id);
+
+        Assert.assertThat(output, containsString(expectedOutput));
 
         tearDown();
     }

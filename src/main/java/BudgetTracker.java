@@ -24,6 +24,8 @@ public class BudgetTracker {
        } else if (option == MenuOptions.SEARCH_BY_ID) {
           List<Opportunity> filteredList = searchBy(userChoiceId());
           display.opportunities(filteredList);
+       } else if (option == MenuOptions.UPDATE_OPP) {
+          updateOpportunity();
        } else {
            display.goodbye();
        }
@@ -82,6 +84,21 @@ public class BudgetTracker {
     private int userChoiceId() {
         display.getId();
         return display.getOnlyNumbersInput();
+    }
+
+    private void updateOpportunity() throws SQLException, ClassNotFoundException {
+        List<Opportunity> filteredList = searchBy(userChoiceId());
+        display.opportunities(filteredList);
+        Opportunity oldOpportunity = filteredList.get(0);
+        display.updateOpportunityMenu();
+        String menuChoice = display.getUpdateOpportunityChoice();
+        UpdateOpportunityOptions option = UpdateOpportunityOptions.findChoice(menuChoice);
+        if (option == UpdateOpportunityOptions.NAME) {
+            String newName = name();
+            databaseCommunicator.updateName(oldOpportunity, newName);
+        }
+        List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
+        display.opportunities(updatedList);
     }
 }
 
