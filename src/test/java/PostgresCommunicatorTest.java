@@ -100,9 +100,7 @@ public class PostgresCommunicatorTest {
         int lastSavedOpportunityID = Integer.parseInt(rs.getString("id"));
         Opportunity lastSavedOpportunity = getOpportunity(opportunities, lastSavedOpportunityID);
         String newName = "Host GOL code retreat at office";
-
         databaseCommunicator.updateName(lastSavedOpportunity, newName);
-
         List<Opportunity> updatedOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         Opportunity updatedOpportunity = getOpportunity(updatedOpportunities, lastSavedOpportunityID);
 
