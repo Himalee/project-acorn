@@ -17,28 +17,28 @@ public class PostgresCommunicatorTest {
         databaseCommunicator = new PostgresCommunicator(databaseURL);
     }
 
-    public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
+    private void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
         databaseCommunicator.writeToDatabase(opportunity);
     }
 
-    public ResultSet getLastSavedOpportunity() throws SQLException, ClassNotFoundException {
+    private ResultSet getLastSavedOpportunity() throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
         Statement stmt = connection.createStatement();
         return stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
     }
 
-    public String getUUIDofLastSavedOpportunity(ResultSet rs) throws SQLException {
+    private String getUUIDofLastSavedOpportunity(ResultSet rs) throws SQLException {
         return rs.getString("uuid");
     }
 
-    public void deleteLastSavedOpportunity(String lastSavedOpportunityUUID) throws SQLException, ClassNotFoundException {
+    private void deleteLastSavedOpportunity(String lastSavedOpportunityUUID) throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
         Statement stmt = connection.createStatement();
         stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
         connection.close();
     }
 
-    public Opportunity exampleOpportunity() {
+    private Opportunity exampleOpportunity() {
         String name = "Host code retreat at office";
         String description = "To be held on annual code retreat day";
         int cost = 12000;
@@ -47,7 +47,7 @@ public class PostgresCommunicatorTest {
         return new Opportunity(name, description, cost, userName, stage);
     }
 
-    public Opportunity getOpportunity(List<Opportunity> opportunities, int lastSavedOpportunityId) {
+    private Opportunity getOpportunity(List<Opportunity> opportunities, int lastSavedOpportunityId) {
         for (Opportunity opportunity : opportunities) {
             int id = opportunity.getId();
             if (lastSavedOpportunityId == id) {
@@ -99,12 +99,33 @@ public class PostgresCommunicatorTest {
         rs.next();
         int lastSavedOpportunityID = Integer.parseInt(rs.getString("id"));
         Opportunity lastSavedOpportunity = getOpportunity(opportunities, lastSavedOpportunityID);
+        String columnName = "name";
         String newName = "Host GOL code retreat at office";
-        databaseCommunicator.updateName(lastSavedOpportunity, newName);
+        databaseCommunicator.updateOpportunity(lastSavedOpportunity, columnName, newName);
         List<Opportunity> updatedOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         Opportunity updatedOpportunity = getOpportunity(updatedOpportunities, lastSavedOpportunityID);
 
         Assert.assertEquals(newName, updatedOpportunity.getName());
+
+        deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
+    }
+
+    @Test
+    public void getOpportunityFromDatabase_updateDescription() throws SQLException, ClassNotFoundException {
+        Opportunity opportunity = exampleOpportunity();
+        writeToDatabase(opportunity);
+        List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        ResultSet rs = getLastSavedOpportunity();
+        rs.next();
+        int lastSavedOpportunityID = Integer.parseInt(rs.getString("id"));
+        Opportunity lastSavedOpportunity = getOpportunity(opportunities, lastSavedOpportunityID);
+        String columnName = "description";
+        String newDescription = "Host GOL code retreat at office in April 2019";
+        databaseCommunicator.updateOpportunity(lastSavedOpportunity, columnName, newDescription);
+        List<Opportunity> updatedOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        Opportunity updatedOpportunity = getOpportunity(updatedOpportunities, lastSavedOpportunityID);
+
+        Assert.assertEquals(newDescription, updatedOpportunity.getDescription());
 
         deleteLastSavedOpportunity(getUUIDofLastSavedOpportunity(rs));
     }

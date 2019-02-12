@@ -8,5 +8,5 @@ public interface DatabaseCommunicator {
     void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException;
     Connection getConnection() throws ClassNotFoundException, SQLException;
     List<Opportunity> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException;
-    void updateName(Opportunity opportunity, String newName) throws SQLException, ClassNotFoundException;
+    void updateOpportunity(Opportunity opportunity, String columnName, String newName) throws SQLException, ClassNotFoundException;
 }
