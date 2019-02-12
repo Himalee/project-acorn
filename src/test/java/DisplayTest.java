@@ -57,7 +57,7 @@ public class DisplayTest {
                 "Update an opportunity (select u)\n" +
                 "Quit (select q)\n\n";
 
-        OptionList startingMenuOptions = new OptionsBuilder().build(MenuTypes.STARTING_MENU.getType());
+        OptionList startingMenuOptions = new OptionsBuilder().build(Menus.STARTING.getMenu());
         Menu opportunityStages = new Menu(startingMenuOptions);
 
         display.menu(opportunityStages);
@@ -71,7 +71,7 @@ public class DisplayTest {
         CommandLineInterface cli = createNewCLI(outContent, "z\nq\n");
         Display display = new Display(cli, validator);
 
-        display.getMenuChoice(MenuTypes.STARTING_MENU.getType());
+        display.getMenuChoice(Menus.STARTING.getMenu());
         Assert.assertThat(outContent.toString(), containsString("Invalid"));
     }
 
@@ -116,7 +116,7 @@ public class DisplayTest {
                 "Declined (select d)\n" +
                 "Expired (select x)\n\n";
 
-        OptionList updateOpportunityMenuOptions = new OptionsBuilder().build(MenuTypes.OPPORTUNITY_STAGES_MENU.getType());
+        OptionList updateOpportunityMenuOptions = new OptionsBuilder().build(Menus.OPPORTUNITY_STAGES.getMenu());
         Menu opportunityStages = new Menu(updateOpportunityMenuOptions);
 
         display.menu(opportunityStages);

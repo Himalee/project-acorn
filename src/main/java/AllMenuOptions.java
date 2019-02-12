@@ -36,14 +36,14 @@ public enum AllMenuOptions {
     }
 
     public static String startingMenu() {
-        return MenuTypes.STARTING_MENU.getType();
+        return Menus.STARTING.getMenu();
     }
 
     public static String opportunityStagesMenu() {
-        return MenuTypes.OPPORTUNITY_STAGES_MENU.getType();
+        return Menus.OPPORTUNITY_STAGES.getMenu();
     }
 
     public static String updateOpportunityMenu() {
-        return MenuTypes.UPDATE_OPPORTUNITY_MENU.getType();
+        return Menus.UPDATE_OPPORTUNITY.getMenu();
     }
 }

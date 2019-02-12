@@ -16,7 +16,7 @@ public class BudgetTracker {
 
     public void start() throws SQLException, ClassNotFoundException {
        display.welcomeUser();
-       AllMenuOptions option = getMenuOption(MenuTypes.STARTING_MENU.getType());
+       AllMenuOptions option = getMenuOption(Menus.STARTING.getMenu());
        if (option == AllMenuOptions.ADD_NEW_OPP) {
            writeUserInputToDatabase();
        } else if (option == AllMenuOptions.DISPLAY_ALL_OPP) {
@@ -70,7 +70,7 @@ public class BudgetTracker {
 
     private String stage() {
         display.getStage();
-        AllMenuOptions stage = getMenuOption(MenuTypes.OPPORTUNITY_STAGES_MENU.getType());
+        AllMenuOptions stage = getMenuOption(Menus.OPPORTUNITY_STAGES.getMenu());
         return stage.getDescription();
     }
 
@@ -96,7 +96,7 @@ public class BudgetTracker {
         List<Opportunity> filteredList = searchBy(userChoiceId());
         display.opportunities(filteredList);
         Opportunity oldOpportunity = filteredList.get(GET_CHOSEN_OPP);
-        AllMenuOptions updateOppOption = getMenuOption(MenuTypes.UPDATE_OPPORTUNITY_MENU.getType());
+        AllMenuOptions updateOppOption = getMenuOption(Menus.UPDATE_OPPORTUNITY.getMenu());
         if (updateOppOption == AllMenuOptions.NAME) {
             String newName = name();
             databaseCommunicator.updateName(oldOpportunity, newName);
