@@ -34,7 +34,7 @@ public class BudgetTracker {
         Menu startingMenu = new Menu(startingMenuOptions);
         display.menu(startingMenu);
         String choice = display.getMenuChoice(menuType);
-        return startingMenuOptions.getOption(choice);
+        return startingMenu.findMenuOption(choice);
     }
 
     private void writeUserInputToDatabase() throws SQLException, ClassNotFoundException {
