@@ -42,6 +42,8 @@ public class ValidatorTest {
         assertFalse(validator.cost("123"));
         assertFalse(validator.cost("123.0"));
         assertFalse(validator.cost("123.123"));
+        assertFalse(validator.cost("1000000"));
+        assertFalse(validator.cost("123:00"));
 
     }
 

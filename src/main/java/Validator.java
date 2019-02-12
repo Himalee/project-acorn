@@ -19,7 +19,7 @@ public class Validator {
     }
 
     public boolean cost(String userInput) {
-        return userInput.matches("[0-9]+.[0-9][0-9]");
+        return userInput.matches("[0-9]+\\.[0-9][0-9]");
     }
 
     public boolean onlyLetters(String userInput) {
