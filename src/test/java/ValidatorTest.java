@@ -15,16 +15,16 @@ public class ValidatorTest {
 
     @Test
     public void validMenuChoice_true() {
-        assertTrue(validator.startingMenuChoice("q"));
-        assertTrue(validator.startingMenuChoice("a"));
-        assertTrue(validator.startingMenuChoice("d"));
+        assertTrue(validator.menuChoice("q", MenuTypes.STARTING_MENU.getType()));
+        assertTrue(validator.menuChoice("a", MenuTypes.STARTING_MENU.getType()));
+        assertTrue(validator.menuChoice("d", MenuTypes.STARTING_MENU.getType()));
     }
 
     @Test
     public void invalidMenuChoice_false() {
-        assertFalse(validator.startingMenuChoice("x"));
-        assertFalse(validator.startingMenuChoice("y"));
-        assertFalse(validator.startingMenuChoice("z"));
+        assertFalse(validator.menuChoice("x", MenuTypes.STARTING_MENU.getType()));
+        assertFalse(validator.menuChoice("y", MenuTypes.STARTING_MENU.getType()));
+        assertFalse(validator.menuChoice("z", MenuTypes.STARTING_MENU.getType()));
     }
 
     @Test
@@ -68,16 +68,16 @@ public class ValidatorTest {
 
     @Test
     public void validOpportunityStageChoice_true() {
-        assertTrue(validator.opportunityStageChoice("t"));
-        assertTrue(validator.opportunityStageChoice("i"));
-        assertTrue(validator.opportunityStageChoice("a"));
+        assertTrue(validator.menuChoice("t", MenuTypes.OPPORTUNITY_STAGES_MENU.getType()));
+        assertTrue(validator.menuChoice("i", MenuTypes.OPPORTUNITY_STAGES_MENU.getType()));
+        assertTrue(validator.menuChoice("a", MenuTypes.OPPORTUNITY_STAGES_MENU.getType()));
     }
 
     @Test
     public void invalidOpportunityStageChoice_false() {
-        assertFalse(validator.opportunityStageChoice("e"));
-        assertFalse(validator.opportunityStageChoice("f"));
-        assertFalse(validator.opportunityStageChoice("g"));
+        assertFalse(validator.menuChoice("e", MenuTypes.OPPORTUNITY_STAGES_MENU.getType()));
+        assertFalse(validator.menuChoice("f", MenuTypes.OPPORTUNITY_STAGES_MENU.getType()));
+        assertFalse(validator.menuChoice("g", MenuTypes.OPPORTUNITY_STAGES_MENU.getType()));
     }
 
     @Test
@@ -97,11 +97,11 @@ public class ValidatorTest {
 
     @Test
     public void validUpdateOpportunityChoice_true() {
-        assertTrue(validator.updateOpportunityChoice("n"));
+        assertTrue(validator.menuChoice("n", MenuTypes.UPDATE_OPPORTUNITY_MENU.getType()));
     }
 
     @Test
     public void invalidUpdateOpportunityChoice_false() {
-        assertFalse(validator.updateOpportunityChoice("a"));
+        assertFalse(validator.menuChoice("a", MenuTypes.UPDATE_OPPORTUNITY_MENU.getType()));
     }
 }
