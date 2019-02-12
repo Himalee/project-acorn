@@ -11,13 +11,10 @@ class PostgresCommunicator implements DatabaseCommunicator {
     }
 
     public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
-        Statement stmt = null;
         Connection db = getConnection();
-        stmt = db.createStatement();
         String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name, stage) VALUES ('%s', '%s', %d, '%s', '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName(), opportunity.getStage());
-        stmt.executeUpdate(sqlQuery);
-        stmt.close();
-        db.close();
+        executeQuery(db, sqlQuery);
+        closeDatabaseConnection(db);
     }
 
     public List<Opportunity> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
@@ -41,19 +38,26 @@ class PostgresCommunicator implements DatabaseCommunicator {
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
-
         return DriverManager.getConnection(databaseURL);
     }
 
     public void updateName(Opportunity opportunity, String newName) throws SQLException, ClassNotFoundException {
-        Statement stmt = null;
         Connection db = getConnection();
-        stmt = db.createStatement();
         int id = opportunity.getId();
         String sqlQuery = String.format("UPDATE opportunities SET name = '%s' WHERE id = %d;", newName, id);
-        stmt.executeUpdate(sqlQuery);
+        executeQuery(db, sqlQuery);
+        closeDatabaseConnection(db);
+    }
+
+    private void executeQuery(Connection database, String query) throws SQLException {
+        Statement stmt = null;
+        stmt = database.createStatement();
+        stmt.executeUpdate(query);
         stmt.close();
-        db.close();
+    }
+
+    private void closeDatabaseConnection(Connection database) throws SQLException {
+        database.close();
     }
 }
 
