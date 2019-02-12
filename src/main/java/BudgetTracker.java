@@ -4,6 +4,8 @@ import java.util.List;
 
 public class BudgetTracker {
 
+    final int GET_CHOSEN_OPP = 0;
+
     private Display display;
     private DatabaseCommunicator databaseCommunicator;
 
@@ -93,7 +95,7 @@ public class BudgetTracker {
     private void updateOpportunity() throws SQLException, ClassNotFoundException {
         List<Opportunity> filteredList = searchBy(userChoiceId());
         display.opportunities(filteredList);
-        Opportunity oldOpportunity = filteredList.get(0);
+        Opportunity oldOpportunity = filteredList.get(GET_CHOSEN_OPP);
         AllMenuOptions updateOppOption = getMenuOption(MenuTypes.UPDATE_OPPORTUNITY_MENU.getType());
         if (updateOppOption == AllMenuOptions.NAME) {
             String newName = name();
