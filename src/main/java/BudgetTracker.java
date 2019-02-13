@@ -99,7 +99,12 @@ public class BudgetTracker {
         AllMenuOptions updateOppOption = getMenuOption(Menus.UPDATE_OPPORTUNITY.getMenu());
         if (updateOppOption == AllMenuOptions.NAME) {
             String newName = name();
-            databaseCommunicator.updateName(oldOpportunity, newName);
+            String columnName = "name";
+            databaseCommunicator.updateOpportunity(oldOpportunity, columnName, newName);
+        } else if (updateOppOption == AllMenuOptions.DESCRIPTION) {
+            String newDescription = description();
+            String columnName = "description";
+            databaseCommunicator.updateOpportunity(oldOpportunity, columnName, newDescription);
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
         display.opportunities(updatedList);

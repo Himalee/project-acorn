@@ -10,7 +10,8 @@ public enum AllMenuOptions {
     APPROVED("a", "Approved", opportunityStagesMenu()),
     DECLINED("d", "Declined", opportunityStagesMenu()),
     EXPIRED("x", "Expired", opportunityStagesMenu()),
-    NAME("n", "Update name", updateOpportunityMenu());
+    NAME("n", "Update name", updateOpportunityMenu()),
+    DESCRIPTION("d", "Update description", updateOpportunityMenu());
 
     private String command;
     private String description;
