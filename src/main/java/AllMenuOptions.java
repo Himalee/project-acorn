@@ -5,11 +5,11 @@ public enum AllMenuOptions {
     SEARCH_BY_ID("i", "Search by id", startingMenu()),
     UPDATE_OPP("u", "Update an opportunity", startingMenu()),
     QUIT("q", "Quit", startingMenu()),
-    TO_BE_DISCUSSED("t", "To be discussed", opportunityStagesMenu()),
-    IN_DISCUSSION("i", "In discussion", opportunityStagesMenu()),
-    APPROVED("a", "Approved", opportunityStagesMenu()),
-    DECLINED("d", "Declined", opportunityStagesMenu()),
-    EXPIRED("x", "Expired", opportunityStagesMenu()),
+    TO_BE_DISCUSSED("t", toBeDiscussed(), opportunityStagesMenu()),
+    IN_DISCUSSION("i", inDiscussion(), opportunityStagesMenu()),
+    APPROVED("a", approved(), opportunityStagesMenu()),
+    DECLINED("d", declined(), opportunityStagesMenu()),
+    EXPIRED("x", expired(), opportunityStagesMenu()),
     NAME("n", "Update name", updateOpportunityMenu()),
     DESCRIPTION("d", "Update description", updateOpportunityMenu()),
     COST("c", "Update cost", updateOpportunityMenu()),
@@ -23,7 +23,6 @@ public enum AllMenuOptions {
         this.command = command;
         this.description = description;
         this.type = type;
-
     }
 
     public String getDescription() {
@@ -48,5 +47,25 @@ public enum AllMenuOptions {
 
     public static String updateOpportunityMenu() {
         return Menus.UPDATE_OPPORTUNITY.getMenu();
+    }
+
+    public static String toBeDiscussed() {
+        return OpportunityStages.TO_BE_DISCUSSED.getStage();
+    }
+
+    public static String inDiscussion() {
+        return OpportunityStages.IN_DISCUSSION.getStage();
+    }
+
+    public static String approved() {
+        return OpportunityStages.APPROVED.getStage();
+    }
+
+    public static String declined() {
+        return OpportunityStages.DECLINED.getStage();
+    }
+
+    public static String expired() {
+        return OpportunityStages.EXPIRED.getStage();
     }
 }
