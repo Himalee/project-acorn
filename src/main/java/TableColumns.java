@@ -1,7 +1,8 @@
 public enum TableColumns {
     NAME("name"),
     DESCRIPTION("description"),
-    COST("proposed_cost");
+    COST("proposed_cost"),
+    USER_NAME("user_name");
 
     private String columnName;
 

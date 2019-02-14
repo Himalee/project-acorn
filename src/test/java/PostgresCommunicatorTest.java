@@ -133,6 +133,16 @@ public class PostgresCommunicatorTest {
         tearDown();
     }
 
+    @Test
+    public void getOpportunityFromDatabase_updateUserName() throws SQLException, ClassNotFoundException {
+        String update = "Ben Wyatt";
+        Opportunity updatedOpportunity = updatedOpportunityStringField("user_name", update);
+
+        Assert.assertEquals(update, updatedOpportunity.getUserName());
+
+        tearDown();
+    }
+
     public void tearDown() throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
         Statement stmt = connection.createStatement();

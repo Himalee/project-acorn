@@ -103,6 +103,8 @@ public class BudgetTracker {
             databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.DESCRIPTION.getColumnName(), description());
         } else if (updateOppOption == AllMenuOptions.COST) {
             databaseCommunicator.updateOpportunityNumericField(oldOpportunity, TableColumns.COST.getColumnName(), proposedCost());
+        } else if (updateOppOption == AllMenuOptions.USER_NAME) {
+            databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.USER_NAME.getColumnName(), userName());
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
         display.opportunities(updatedList);

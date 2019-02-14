@@ -12,7 +12,8 @@ public enum AllMenuOptions {
     EXPIRED("x", "Expired", opportunityStagesMenu()),
     NAME("n", "Update name", updateOpportunityMenu()),
     DESCRIPTION("d", "Update description", updateOpportunityMenu()),
-    COST("c", "Update cost", updateOpportunityMenu());
+    COST("c", "Update cost", updateOpportunityMenu()),
+    USER_NAME("r", "Update user name", updateOpportunityMenu());
 
     private String command;
     private String description;
