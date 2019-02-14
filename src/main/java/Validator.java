@@ -23,7 +23,7 @@ public class Validator {
     }
 
     public boolean onlyLetters(String userInput) {
-        return userInput.matches("[a-zA-Z]+") || userInput.length() == 0;
+        return userInput.matches("[a-zA-Z ]+") || userInput.length() == 0;
     }
 
     public boolean onlyNumbers(String userInput) {

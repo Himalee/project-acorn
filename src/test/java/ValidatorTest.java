@@ -55,7 +55,8 @@ public class ValidatorTest {
     @Test
     public void onlyLettersInput_true() {
         assertTrue(validator.onlyLetters("abcDEF"));
-        assertTrue(validator.onlyLetters("abc"));
+        assertTrue(validator.onlyLetters("abc abc"));
+        assertTrue(validator.onlyLetters("abc def GHI"));
         assertTrue(validator.onlyLetters(""));
     }
 
