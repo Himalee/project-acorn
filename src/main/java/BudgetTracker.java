@@ -100,11 +100,15 @@ public class BudgetTracker {
         if (updateOppOption == AllMenuOptions.NAME) {
             String newName = name();
             String columnName = "name";
-            databaseCommunicator.updateOpportunity(oldOpportunity, columnName, newName);
+            databaseCommunicator.updateOpportunityStringField(oldOpportunity, columnName, newName);
         } else if (updateOppOption == AllMenuOptions.DESCRIPTION) {
             String newDescription = description();
             String columnName = "description";
-            databaseCommunicator.updateOpportunity(oldOpportunity, columnName, newDescription);
+            databaseCommunicator.updateOpportunityStringField(oldOpportunity, columnName, newDescription);
+        } else if (updateOppOption == AllMenuOptions.COST) {
+            int newCost = proposedCost();
+            String columnName = "proposed_cost";
+            databaseCommunicator.updateOpportunityNumericField(oldOpportunity, columnName, newCost);
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
         display.opportunities(updatedList);

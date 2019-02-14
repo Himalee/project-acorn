@@ -20,6 +20,7 @@ public class BudgetTrackerTest {
     private static final String UPDATE_OPPORTUNITY = "u";
     private static final String UPDATE_NAME = "n";
     private static final String UPDATE_DESCRIPTION = "d";
+    private static final String UPDATE_COST = "c";
     private Validator validator;
 
     @Before
@@ -138,6 +139,27 @@ public class BudgetTrackerTest {
 
         String output = outContent.toString();
         String expectedOutput = String.format("%d. Host meet up\nIn Spring 2019\n1400\nBurt Macklin\nApproved", id);
+
+        Assert.assertThat(output, containsString(expectedOutput));
+
+        tearDown();
+    }
+
+    @Test
+    public void createNewBudgetTracker_updateOpportunityCost() throws SQLException, ClassNotFoundException {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        Opportunity opportunity = new Opportunity("Host Code First Girls", "8 week course", 12000, "Leslie K", "Approved");
+        databaseCommunicator.writeToDatabase(opportunity);
+        Opportunity savedOpportunity = getOpportunityByUserName("Leslie K");
+        int id = savedOpportunity.getId();
+        String simulatedUserInput = String.format("%s\n%d\n%s\n130.00\n", UPDATE_OPPORTUNITY, id, UPDATE_COST);
+        Display display = createNewDisplay(outContent, simulatedUserInput);
+        budgetTracker = new BudgetTracker(display, databaseCommunicator);
+
+        budgetTracker.start();
+
+        String output = outContent.toString();
+        String expectedOutput = String.format("%d. Host Code First Girls\n8 week course\n13000\nLeslie K\nApproved", id);
 
         Assert.assertThat(output, containsString(expectedOutput));
 

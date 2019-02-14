@@ -41,10 +41,20 @@ class PostgresCommunicator implements DatabaseCommunicator {
         return DriverManager.getConnection(databaseURL);
     }
 
-    public void updateOpportunity(Opportunity opportunity, String columnName, String newName) throws SQLException, ClassNotFoundException {
-        Connection db = getConnection();
+    public void updateOpportunityStringField(Opportunity opportunity, String columnName, String update) throws SQLException, ClassNotFoundException {
         int id = opportunity.getId();
-        String sqlQuery = String.format("UPDATE opportunities SET %s = '%s' WHERE id = %d;", columnName, newName, id);
+        String sqlQuery = String.format("UPDATE opportunities SET %s = '%s' WHERE id = %d;", columnName, update, id);
+        updateOpportunity(sqlQuery);
+    }
+
+    public void updateOpportunityNumericField(Opportunity opportunity, String columnName, int update) throws SQLException, ClassNotFoundException {
+        int id = opportunity.getId();
+        String sqlQuery = String.format("UPDATE opportunities SET %s = %d WHERE id = %d;", columnName, update, id);
+        updateOpportunity(sqlQuery);
+    }
+
+    private void updateOpportunity(String sqlQuery) throws SQLException, ClassNotFoundException {
+        Connection db = getConnection();
         executeQuery(db, sqlQuery);
         closeDatabaseConnection(db);
     }

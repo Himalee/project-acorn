@@ -46,7 +46,7 @@ public class PostgresCommunicatorTest {
         return null;
     }
 
-    private Opportunity updatedOpportunity(String columnName, String update) throws SQLException, ClassNotFoundException {
+    private Opportunity updatedOpportunityStringField(String columnName, String update) throws SQLException, ClassNotFoundException {
         Opportunity opportunity = exampleOpportunity();
         writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
@@ -54,7 +54,7 @@ public class PostgresCommunicatorTest {
         rs.next();
         int lastSavedOpportunityID = Integer.parseInt(rs.getString("id"));
         Opportunity lastSavedOpportunity = getOpportunity(opportunities, lastSavedOpportunityID);
-        databaseCommunicator.updateOpportunity(lastSavedOpportunity, columnName, update);
+        databaseCommunicator.updateOpportunityStringField(lastSavedOpportunity, columnName, update);
         List<Opportunity> updatedOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         return getOpportunity(updatedOpportunities, lastSavedOpportunityID);
     }
@@ -95,7 +95,7 @@ public class PostgresCommunicatorTest {
     @Test
     public void getOpportunityFromDatabase_updateName() throws SQLException, ClassNotFoundException {
         String update = "Host GOL code retreat at office";
-        Opportunity updatedOpportunity = updatedOpportunity("name", update);
+        Opportunity updatedOpportunity = updatedOpportunityStringField("name", update);
 
         Assert.assertEquals(update, updatedOpportunity.getName());
 
@@ -105,7 +105,7 @@ public class PostgresCommunicatorTest {
     @Test
     public void getOpportunityFromDatabase_updateDescription() throws SQLException, ClassNotFoundException {
         String update = "Host GOL code retreat at office in April 2019";
-        Opportunity updatedOpportunity = updatedOpportunity("description", update);
+        Opportunity updatedOpportunity = updatedOpportunityStringField("description", update);
 
         Assert.assertEquals(update, updatedOpportunity.getDescription());
 
@@ -113,9 +113,24 @@ public class PostgresCommunicatorTest {
     }
 
     @Test
-    public void opportunityID_checkIfRowExists() throws SQLException, ClassNotFoundException {
-        UUID uuid = UUID.randomUUID();
-        assertFalse(databaseCommunicator.rowExists(uuid));
+    public void getOpportunityFromDatabase_updateCost() throws SQLException, ClassNotFoundException {
+        Opportunity opportunity = exampleOpportunity();
+        writeToDatabase(opportunity);
+        List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        ResultSet rs = getLastSavedOpportunity();
+        rs.next();
+        int lastSavedOpportunityID = Integer.parseInt(rs.getString("id"));
+        Opportunity lastSavedOpportunity = getOpportunity(opportunities, lastSavedOpportunityID);
+        String columnName = "proposed_cost";
+        int update = 54000;
+
+        databaseCommunicator.updateOpportunityNumericField(lastSavedOpportunity, columnName, update);
+        List<Opportunity> updatedOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
+        Opportunity updatedOpportunity = getOpportunity(updatedOpportunities, lastSavedOpportunityID);
+
+        Assert.assertEquals(update, updatedOpportunity.getProposedCost());
+
+        tearDown();
     }
 
     public void tearDown() throws SQLException, ClassNotFoundException {
