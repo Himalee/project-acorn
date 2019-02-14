@@ -97,14 +97,19 @@ public class BudgetTracker {
         display.opportunities(filteredList);
         Opportunity oldOpportunity = filteredList.get(GET_CHOSEN_OPP);
         AllMenuOptions updateOppOption = getMenuOption(Menus.UPDATE_OPPORTUNITY.getMenu());
-        if (updateOppOption == AllMenuOptions.NAME) {
-            databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.NAME.getColumnName(), name());
-        } else if (updateOppOption == AllMenuOptions.DESCRIPTION) {
-            databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.DESCRIPTION.getColumnName(), description());
-        } else if (updateOppOption == AllMenuOptions.COST) {
-            databaseCommunicator.updateOpportunityNumericField(oldOpportunity, TableColumns.COST.getColumnName(), proposedCost());
-        } else if (updateOppOption == AllMenuOptions.USER_NAME) {
-            databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.USER_NAME.getColumnName(), userName());
+        switch (updateOppOption) {
+            case NAME:
+                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.NAME.getColumnName(), name());
+                break;
+            case DESCRIPTION:
+                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.DESCRIPTION.getColumnName(), description());
+                break;
+            case COST:
+                databaseCommunicator.updateOpportunityNumericField(oldOpportunity, TableColumns.COST.getColumnName(), proposedCost());
+                break;
+            case USER_NAME:
+                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.USER_NAME.getColumnName(), userName());
+                break;
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
         display.opportunities(updatedList);
