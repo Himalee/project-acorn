@@ -110,6 +110,9 @@ public class BudgetTracker {
             case USER_NAME:
                 databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.USER_NAME.getColumnName(), userName());
                 break;
+            case STAGE:
+                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.STAGE.getColumnName(), stage());
+                break;
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
         display.opportunities(updatedList);
