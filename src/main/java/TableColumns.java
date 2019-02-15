@@ -4,7 +4,8 @@ public enum TableColumns {
     COST("proposed_cost"),
     USER_NAME("user_name"),
     STAGE("stage"),
-    ID("id");
+    ID("id"),
+    UUID("uuid");
 
     private String columnName;
 
