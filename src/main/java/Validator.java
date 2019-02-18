@@ -29,8 +29,4 @@ public class Validator {
     public boolean onlyNumbers(String userInput) {
         return userInput.matches("[0-9]+");
     }
-
-    public boolean yesOrNo(String userInput) {
-        return userInput.equals("y") || userInput.equals("n");
-    }
 }

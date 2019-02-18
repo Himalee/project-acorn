@@ -29,7 +29,9 @@ public class BudgetTracker {
           updateOpportunity();
        } else if (option == AllMenuOptions.DELETE_OPP) {
            Opportunity opportunity = getChosenOpportunity();
-           if (hasUserConfirmed()) {
+           display.areYouSure();
+           AllMenuOptions confirmationOption = getMenuOption(Menus.CONFIRMATION.getMenu());
+           if (confirmationOption == AllMenuOptions.YES) {
                deleteOpportunity(opportunity);
            }
        }
@@ -133,12 +135,6 @@ public class BudgetTracker {
         List<Opportunity> filteredList = searchBy(userChoiceId());
         display.opportunities(filteredList);
         return filteredList.get(GET_CHOSEN_OPP);
-    }
-
-    private boolean hasUserConfirmed() {
-        display.areYouSure();
-        String answer = display.getConfirmation();
-        return answer.equals("y");
     }
 
     private void deleteOpportunity(Opportunity opportunity) throws SQLException, ClassNotFoundException {

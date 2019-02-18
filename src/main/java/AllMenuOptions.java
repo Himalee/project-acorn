@@ -15,7 +15,9 @@ public enum AllMenuOptions {
     DESCRIPTION("d", "Update description", updateOpportunityMenu()),
     COST("c", "Update cost", updateOpportunityMenu()),
     USER_NAME("r", "Update user name", updateOpportunityMenu()),
-    STAGE("s", "Update stage", updateOpportunityMenu());
+    STAGE("s", "Update stage", updateOpportunityMenu()),
+    YES("y", "Yes", confirmationMenu()),
+    NO("n", "No", confirmationMenu());
 
     private String command;
     private String description;
@@ -49,6 +51,10 @@ public enum AllMenuOptions {
 
     public static String updateOpportunityMenu() {
         return Menus.UPDATE_OPPORTUNITY.getMenu();
+    }
+
+    public static String confirmationMenu() {
+        return Menus.CONFIRMATION.getMenu();
     }
 
     public static String toBeDiscussed() {

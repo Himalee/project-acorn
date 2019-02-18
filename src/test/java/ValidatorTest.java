@@ -110,14 +110,14 @@ public class ValidatorTest {
 
     @Test
     public void validConfirmationChoice_true() {
-        assertTrue(validator.yesOrNo("y"));
-        assertTrue(validator.yesOrNo("n"));
+        assertTrue(validator.menuChoice("y", Menus.CONFIRMATION.getMenu()));
+        assertTrue(validator.menuChoice("n", Menus.CONFIRMATION.getMenu()));
 
     }
 
     @Test
     public void invalidConfirmationChoice_false() {
-        assertFalse(validator.yesOrNo("yy"));
-        assertFalse(validator.yesOrNo("123"));
+        assertFalse(validator.menuChoice("yy", Menus.CONFIRMATION.getMenu()));
+        assertFalse(validator.menuChoice("123", Menus.CONFIRMATION.getMenu()));
     }
 }
