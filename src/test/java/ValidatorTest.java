@@ -22,7 +22,7 @@ public class ValidatorTest {
 
     @Test
     public void invalidMenuChoice_false() {
-        assertFalse(validator.menuChoice("x", Menus.STARTING.getMenu()));
+        assertFalse(validator.menuChoice("v", Menus.STARTING.getMenu()));
         assertFalse(validator.menuChoice("y", Menus.STARTING.getMenu()));
         assertFalse(validator.menuChoice("z", Menus.STARTING.getMenu()));
     }
