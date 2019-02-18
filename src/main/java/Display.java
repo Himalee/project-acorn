@@ -129,5 +129,22 @@ public class Display {
         }
         cli.present(formattedMenu.toString());
     }
+
+    public String getConfirmation() {
+        String userInput = getUserInputString();
+        while (!validator.yesOrNo(userInput)) {
+            cli.present(Message.invalidMenuChoice());
+            userInput = getUserInputString();
+        }
+        return userInput;
+    }
+
+    public void opportunityDeleted() {
+        cli.present(Message.opportunityHasBeenDeleted());
+    }
+
+    public void areYouSure() {
+        cli.present(Message.confirm());
+    }
 }
 

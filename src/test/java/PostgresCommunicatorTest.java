@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertFalse;
 
@@ -20,7 +19,7 @@ public class PostgresCommunicatorTest {
         int cost = 12000;
         String userName = "Himalee";
         String stage = "Approved";
-        String uuid = UUID.randomUUID().toString();
+        String uuid = "1234";
         return new Opportunity(name, description, cost, userName, stage, uuid);
     }
 
@@ -138,8 +137,6 @@ public class PostgresCommunicatorTest {
         databaseCommunicator.deleteOpportunity(opportunity);
 
         assertFalse(databaseCommunicator.rowExists(uuid));
-
-        tearDown();
     }
 
     public void tearDown() throws SQLException, ClassNotFoundException {

@@ -107,4 +107,17 @@ public class ValidatorTest {
     public void invalidUpdateOpportunityChoice_false() {
         assertFalse(validator.menuChoice("a", Menus.UPDATE_OPPORTUNITY.getMenu()));
     }
+
+    @Test
+    public void validConfirmationChoice_true() {
+        assertTrue(validator.yesOrNo("y"));
+        assertTrue(validator.yesOrNo("n"));
+
+    }
+
+    @Test
+    public void invalidConfirmationChoice_false() {
+        assertFalse(validator.yesOrNo("yy"));
+        assertFalse(validator.yesOrNo("123"));
+    }
 }
