@@ -11,8 +11,17 @@ public class PostgresCommunicatorTest {
     private DatabaseCommunicator databaseCommunicator = new PostgresCommunicator(System.getenv("TESTDBURL"));
     private TestHelper testHelper = new TestHelper();
 
+    public Opportunity exampleOpportunity() {
+        String name = "Host code retreat at office";
+        String description = "To be held on annual code retreat day";
+        int cost = 12000;
+        String userName = "Himalee";
+        String stage = "Approved";
+        return new Opportunity(name, description, cost, userName, stage);
+    }
+
     private Opportunity updatedOpportunityStringField(String columnName, String update) throws SQLException, ClassNotFoundException {
-        Opportunity opportunity = testHelper.exampleOpportunity();
+        Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
@@ -26,7 +35,7 @@ public class PostgresCommunicatorTest {
 
     @Test
     public void newOpportunity_writeToDatabase() throws SQLException, ClassNotFoundException {
-        Opportunity opportunity = testHelper.exampleOpportunity();
+        Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -39,7 +48,7 @@ public class PostgresCommunicatorTest {
 
     @Test
     public void allOpportunities_readFromDatabase() throws SQLException, ClassNotFoundException {
-        Opportunity opportunity = testHelper.exampleOpportunity();
+        Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
@@ -79,7 +88,7 @@ public class PostgresCommunicatorTest {
 
     @Test
     public void getOpportunityFromDatabase_updateCost() throws SQLException, ClassNotFoundException {
-        Opportunity opportunity = testHelper.exampleOpportunity();
+        Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
