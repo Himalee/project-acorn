@@ -55,6 +55,7 @@ public class DisplayTest {
                 "Display all opportunities (select d)\n" +
                 "Search by id (select i)\n" +
                 "Update an opportunity (select u)\n" +
+                "Delete an opportunity (select d)\n" +
                 "Quit (select q)\n\n";
 
         OptionList startingMenuOptions = new OptionsBuilder().build(Menus.STARTING.getMenu());
