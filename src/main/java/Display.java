@@ -50,18 +50,6 @@ public class Display {
         return presentableOpportunities.toString();
     }
 
-
-    public void startingMenu() {
-        MenuOptions[] menuOptions = MenuOptions.values();
-        cli.present(formatMenu(menuOptions));
-    }
-
-    public void opportunityStagesMenu() {
-        OpportunityStages[] opportunityStages = OpportunityStages.values();
-        cli.present(formatMenu(opportunityStages));
-    }
-
-
     public void getOpportunityDescription() {
         cli.present(Message.enterOpportunityDescription());
     }
@@ -70,9 +58,9 @@ public class Display {
         cli.present(Message.enterProposedOpportunityCost());
     }
 
-    public String getMenuChoice() {
+    public String getMenuChoice(String menuType) {
         String menuChoice = getUserInputString();
-        while (!validator.startingMenuChoice(menuChoice)) {
+        while (!validator.menuChoice(menuChoice, menuType)) {
             cli.present(Message.invalidMenuChoice());
             menuChoice = getUserInputString();
         }
@@ -115,15 +103,6 @@ public class Display {
         cli.present(Message.enterOpportunityStage());
     }
 
-    public String getOpportunityStage() {
-        String stageChoice = getUserInputString();
-        while (!validator.opportunityStageChoice(stageChoice)) {
-            cli.present(Message.invalidMenuChoice());
-            stageChoice = getUserInputString();
-        }
-        return stageChoice;
-    }
-
     public void getId() {
         cli.present(Message.enterOpportunityId());
     }
@@ -137,17 +116,18 @@ public class Display {
         return Integer.parseInt(userInput);
     }
 
-    private String formatMenu(Menu[] menu) {
+    public void menu(Menu menu) {
         StringBuilder formattedMenu = new StringBuilder();
-        for (Menu menuOption : menu) {
-            formattedMenu.append(menuOption.getName());
+        ArrayList<AllMenuOptions> options = menu.getOptionList();
+        for (AllMenuOptions option : options) {
+            formattedMenu.append(option.getDescription());
             formattedMenu.append(" (select ");
-            formattedMenu.append(menuOption.getCommand());
+            formattedMenu.append(option.getCommand());
             formattedMenu.append(")");
             formattedMenu.append("\n");
 
         }
-        return formattedMenu.toString();
+        cli.present(formattedMenu.toString());
     }
 }
 

@@ -1,33 +1,18 @@
-public enum OpportunityStages implements Menu {
+public enum OpportunityStages {
 
-    TO_BE_DISCUSSED("t", "To be discussed"),
-    IN_DISCUSSION("i", "In discussion"),
-    APPROVED("a", "Approved"),
-    DECLINED("d", "Declined"),
-    EXPIRED("x", "Expired");
+    TO_BE_DISCUSSED("To be discussed"),
+    IN_DISCUSSION("In discussion"),
+    APPROVED("Approved"),
+    DECLINED("Declined"),
+    EXPIRED("Expired");
 
-    private String command;
-    private String name;
+    private String stage;
 
-    OpportunityStages(String command, String name) {
-        this.command = command;
-        this.name = name;
+    OpportunityStages(String stage) {
+        this.stage = stage;
     }
 
-    public static OpportunityStages findStage(String stageChoice) {
-        for (OpportunityStages stage : values()) {
-            if (stage.command.equals(stageChoice)) {
-                return stage;
-            }
-        }
-        throw new IllegalArgumentException(stageChoice);
-    }
-
-    public String getCommand() {
-        return command;
-    }
-
-    public String getName() {
-        return name;
+    public String getStage() {
+        return stage;
     }
 }
