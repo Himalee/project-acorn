@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.UUID;
+
+import static org.junit.Assert.assertFalse;
 
 public class PostgresCommunicatorTest {
 
@@ -123,6 +126,18 @@ public class PostgresCommunicatorTest {
         Opportunity updatedOpportunity = updatedOpportunityStringField(TableColumns.STAGE.getColumnName(), update);
 
         Assert.assertEquals(update, updatedOpportunity.getStage());
+
+        tearDown();
+    }
+
+    @Test
+    public void newOpportunity_writeAndDeleteFromDatabase() throws SQLException, ClassNotFoundException {
+        Opportunity opportunity = exampleOpportunity();
+        testHelper.writeToDatabase(opportunity);
+        String uuid = opportunity.getUuid();
+        databaseCommunicator.deleteOpportunity(opportunity);
+
+        assertFalse(databaseCommunicator.rowExists(uuid));
 
         tearDown();
     }

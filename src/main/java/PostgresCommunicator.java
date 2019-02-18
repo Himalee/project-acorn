@@ -46,6 +46,21 @@ class PostgresCommunicator implements DatabaseCommunicator {
         executeQuery(sqlQuery);
     }
 
+    public void deleteOpportunity(Opportunity opportunity) throws SQLException, ClassNotFoundException {
+        String uuid = opportunity.getUuid();
+        String sqlQuery = String.format("DELETE FROM opportunities WHERE uuid = '%s';", uuid);
+        executeQuery(sqlQuery);
+
+    }
+
+    public boolean rowExists(String uuid) throws SQLException, ClassNotFoundException {
+        Connection db = getConnection();
+        String sqlQuery = String.format("SELECT name FROM opportunities WHERE uuid = '%s';", uuid);
+        Statement stmt = db.createStatement();
+        ResultSet rs = stmt.executeQuery(sqlQuery);
+        return rs.next();
+    }
+
     private void executeQuery(String query) throws SQLException, ClassNotFoundException {
         Connection database = getConnection();
         Statement stmt = null;
