@@ -1,6 +1,7 @@
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class BudgetTracker {
 
@@ -45,7 +46,7 @@ public class BudgetTracker {
     }
 
     private Opportunity createNewOpportunity() {
-        return new Opportunity(name(), description(), proposedCost(), userName(), stage());
+        return new Opportunity(name(), description(), proposedCost(), userName(), stage(), uuid());
     }
 
     private String userName(){
@@ -72,6 +73,10 @@ public class BudgetTracker {
         display.getStage();
         AllMenuOptions stage = getMenuOption(Menus.OPPORTUNITY_STAGES.getMenu());
         return stage.getDescription();
+    }
+
+    private String uuid() {
+        return UUID.randomUUID().toString();
     }
 
     private List<Opportunity> searchBy(int userChoiceId) throws SQLException, ClassNotFoundException {

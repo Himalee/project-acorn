@@ -67,7 +67,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_displayOpportunityBasedOnId() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Hello", "World", 1400, "HelloWorld", "Approved");
+        Opportunity opportunity = new Opportunity("Hello", "World", 1400, "HelloWorld", "Approved", "123");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -87,7 +87,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateOpportunityName() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Foo", "Bar", 1200, "FooBar", "Expired");
+        Opportunity opportunity = new Opportunity("Foo", "Bar", 1200, "FooBar", "Expired", "456");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -110,7 +110,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateOpportunityDescription() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Host meet up", "In Spring 2019", 1400, "Burt Macklin", "Approved");
+        Opportunity opportunity = new Opportunity("Host meet up", "In Spring 2019", 1400, "Burt Macklin", "Approved", "789");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -133,7 +133,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateOpportunityCost() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Host Code First Girls", "8 week course", 12000, "Leslie K", "Approved");
+        Opportunity opportunity = new Opportunity("Host Code First Girls", "8 week course", 12000, "Leslie K", "Approved", "101112");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -155,7 +155,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateUserName() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Ben", "Approved");
+        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Ben", "Approved", "131415");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -178,7 +178,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateStage() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Tom", "Approved");
+        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Tom", "Approved", "161718");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();

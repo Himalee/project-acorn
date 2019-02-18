@@ -11,7 +11,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
     }
 
     public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name, stage) VALUES ('%s', '%s', %d, '%s', '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName(), opportunity.getStage());
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name, stage, opportunity_uuid) VALUES ('%s', '%s', %d, '%s', '%s', '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName(), opportunity.getStage(), opportunity.getUuid());
         executeQuery(sqlQuery);
     }
 
@@ -61,7 +61,8 @@ class PostgresCommunicator implements DatabaseCommunicator {
         int proposedCost = rs.getInt(TableColumns.COST.getColumnName());
         String userName = rs.getString(TableColumns.USER_NAME.getColumnName());
         String stage = rs.getString(TableColumns.STAGE.getColumnName());
-        return new Opportunity(name, description, proposedCost, userName, stage);
+        String uuid = rs.getString(TableColumns.OPPORTUNITY_UUID.getColumnName());
+        return new Opportunity(name, description, proposedCost, userName, stage, uuid);
     }
 
     private void setOpportunityId(Opportunity opportunity, ResultSet rs) throws SQLException {

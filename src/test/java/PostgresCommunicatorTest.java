@@ -17,7 +17,8 @@ public class PostgresCommunicatorTest {
         int cost = 12000;
         String userName = "Himalee";
         String stage = "Approved";
-        return new Opportunity(name, description, cost, userName, stage);
+        String uuid = UUID.randomUUID().toString();
+        return new Opportunity(name, description, cost, userName, stage, uuid);
     }
 
     private Opportunity updatedOpportunityStringField(String columnName, String update) throws SQLException, ClassNotFoundException {
