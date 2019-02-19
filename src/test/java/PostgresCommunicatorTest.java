@@ -27,9 +27,9 @@ public class PostgresCommunicatorTest {
         Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
-        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
-        rs.next();
-        int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
+        ResultSet resultSet = testHelper.getResultSetForLastSavedOpportunity();
+        resultSet.next();
+        int lastSavedOpportunityID = Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName()));
         Opportunity lastSavedOpportunity = testHelper.getOpportunity(opportunities, lastSavedOpportunityID);
         databaseCommunicator.updateOpportunityStringField(lastSavedOpportunity, columnName, update);
         List<Opportunity> updatedOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
@@ -40,9 +40,9 @@ public class PostgresCommunicatorTest {
     public void newOpportunity_writeToDatabase() throws SQLException, ClassNotFoundException {
         Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
-        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
-        rs.next();
-        String lastSavedOpportunityName = rs.getString(TableColumns.NAME.getColumnName());
+        ResultSet resultSet = testHelper.getResultSetForLastSavedOpportunity();
+        resultSet.next();
+        String lastSavedOpportunityName = resultSet.getString(TableColumns.NAME.getColumnName());
 
         Assert.assertEquals(opportunity.getName(), lastSavedOpportunityName);
 
@@ -54,9 +54,9 @@ public class PostgresCommunicatorTest {
         Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
-        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
-        rs.next();
-        int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
+        ResultSet resultSet = testHelper.getResultSetForLastSavedOpportunity();
+        resultSet.next();
+        int lastSavedOpportunityID = Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName()));
 
         Opportunity lastSavedOpportunity = testHelper.getOpportunity(opportunities, lastSavedOpportunityID);
 
@@ -94,9 +94,9 @@ public class PostgresCommunicatorTest {
         Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
-        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
-        rs.next();
-        int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
+        ResultSet resultSet = testHelper.getResultSetForLastSavedOpportunity();
+        resultSet.next();
+        int lastSavedOpportunityID = Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName()));
         Opportunity lastSavedOpportunity = testHelper.getOpportunity(opportunities, lastSavedOpportunityID);
         int update = 54000;
 
@@ -141,11 +141,11 @@ public class PostgresCommunicatorTest {
 
     public void tearDown() throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
-        rs.next();
-        String lastSavedOpportunityUUID = rs.getString(TableColumns.UUID.getColumnName());
-        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        resultSet.next();
+        String lastSavedOpportunityUUID = resultSet.getString(TableColumns.UUID.getColumnName());
+        statement.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
         connection.close();
     }
 }

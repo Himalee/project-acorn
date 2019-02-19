@@ -14,8 +14,8 @@ public class TestHelper {
 
     public ResultSet getResultSetForLastSavedOpportunity() throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
-        Statement stmt = connection.createStatement();
-        return stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        Statement statement = connection.createStatement();
+        return statement.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
     }
 
     public Opportunity getOpportunity(List<Opportunity> opportunities, int lastSavedOpportunityId) {
