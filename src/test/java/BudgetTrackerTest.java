@@ -225,8 +225,8 @@ public class BudgetTrackerTest {
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
         rs.next();
-        String lastSavedOpportunityUUID = rs.getString("uuid");
-        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
+        String lastSavedOpportunityUUID = rs.getString("opportunity_uuid");
+        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE opportunity_uuid='%s'", lastSavedOpportunityUUID));
         connection.close();
     }
 }

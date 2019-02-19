@@ -144,8 +144,8 @@ public class PostgresCommunicatorTest {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
         resultSet.next();
-        String lastSavedOpportunityUUID = resultSet.getString(TableColumns.UUID.getColumnName());
-        statement.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
+        String lastSavedOpportunityUUID = resultSet.getString(TableColumns.OPPORTUNITY_UUID.getColumnName());
+        statement.executeUpdate(String.format("DELETE FROM opportunities WHERE opportunity_uuid='%s'", lastSavedOpportunityUUID));
         connection.close();
     }
 }

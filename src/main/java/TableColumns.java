@@ -5,7 +5,6 @@ public enum TableColumns {
     USER_NAME("user_name"),
     STAGE("stage"),
     ID("id"),
-    UUID("uuid"),
     OPPORTUNITY_UUID("opportunity_uuid");
 
     private String columnName;
