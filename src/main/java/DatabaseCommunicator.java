@@ -12,5 +12,5 @@ public interface DatabaseCommunicator {
     void updateOpportunityStringField(Opportunity opportunity, String columnName, String newName) throws SQLException, ClassNotFoundException;
     void updateOpportunityNumericField(Opportunity opportunity, String columnName, int update) throws SQLException, ClassNotFoundException;
     void deleteOpportunity(Opportunity opportunity) throws SQLException, ClassNotFoundException;
-    boolean rowExists(String uuid) throws SQLException, ClassNotFoundException;
+    boolean doesRowExist(String uuid) throws SQLException, ClassNotFoundException;
 }

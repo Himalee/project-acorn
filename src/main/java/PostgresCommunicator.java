@@ -53,7 +53,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
 
     }
 
-    public boolean rowExists(String uuid) throws SQLException, ClassNotFoundException {
+    public boolean doesRowExist(String uuid) throws SQLException, ClassNotFoundException {
         Connection db = getConnection();
         String sqlQuery = String.format("SELECT name FROM opportunities WHERE opportunity_uuid = '%s';", uuid);
         Statement stmt = db.createStatement();

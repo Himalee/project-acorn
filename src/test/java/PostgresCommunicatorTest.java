@@ -136,7 +136,7 @@ public class PostgresCommunicatorTest {
         String uuid = opportunity.getUuid();
         databaseCommunicator.deleteOpportunity(opportunity);
 
-        assertFalse(databaseCommunicator.rowExists(uuid));
+        assertFalse(databaseCommunicator.doesRowExist(uuid));
     }
 
     public void tearDown() throws SQLException, ClassNotFoundException {
