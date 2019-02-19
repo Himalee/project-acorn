@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+
 public class PostgresCommunicatorTest {
 
     private DatabaseCommunicator databaseCommunicator = new PostgresCommunicator(System.getenv("TESTDBURL"));
@@ -17,16 +19,17 @@ public class PostgresCommunicatorTest {
         int cost = 12000;
         String userName = "Himalee";
         String stage = "Approved";
-        return new Opportunity(name, description, cost, userName, stage);
+        String uuid = "1234";
+        return new Opportunity(name, description, cost, userName, stage, uuid);
     }
 
     private Opportunity updatedOpportunityStringField(String columnName, String update) throws SQLException, ClassNotFoundException {
         Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
-        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
-        rs.next();
-        int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
+        ResultSet resultSet = testHelper.getResultSetForLastSavedOpportunity();
+        resultSet.next();
+        int lastSavedOpportunityID = Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName()));
         Opportunity lastSavedOpportunity = testHelper.getOpportunity(opportunities, lastSavedOpportunityID);
         databaseCommunicator.updateOpportunityStringField(lastSavedOpportunity, columnName, update);
         List<Opportunity> updatedOpportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
@@ -37,9 +40,9 @@ public class PostgresCommunicatorTest {
     public void newOpportunity_writeToDatabase() throws SQLException, ClassNotFoundException {
         Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
-        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
-        rs.next();
-        String lastSavedOpportunityName = rs.getString(TableColumns.NAME.getColumnName());
+        ResultSet resultSet = testHelper.getResultSetForLastSavedOpportunity();
+        resultSet.next();
+        String lastSavedOpportunityName = resultSet.getString(TableColumns.NAME.getColumnName());
 
         Assert.assertEquals(opportunity.getName(), lastSavedOpportunityName);
 
@@ -51,9 +54,9 @@ public class PostgresCommunicatorTest {
         Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
-        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
-        rs.next();
-        int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
+        ResultSet resultSet = testHelper.getResultSetForLastSavedOpportunity();
+        resultSet.next();
+        int lastSavedOpportunityID = Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName()));
 
         Opportunity lastSavedOpportunity = testHelper.getOpportunity(opportunities, lastSavedOpportunityID);
 
@@ -91,9 +94,9 @@ public class PostgresCommunicatorTest {
         Opportunity opportunity = exampleOpportunity();
         testHelper.writeToDatabase(opportunity);
         List<Opportunity> opportunities = databaseCommunicator.readAllOpportunitiesFromDatabase();
-        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
-        rs.next();
-        int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
+        ResultSet resultSet = testHelper.getResultSetForLastSavedOpportunity();
+        resultSet.next();
+        int lastSavedOpportunityID = Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName()));
         Opportunity lastSavedOpportunity = testHelper.getOpportunity(opportunities, lastSavedOpportunityID);
         int update = 54000;
 
@@ -126,13 +129,23 @@ public class PostgresCommunicatorTest {
         tearDown();
     }
 
+    @Test
+    public void newOpportunity_writeAndDeleteFromDatabase() throws SQLException, ClassNotFoundException {
+        Opportunity opportunity = exampleOpportunity();
+        testHelper.writeToDatabase(opportunity);
+        String uuid = opportunity.getUuid();
+        databaseCommunicator.deleteOpportunity(opportunity);
+
+        assertFalse(databaseCommunicator.doesRowExist(uuid));
+    }
+
     public void tearDown() throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
-        rs.next();
-        String lastSavedOpportunityUUID = rs.getString(TableColumns.UUID.getColumnName());
-        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE uuid='%s'", lastSavedOpportunityUUID));
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        resultSet.next();
+        String lastSavedOpportunityUUID = resultSet.getString(TableColumns.OPPORTUNITY_UUID.getColumnName());
+        statement.executeUpdate(String.format("DELETE FROM opportunities WHERE opportunity_uuid='%s'", lastSavedOpportunityUUID));
         connection.close();
     }
 }

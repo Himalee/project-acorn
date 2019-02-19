@@ -129,5 +129,13 @@ public class Display {
         }
         cli.present(formattedMenu.toString());
     }
+
+    public void opportunityDeleted() {
+        cli.present(Message.opportunityHasBeenDeleted());
+    }
+
+    public void areYouSure() {
+        cli.present(Message.confirm());
+    }
 }
 

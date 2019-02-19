@@ -1,10 +1,11 @@
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class BudgetTracker {
 
-    final int GET_CHOSEN_OPP = 0;
+    final int GET_CHOSEN_OPPORTUNITY = 0;
 
     private Display display;
     private DatabaseCommunicator databaseCommunicator;
@@ -17,16 +18,24 @@ public class BudgetTracker {
     public void start() throws SQLException, ClassNotFoundException {
        display.welcomeUser();
        AllMenuOptions option = getMenuOption(Menus.STARTING.getMenu());
-       if (option == AllMenuOptions.ADD_NEW_OPP) {
+       if (option == AllMenuOptions.ADD_NEW_OPPORTUNITY) {
            writeUserInputToDatabase();
-       } else if (option == AllMenuOptions.DISPLAY_ALL_OPP) {
+       } else if (option == AllMenuOptions.DISPLAY_ALL_OPPORTUNITY) {
           display.opportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
        } else if (option == AllMenuOptions.SEARCH_BY_ID) {
-          List<Opportunity> filteredList = searchBy(userChoiceId());
+          List<Opportunity> filteredList = searchBy(getUserChoiceId());
           display.opportunities(filteredList);
-       } else if (option == AllMenuOptions.UPDATE_OPP) {
+       } else if (option == AllMenuOptions.UPDATE_OPPORTUNITY) {
           updateOpportunity();
-       } else {
+       } else if (option == AllMenuOptions.DELETE_OPPORTUNITY) {
+           Opportunity opportunity = getChosenOpportunity();
+           display.areYouSure();
+           AllMenuOptions confirmationOption = getMenuOption(Menus.CONFIRMATION.getMenu());
+           if (confirmationOption == AllMenuOptions.YES) {
+               deleteOpportunity(opportunity);
+           }
+       }
+       else {
            display.goodbye();
        }
     }
@@ -45,33 +54,37 @@ public class BudgetTracker {
     }
 
     private Opportunity createNewOpportunity() {
-        return new Opportunity(name(), description(), proposedCost(), userName(), stage());
+        return new Opportunity(getName(), getDescription(), getProposedCost(), getUserName(), getStage(), generateUuid());
     }
 
-    private String userName(){
+    private String getUserName(){
         display.getUserName();
         return display.getOnlyLettersInput();
     }
 
-    private String name() {
+    private String getName() {
         display.getOpportunityName();
         return display.getNonEmptyInput();
     }
 
-    private String description() {
+    private String getDescription() {
         display.getOpportunityDescription();
         return display.getNonEmptyInput();
     }
 
-    private int proposedCost() {
+    private int getProposedCost() {
         display.getOpportunityProposedCost();
         return display.getCost();
     }
 
-    private String stage() {
+    private String getStage() {
         display.getStage();
         AllMenuOptions stage = getMenuOption(Menus.OPPORTUNITY_STAGES.getMenu());
         return stage.getDescription();
+    }
+
+    private String generateUuid() {
+        return UUID.randomUUID().toString();
     }
 
     private List<Opportunity> searchBy(int userChoiceId) throws SQLException, ClassNotFoundException {
@@ -87,35 +100,46 @@ public class BudgetTracker {
         return opportunityList;
     }
 
-    private int userChoiceId() {
+    private int getUserChoiceId() {
         display.getId();
         return display.getOnlyNumbersInput();
     }
 
     private void updateOpportunity() throws SQLException, ClassNotFoundException {
-        List<Opportunity> filteredList = searchBy(userChoiceId());
+        List<Opportunity> filteredList = searchBy(getUserChoiceId());
         display.opportunities(filteredList);
-        Opportunity oldOpportunity = filteredList.get(GET_CHOSEN_OPP);
+        Opportunity oldOpportunity = filteredList.get(GET_CHOSEN_OPPORTUNITY);
         AllMenuOptions updateOppOption = getMenuOption(Menus.UPDATE_OPPORTUNITY.getMenu());
         switch (updateOppOption) {
             case NAME:
-                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.NAME.getColumnName(), name());
+                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.NAME.getColumnName(), getName());
                 break;
             case DESCRIPTION:
-                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.DESCRIPTION.getColumnName(), description());
+                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.DESCRIPTION.getColumnName(), getDescription());
                 break;
             case COST:
-                databaseCommunicator.updateOpportunityNumericField(oldOpportunity, TableColumns.COST.getColumnName(), proposedCost());
+                databaseCommunicator.updateOpportunityNumericField(oldOpportunity, TableColumns.COST.getColumnName(), getProposedCost());
                 break;
             case USER_NAME:
-                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.USER_NAME.getColumnName(), userName());
+                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.USER_NAME.getColumnName(), getUserName());
                 break;
             case STAGE:
-                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.STAGE.getColumnName(), stage());
+                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.STAGE.getColumnName(), getStage());
                 break;
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
         display.opportunities(updatedList);
+    }
+
+    private Opportunity getChosenOpportunity() throws SQLException, ClassNotFoundException {
+        List<Opportunity> filteredList = searchBy(getUserChoiceId());
+        display.opportunities(filteredList);
+        return filteredList.get(GET_CHOSEN_OPPORTUNITY);
+    }
+
+    private void deleteOpportunity(Opportunity opportunity) throws SQLException, ClassNotFoundException {
+        databaseCommunicator.deleteOpportunity(opportunity);
+        display.opportunityDeleted();
     }
 }
 

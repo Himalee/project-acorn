@@ -11,23 +11,23 @@ class PostgresCommunicator implements DatabaseCommunicator {
     }
 
     public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name, stage) VALUES ('%s', '%s', %d, '%s', '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName(), opportunity.getStage());
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name, stage, opportunity_uuid) VALUES ('%s', '%s', %d, '%s', '%s', '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName(), opportunity.getStage(), opportunity.getUuid());
         executeQuery(sqlQuery);
     }
 
     public List<Opportunity> readAllOpportunitiesFromDatabase() throws SQLException, ClassNotFoundException {
         List<Opportunity> opportunities = new ArrayList<>();
         String readSqlQuery = "SELECT * FROM opportunities";
-        Connection db = getConnection();
-        Statement stmt = db.createStatement();
-        ResultSet rs = stmt.executeQuery(readSqlQuery);
-        while (rs.next()) {
-            Opportunity opportunity = readOpportunity(rs);
-            setOpportunityId(opportunity, rs);
+        Connection database = getConnection();
+        Statement statement = database.createStatement();
+        ResultSet resultSet = statement.executeQuery(readSqlQuery);
+        while (resultSet.next()) {
+            Opportunity opportunity = readOpportunity(resultSet);
+            setOpportunityId(opportunity, resultSet);
             opportunities.add(opportunity);
         }
-        stmt.close();
-        db.close();
+        statement.close();
+        database.close();
         return opportunities;
     }
 
@@ -46,26 +46,42 @@ class PostgresCommunicator implements DatabaseCommunicator {
         executeQuery(sqlQuery);
     }
 
+    public void deleteOpportunity(Opportunity opportunity) throws SQLException, ClassNotFoundException {
+        String uuid = opportunity.getUuid();
+        String sqlQuery = String.format("DELETE FROM opportunities WHERE opportunity_uuid = '%s';", uuid);
+        executeQuery(sqlQuery);
+
+    }
+
+    public boolean doesRowExist(String uuid) throws SQLException, ClassNotFoundException {
+        Connection database = getConnection();
+        String sqlQuery = String.format("SELECT name FROM opportunities WHERE opportunity_uuid = '%s';", uuid);
+        Statement statement = database.createStatement();
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        return resultSet.next();
+    }
+
     private void executeQuery(String query) throws SQLException, ClassNotFoundException {
         Connection database = getConnection();
-        Statement stmt = null;
-        stmt = database.createStatement();
-        stmt.executeUpdate(query);
-        stmt.close();
+        Statement statement = null;
+        statement = database.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
         database.close();
     }
 
-    private Opportunity readOpportunity(ResultSet rs) throws SQLException {
-        String name = rs.getString(TableColumns.NAME.getColumnName());
-        String description = rs.getString(TableColumns.DESCRIPTION.getColumnName());
-        int proposedCost = rs.getInt(TableColumns.COST.getColumnName());
-        String userName = rs.getString(TableColumns.USER_NAME.getColumnName());
-        String stage = rs.getString(TableColumns.STAGE.getColumnName());
-        return new Opportunity(name, description, proposedCost, userName, stage);
+    private Opportunity readOpportunity(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString(TableColumns.NAME.getColumnName());
+        String description = resultSet.getString(TableColumns.DESCRIPTION.getColumnName());
+        int proposedCost = resultSet.getInt(TableColumns.COST.getColumnName());
+        String userName = resultSet.getString(TableColumns.USER_NAME.getColumnName());
+        String stage = resultSet.getString(TableColumns.STAGE.getColumnName());
+        String uuid = resultSet.getString(TableColumns.OPPORTUNITY_UUID.getColumnName());
+        return new Opportunity(name, description, proposedCost, userName, stage, uuid);
     }
 
-    private void setOpportunityId(Opportunity opportunity, ResultSet rs) throws SQLException {
-        opportunity.setId(Integer.parseInt(rs.getString(TableColumns.ID.getColumnName())));
+    private void setOpportunityId(Opportunity opportunity, ResultSet resultSet) throws SQLException {
+        opportunity.setId(Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName())));
     }
 }
 

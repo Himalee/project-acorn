@@ -2,7 +2,8 @@ public enum Menus {
 
     STARTING("starting menu"),
     OPPORTUNITY_STAGES("opportunity stages"),
-    UPDATE_OPPORTUNITY("update opportunity");
+    UPDATE_OPPORTUNITY("update opportunity"),
+    CONFIRMATION("confirm");
 
     private String menu;
 

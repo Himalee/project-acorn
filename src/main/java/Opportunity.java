@@ -1,18 +1,20 @@
 public class Opportunity implements Comparable<Opportunity> {
 
     private int id;
+    private String uuid;
     private String name;
     private String description;
     private int proposedCost;
     private String userName;
     private String stage;
 
-    public Opportunity(String name, String description, int proposedCost, String userName, String stage) {
+    public Opportunity(String name, String description, int proposedCost, String userName, String stage, String uuid) {
         this.name = name;
         this.description = description;
         this.proposedCost = proposedCost;
         this.userName = userName;
         this.stage = stage;
+        this.uuid = uuid;
     }
 
     public int getId() {
@@ -43,8 +45,14 @@ public class Opportunity implements Comparable<Opportunity> {
         return stage;
     }
 
-    @Override
-    public int compareTo(Opportunity o) {
-        return this.getId() - o.getId();
+    public String getUuid() {
+        return uuid;
     }
+
+    @Override
+    public int compareTo(Opportunity opportunity) {
+        return this.getId() - opportunity.getId();
+    }
+
+
 }

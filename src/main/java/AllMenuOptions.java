@@ -1,9 +1,10 @@
 public enum AllMenuOptions {
 
-    ADD_NEW_OPP("a", "Add new opportunity", startingMenu()),
-    DISPLAY_ALL_OPP("d", "Display all opportunities", startingMenu()),
+    ADD_NEW_OPPORTUNITY("a", "Add new opportunity", startingMenu()),
+    DISPLAY_ALL_OPPORTUNITY("d", "Display all opportunities", startingMenu()),
     SEARCH_BY_ID("i", "Search by id", startingMenu()),
-    UPDATE_OPP("u", "Update an opportunity", startingMenu()),
+    UPDATE_OPPORTUNITY("u", "Update an opportunity", startingMenu()),
+    DELETE_OPPORTUNITY("x", "Delete an opportunity", startingMenu()),
     QUIT("q", "Quit", startingMenu()),
     TO_BE_DISCUSSED("t", toBeDiscussed(), opportunityStagesMenu()),
     IN_DISCUSSION("i", inDiscussion(), opportunityStagesMenu()),
@@ -14,7 +15,9 @@ public enum AllMenuOptions {
     DESCRIPTION("d", "Update description", updateOpportunityMenu()),
     COST("c", "Update cost", updateOpportunityMenu()),
     USER_NAME("r", "Update user name", updateOpportunityMenu()),
-    STAGE("s", "Update stage", updateOpportunityMenu());
+    STAGE("s", "Update stage", updateOpportunityMenu()),
+    YES("y", "Yes", confirmationMenu()),
+    NO("n", "No", confirmationMenu());
 
     private String command;
     private String description;
@@ -48,6 +51,10 @@ public enum AllMenuOptions {
 
     public static String updateOpportunityMenu() {
         return Menus.UPDATE_OPPORTUNITY.getMenu();
+    }
+
+    public static String confirmationMenu() {
+        return Menus.CONFIRMATION.getMenu();
     }
 
     public static String toBeDiscussed() {

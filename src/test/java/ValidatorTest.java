@@ -22,7 +22,7 @@ public class ValidatorTest {
 
     @Test
     public void invalidMenuChoice_false() {
-        assertFalse(validator.menuChoice("x", Menus.STARTING.getMenu()));
+        assertFalse(validator.menuChoice("v", Menus.STARTING.getMenu()));
         assertFalse(validator.menuChoice("y", Menus.STARTING.getMenu()));
         assertFalse(validator.menuChoice("z", Menus.STARTING.getMenu()));
     }
@@ -106,5 +106,18 @@ public class ValidatorTest {
     @Test
     public void invalidUpdateOpportunityChoice_false() {
         assertFalse(validator.menuChoice("a", Menus.UPDATE_OPPORTUNITY.getMenu()));
+    }
+
+    @Test
+    public void validConfirmationChoice_true() {
+        assertTrue(validator.menuChoice("y", Menus.CONFIRMATION.getMenu()));
+        assertTrue(validator.menuChoice("n", Menus.CONFIRMATION.getMenu()));
+
+    }
+
+    @Test
+    public void invalidConfirmationChoice_false() {
+        assertFalse(validator.menuChoice("yy", Menus.CONFIRMATION.getMenu()));
+        assertFalse(validator.menuChoice("123", Menus.CONFIRMATION.getMenu()));
     }
 }

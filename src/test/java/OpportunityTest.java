@@ -13,7 +13,8 @@ public class OpportunityTest {
         int proposedCost = 30000;
         String userName = "Himalee";
         String stage = "approved";
-        opportunity = new Opportunity(name, description, proposedCost, userName, stage);
+        String uuid = "1234abc";
+        opportunity = new Opportunity(name, description, proposedCost, userName, stage, uuid);
 
     }
 

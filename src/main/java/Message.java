@@ -43,4 +43,12 @@ public class Message {
     public static String enterOpportunityId() {
         return "Please enter the opportunity id";
     }
+
+    public static String opportunityHasBeenDeleted() {
+        return "Deleted";
+    }
+
+    public static String confirm() {
+        return "Are you sure? Yes (select y) or No (select n)";
+    }
 }
