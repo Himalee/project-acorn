@@ -2,8 +2,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
-
 public class OpportunityTest {
 
     private Opportunity opportunity;
@@ -15,7 +13,7 @@ public class OpportunityTest {
         int proposedCost = 30000;
         String userName = "Himalee";
         String stage = "approved";
-        String uuid = UUID.randomUUID().toString();
+        String uuid = "1234abc";
         opportunity = new Opportunity(name, description, proposedCost, userName, stage, uuid);
 
     }
