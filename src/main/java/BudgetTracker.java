@@ -29,10 +29,7 @@ public class BudgetTracker {
           updateOpportunity();
        } else if (option == AllMenuOptions.DELETE_OPPORTUNITY) {
            Opportunity opportunity = getChosenOpportunity();
-           display.areYouSure();
-           if (getUserConfirmation()) {
-               deleteOpportunity(opportunity);
-           }
+           deleteOpportunityWithConfirmation(opportunity);
        }
        else {
            display.goodbye();
@@ -162,6 +159,13 @@ public class BudgetTracker {
         display.areYouSure();
         if (getUserConfirmation()) {
             databaseCommunicator.updateOpportunityNumericField(opportunity, columnName, updatedField);
+        }
+    }
+
+    private void deleteOpportunityWithConfirmation(Opportunity opportunity) throws SQLException, ClassNotFoundException {
+        display.areYouSure();
+        if (getUserConfirmation()) {
+            deleteOpportunity(opportunity);
         }
     }
 }
