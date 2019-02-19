@@ -30,11 +30,11 @@ public class DisplayTest {
         Display display = new Display(cli, validator);
 
         List<Opportunity> opportunities = new ArrayList<>();
-        Opportunity oppOne = new Opportunity("hello", "world", 120, "himalee", "approved", "abc");
+        Opportunity oppOne = new Opportunity("hello", "world", 120, "himalee", "approved", "abc", "01-01-2019");
         oppOne.setId(1);
-        Opportunity oppTwo = new Opportunity("foo", "bar", 140, "tailor", "approved", "def");
+        Opportunity oppTwo = new Opportunity("foo", "bar", 140, "tailor", "approved", "def", "01-01-2019");
         oppTwo.setId(2);
-        Opportunity oppThree = new Opportunity("goodbye", "world", 150, "becca", "approved", "ghi");
+        Opportunity oppThree = new Opportunity("goodbye", "world", 150, "becca", "approved", "ghi", "01-01-2019");
         oppThree.setId(11);
         opportunities.add(oppOne);
         opportunities.add(oppTwo);

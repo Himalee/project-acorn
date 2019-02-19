@@ -20,7 +20,8 @@ public class PostgresCommunicatorTest {
         String userName = "Himalee";
         String stage = "Approved";
         String uuid = "1234";
-        return new Opportunity(name, description, cost, userName, stage, uuid);
+        String date = "01-01-2019";
+        return new Opportunity(name, description, cost, userName, stage, uuid, date);
     }
 
     private Opportunity updatedOpportunityStringField(String columnName, String update) throws SQLException, ClassNotFoundException {
