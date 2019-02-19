@@ -49,6 +49,6 @@ public class Message {
     }
 
     public static String confirm() {
-        return "Are you sure? Yes (select y) or No (select n)";
+        return "Are you sure?";
     }
 }

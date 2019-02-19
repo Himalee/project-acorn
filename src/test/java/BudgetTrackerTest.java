@@ -94,7 +94,7 @@ public class BudgetTrackerTest {
         rs.next();
         int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
         String newName = "GoodbyeWorld";
-        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_NAME, newName);
+        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\ny\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_NAME, newName);
         Display display = createNewDisplay(outContent, simulatedUserInput);
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
 
@@ -117,7 +117,7 @@ public class BudgetTrackerTest {
         rs.next();
         int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
         String newDescription = "In Winter 2019";
-        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_DESCRIPTION, newDescription);
+        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\ny\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_DESCRIPTION, newDescription);
         Display display = createNewDisplay(outContent, simulatedUserInput);
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
 
@@ -139,7 +139,7 @@ public class BudgetTrackerTest {
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
         int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
-        String simulatedUserInput = String.format("%s\n%d\n%s\n130.00\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_COST);
+        String simulatedUserInput = String.format("%s\n%d\n%s\n130.00\ny\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_COST);
         Display display = createNewDisplay(outContent, simulatedUserInput);
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
 
@@ -162,7 +162,7 @@ public class BudgetTrackerTest {
         rs.next();
         int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
         String newUserName = "April Ludgate";
-        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_USER_NAME, newUserName);
+        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\ny\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_USER_NAME, newUserName);
         Display display = createNewDisplay(outContent, simulatedUserInput);
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
 
@@ -185,7 +185,7 @@ public class BudgetTrackerTest {
         rs.next();
         int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
         String newStageChoice = "x";
-        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_STAGE, newStageChoice);
+        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\ny\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_STAGE, newStageChoice);
         Display display = createNewDisplay(outContent, simulatedUserInput);
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
 

@@ -30,8 +30,7 @@ public class BudgetTracker {
        } else if (option == AllMenuOptions.DELETE_OPPORTUNITY) {
            Opportunity opportunity = getChosenOpportunity();
            display.areYouSure();
-           AllMenuOptions confirmationOption = getMenuOption(Menus.CONFIRMATION.getMenu());
-           if (confirmationOption == AllMenuOptions.YES) {
+           if (getUserConfirmation()) {
                deleteOpportunity(opportunity);
            }
        }
@@ -112,19 +111,24 @@ public class BudgetTracker {
         AllMenuOptions updateOppOption = getMenuOption(Menus.UPDATE_OPPORTUNITY.getMenu());
         switch (updateOppOption) {
             case NAME:
-                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.NAME.getColumnName(), getName());
+                String name = getName();
+                updateStringField(oldOpportunity, TableColumns.NAME.getColumnName(), name);
                 break;
             case DESCRIPTION:
-                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.DESCRIPTION.getColumnName(), getDescription());
+                String description = getDescription();
+                updateStringField(oldOpportunity, TableColumns.DESCRIPTION.getColumnName(), description);
                 break;
             case COST:
-                databaseCommunicator.updateOpportunityNumericField(oldOpportunity, TableColumns.COST.getColumnName(), getProposedCost());
+                int cost = getProposedCost();
+                updateNumericField(oldOpportunity, TableColumns.COST.getColumnName(), cost);
                 break;
             case USER_NAME:
-                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.USER_NAME.getColumnName(), getUserName());
+                String userName = getUserName();
+                updateStringField(oldOpportunity, TableColumns.USER_NAME.getColumnName(), userName);
                 break;
             case STAGE:
-                databaseCommunicator.updateOpportunityStringField(oldOpportunity, TableColumns.STAGE.getColumnName(), getStage());
+                String stage = getStage();
+                updateStringField(oldOpportunity, TableColumns.STAGE.getColumnName(), stage);
                 break;
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
@@ -140,6 +144,25 @@ public class BudgetTracker {
     private void deleteOpportunity(Opportunity opportunity) throws SQLException, ClassNotFoundException {
         databaseCommunicator.deleteOpportunity(opportunity);
         display.opportunityDeleted();
+    }
+
+    private boolean getUserConfirmation() {
+        AllMenuOptions confirmationOption = getMenuOption(Menus.CONFIRMATION.getMenu());
+        return confirmationOption == AllMenuOptions.YES;
+    }
+
+    private void updateStringField(Opportunity opportunity, String columnName, String updatedField) throws SQLException, ClassNotFoundException {
+        display.areYouSure();
+        if (getUserConfirmation()) {
+            databaseCommunicator.updateOpportunityStringField(opportunity, columnName, updatedField);
+        }
+    }
+
+    private void updateNumericField(Opportunity opportunity, String columnName, int updatedField) throws SQLException, ClassNotFoundException {
+        display.areYouSure();
+        if (getUserConfirmation()) {
+            databaseCommunicator.updateOpportunityNumericField(opportunity, columnName, updatedField);
+        }
     }
 }
 
