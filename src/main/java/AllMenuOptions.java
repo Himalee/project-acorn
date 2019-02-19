@@ -1,10 +1,10 @@
 public enum AllMenuOptions {
 
-    ADD_NEW_OPP("a", "Add new opportunity", startingMenu()),
-    DISPLAY_ALL_OPP("d", "Display all opportunities", startingMenu()),
+    ADD_NEW_OPPORTUNITY("a", "Add new opportunity", startingMenu()),
+    DISPLAY_ALL_OPPORTUNITY("d", "Display all opportunities", startingMenu()),
     SEARCH_BY_ID("i", "Search by id", startingMenu()),
-    UPDATE_OPP("u", "Update an opportunity", startingMenu()),
-    DELETE_OPP("x", "Delete an opportunity", startingMenu()),
+    UPDATE_OPPORTUNITY("u", "Update an opportunity", startingMenu()),
+    DELETE_OPPORTUNITY("x", "Delete an opportunity", startingMenu()),
     QUIT("q", "Quit", startingMenu()),
     TO_BE_DISCUSSED("t", toBeDiscussed(), opportunityStagesMenu()),
     IN_DISCUSSION("i", inDiscussion(), opportunityStagesMenu()),

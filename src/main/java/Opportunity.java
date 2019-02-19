@@ -50,8 +50,8 @@ public class Opportunity implements Comparable<Opportunity> {
     }
 
     @Override
-    public int compareTo(Opportunity o) {
-        return this.getId() - o.getId();
+    public int compareTo(Opportunity opportunity) {
+        return this.getId() - opportunity.getId();
     }
 
 

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class BudgetTracker {
 
-    final int GET_CHOSEN_OPP = 0;
+    final int GET_CHOSEN_OPPORTUNITY = 0;
 
     private Display display;
     private DatabaseCommunicator databaseCommunicator;
@@ -18,16 +18,16 @@ public class BudgetTracker {
     public void start() throws SQLException, ClassNotFoundException {
        display.welcomeUser();
        AllMenuOptions option = getMenuOption(Menus.STARTING.getMenu());
-       if (option == AllMenuOptions.ADD_NEW_OPP) {
+       if (option == AllMenuOptions.ADD_NEW_OPPORTUNITY) {
            writeUserInputToDatabase();
-       } else if (option == AllMenuOptions.DISPLAY_ALL_OPP) {
+       } else if (option == AllMenuOptions.DISPLAY_ALL_OPPORTUNITY) {
           display.opportunities(databaseCommunicator.readAllOpportunitiesFromDatabase());
        } else if (option == AllMenuOptions.SEARCH_BY_ID) {
           List<Opportunity> filteredList = searchBy(userChoiceId());
           display.opportunities(filteredList);
-       } else if (option == AllMenuOptions.UPDATE_OPP) {
+       } else if (option == AllMenuOptions.UPDATE_OPPORTUNITY) {
           updateOpportunity();
-       } else if (option == AllMenuOptions.DELETE_OPP) {
+       } else if (option == AllMenuOptions.DELETE_OPPORTUNITY) {
            Opportunity opportunity = getChosenOpportunity();
            display.areYouSure();
            AllMenuOptions confirmationOption = getMenuOption(Menus.CONFIRMATION.getMenu());
@@ -108,7 +108,7 @@ public class BudgetTracker {
     private void updateOpportunity() throws SQLException, ClassNotFoundException {
         List<Opportunity> filteredList = searchBy(userChoiceId());
         display.opportunities(filteredList);
-        Opportunity oldOpportunity = filteredList.get(GET_CHOSEN_OPP);
+        Opportunity oldOpportunity = filteredList.get(GET_CHOSEN_OPPORTUNITY);
         AllMenuOptions updateOppOption = getMenuOption(Menus.UPDATE_OPPORTUNITY.getMenu());
         switch (updateOppOption) {
             case NAME:
@@ -134,7 +134,7 @@ public class BudgetTracker {
     private Opportunity getChosenOpportunity() throws SQLException, ClassNotFoundException {
         List<Opportunity> filteredList = searchBy(userChoiceId());
         display.opportunities(filteredList);
-        return filteredList.get(GET_CHOSEN_OPP);
+        return filteredList.get(GET_CHOSEN_OPPORTUNITY);
     }
 
     private void deleteOpportunity(Opportunity opportunity) throws SQLException, ClassNotFoundException {

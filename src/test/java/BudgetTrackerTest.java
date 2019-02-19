@@ -13,7 +13,7 @@ public class BudgetTrackerTest {
     private DatabaseCommunicator databaseCommunicator = new PostgresCommunicator(System.getenv("TESTDBURL"));
     private TestHelper testHelper = new TestHelper();
     private static final String QUIT_APP = "q";
-    private static final String ADD_NEW_OPP_TO_DB = "a";
+    private static final String ADD_NEW_OPPORTUNITY_TO_DATABASE = "a";
     private static final String TO_BE_DISCUSSED = "t";
     private static final String SEARCH_BY_ID = "i";
     private static final String UPDATE_OPPORTUNITY = "u";
@@ -52,7 +52,7 @@ public class BudgetTrackerTest {
         String newUserName = "Himalee";
         String newOpportunityName = "Black girl tech sponsorship";
         String newOpportunityDescription = "Offer paid internships";
-        String simulatedUserInput = String.format("%s\n%s\n%s\n123.45\n%s\n%s\n", ADD_NEW_OPP_TO_DB, newOpportunityName, newOpportunityDescription, newUserName, TO_BE_DISCUSSED);
+        String simulatedUserInput = String.format("%s\n%s\n%s\n123.45\n%s\n%s\n", ADD_NEW_OPPORTUNITY_TO_DATABASE, newOpportunityName, newOpportunityDescription, newUserName, TO_BE_DISCUSSED);
         Display display = createNewDisplay(outContent, simulatedUserInput);
 
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
