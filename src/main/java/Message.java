@@ -53,6 +53,6 @@ public class Message {
     }
 
     public static String enterOpportunityDate() {
-        return "Please enter the date of the opportunity in format DD-MM-YYYY";
+        return "Please enter the date of the opportunity in format dd-mm-yyyy";
     }
 }
