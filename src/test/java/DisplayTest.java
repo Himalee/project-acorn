@@ -41,7 +41,7 @@ public class DisplayTest {
         opportunities.add(oppThree);
 
         display.opportunities(opportunities);
-        String expectedOutput = "1. hello\nworld\n120\nhimalee\napproved\n2. foo\nbar\n140\ntailor\napproved\n11. goodbye\nworld\n150\nbecca\napproved\n\n";
+        String expectedOutput = "1. hello\nworld\n120\nhimalee\napproved\n01-01-2019\n2. foo\nbar\n140\ntailor\napproved\n01-01-2019\n11. goodbye\nworld\n150\nbecca\napproved\n01-01-2019\n\n";
 
         Assert.assertEquals(expectedOutput, outContent.toString());
     }

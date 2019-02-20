@@ -45,7 +45,7 @@ public class Display {
             presentableOpportunities.append(opportunity.getProposedCost() + "\n");
             presentableOpportunities.append(opportunity.getUserName() + "\n");
             presentableOpportunities.append(opportunity.getStage() + "\n");
-
+            presentableOpportunities.append(opportunity.getDate() + "\n");
         }
         return presentableOpportunities.toString();
     }

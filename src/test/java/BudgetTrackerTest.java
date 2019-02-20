@@ -81,7 +81,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        Assert.assertThat(output, containsString("Hello\nWorld\n1400\nHelloWorld\nApproved"));
+        Assert.assertThat(output, containsString("Hello\nWorld\n1400\nHelloWorld\nApproved\n01-01-2019"));
 
         tearDown();
     }
@@ -102,7 +102,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. GoodbyeWorld\nBar\n1200\nFooBar\nExpired", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. GoodbyeWorld\nBar\n1200\nFooBar\nExpired\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -125,7 +125,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Host meet up\nIn Spring 2019\n1400\nBurt Macklin\nApproved", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Host meet up\nIn Spring 2019\n1400\nBurt Macklin\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -147,7 +147,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Host Code First Girls\n8 week course\n13000\nLeslie K\nApproved", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Host Code First Girls\n8 week course\n13000\nLeslie K\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -170,7 +170,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nApril Ludgate\nApproved", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nApril Ludgate\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -193,7 +193,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nTom\nExpired", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nTom\nExpired\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -217,17 +217,15 @@ public class BudgetTrackerTest {
 
         String output = outContent.toString();
         Assert.assertThat(output, containsString("Deleted"));
-
-        tearDown();
     }
 
     public void tearDown() throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
-        rs.next();
-        String lastSavedOpportunityUUID = rs.getString("opportunity_uuid");
-        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE opportunity_uuid='%s'", lastSavedOpportunityUUID));
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        resultSet.next();
+        String lastSavedOpportunityUUID = resultSet.getString("opportunity_uuid");
+        statement.executeUpdate(String.format("DELETE FROM opportunities WHERE opportunity_uuid='%s'", lastSavedOpportunityUUID));
         connection.close();
     }
 }

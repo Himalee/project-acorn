@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,11 +79,18 @@ class PostgresCommunicator implements DatabaseCommunicator {
         String userName = resultSet.getString(TableColumns.USER_NAME.getColumnName());
         String stage = resultSet.getString(TableColumns.STAGE.getColumnName());
         String uuid = resultSet.getString(TableColumns.OPPORTUNITY_UUID.getColumnName());
-        return new Opportunity(name, description, proposedCost, userName, stage, uuid);
+        String date = formatDate(resultSet);
+        return new Opportunity(name, description, proposedCost, userName, stage, uuid, date);
     }
 
     private void setOpportunityId(Opportunity opportunity, ResultSet resultSet) throws SQLException {
         opportunity.setId(Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName())));
+    }
+
+    private String formatDate(ResultSet resultSet) throws SQLException {
+        Date date = resultSet.getDate(TableColumns.DATE.getColumnName());
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        return dateFormat.format(date);
     }
 }
 
