@@ -132,6 +132,10 @@ public class BudgetTracker {
                 String stage = getStage();
                 updateStringField(oldOpportunity, TableColumns.STAGE.getColumnName(), stage);
                 break;
+            case DATE:
+                String date = getDate();
+                updateStringField(oldOpportunity, TableColumns.DATE.getColumnName(), date);
+                break;
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());
         display.opportunities(updatedList);

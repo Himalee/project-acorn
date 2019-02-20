@@ -140,6 +140,16 @@ public class PostgresCommunicatorTest {
         assertFalse(databaseCommunicator.doesRowExist(uuid));
     }
 
+    @Test
+    public void getOpportunityFromDatabase_updateDate() throws SQLException, ClassNotFoundException {
+        String update = "01-02-2019";
+        Opportunity updatedOpportunity = updatedOpportunityStringField(TableColumns.DATE.getColumnName(), update);
+
+        Assert.assertEquals(update, updatedOpportunity.getDate());
+
+        tearDown();
+    }
+
     public void tearDown() throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
         Statement statement = connection.createStatement();
