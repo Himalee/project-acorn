@@ -82,7 +82,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        Assert.assertThat(output, containsString("Hello\nWorld\n1400\nHelloWorld\nApproved\n01-01-2019"));
+        Assert.assertThat(output, containsString("Hello\nWorld\n£14.00\nHelloWorld\nApproved\n01-01-2019"));
 
         tearDown();
     }
@@ -103,7 +103,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. GoodbyeWorld\nBar\n1200\nFooBar\nExpired\n01-01-2019", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. GoodbyeWorld\nBar\n£12.00\nFooBar\nExpired\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -126,7 +126,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Host meet up\nIn Spring 2019\n1400\nBurt Macklin\nApproved\n01-01-2019", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Host meet up\nIn Spring 2019\n£14.00\nBurt Macklin\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -148,7 +148,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Host Code First Girls\n8 week course\n13000\nLeslie K\nApproved\n01-01-2019", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Host Code First Girls\n8 week course\n£130.00\nLeslie K\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -171,7 +171,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nApril Ludgate\nApproved\n01-01-2019", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n£155.00\nApril Ludgate\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -194,7 +194,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nTom\nExpired\n01-01-2019", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n£155.00\nTom\nExpired\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -236,7 +236,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nBen\nApproved\n01-02-2019", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n£155.00\nBen\nApproved\n01-02-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
