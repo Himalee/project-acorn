@@ -51,4 +51,8 @@ public class Message {
     public static String confirm() {
         return "Are you sure?";
     }
+
+    public static String enterOpportunityDate() {
+        return "Please enter the date of the opportunity";
+    }
 }

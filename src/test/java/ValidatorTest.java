@@ -120,4 +120,19 @@ public class ValidatorTest {
         assertFalse(validator.menuChoice("yy", Menus.CONFIRMATION.getMenu()));
         assertFalse(validator.menuChoice("123", Menus.CONFIRMATION.getMenu()));
     }
+
+    @Test
+    public void invalidDate_false() {
+        assertFalse(validator.date("01-13-20193"));
+        assertFalse(validator.date("01/13/2019"));
+        assertFalse(validator.date("01-13-2019"));
+        assertFalse(validator.date("36-12-2019"));
+        assertFalse(validator.date("01--13-2019"));
+        assertFalse(validator.date("01132019"));
+    }
+
+    @Test
+    public void validDate_true() {
+        assertTrue(validator.date("01-12-2019"));
+    }
 }

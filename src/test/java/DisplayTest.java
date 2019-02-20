@@ -124,4 +124,14 @@ public class DisplayTest {
 
         Assert.assertEquals(expectedOutput, outContent.toString());
     }
+
+    @Test
+    public void invalidOpportunityDateUserInput_displayDatePrompt() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        CommandLineInterface cli = createNewCLI(outContent, "123-12-2018\n01/01/2019\n05-06-2019");
+        Display display = new Display(cli, validator);
+
+        display.getDate();
+        Assert.assertThat(outContent.toString(), containsString("Please enter the date"));
+    }
 }

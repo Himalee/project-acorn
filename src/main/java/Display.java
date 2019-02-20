@@ -137,5 +137,18 @@ public class Display {
     public void areYouSure() {
         cli.present(Message.confirm());
     }
+
+    public String getDate() {
+        String userInput = getUserInputString();
+        while (!validator.date(userInput)) {
+            cli.present(Message.enterOpportunityDate());
+            userInput = getUserInputString();
+        }
+        return userInput;
+    }
+
+    public void getOpportunityDate() {
+        cli.present(Message.enterOpportunityDate());
+    }
 }
 
