@@ -39,8 +39,13 @@ class PostgresCommunicator implements DatabaseCommunicator {
     }
 
     public void updateOpportunityStringField(Opportunity opportunity, String columnName, String update) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("UPDATE opportunities SET %s = '%s' WHERE id = %d;", columnName, update, opportunity.getId());
-        executeQuery(sqlQuery);
+        StringBuilder sqlQuery = new StringBuilder();
+        if (isColumnDate(columnName)) {
+            sqlQuery.append(String.format("UPDATE opportunities SET %s = TO_DATE('%s', 'dd/mm/yyyy') WHERE id = %d;", columnName, update, opportunity.getId()));
+        } else {
+            sqlQuery.append(String.format("UPDATE opportunities SET %s = '%s' WHERE id = %d;", columnName, update, opportunity.getId()));
+        }
+        executeQuery(sqlQuery.toString());
     }
 
     public void updateOpportunityNumericField(Opportunity opportunity, String columnName, int update) throws SQLException, ClassNotFoundException {
@@ -89,8 +94,12 @@ class PostgresCommunicator implements DatabaseCommunicator {
 
     private String formatDate(ResultSet resultSet) throws SQLException {
         Date date = resultSet.getDate(TableColumns.DATE.getColumnName());
-        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return dateFormat.format(date);
+    }
+
+    private boolean isColumnDate(String columnName) {
+       return columnName.equals(TableColumns.DATE.getColumnName());
     }
 }
 

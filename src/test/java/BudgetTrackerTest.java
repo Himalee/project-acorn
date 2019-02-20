@@ -223,7 +223,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateDate() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Ben", "Approved", "131415", "01-01-2019");
+        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Ben", "Approved", "131415", "01-05-2019");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
