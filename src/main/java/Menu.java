@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Menu {
 
@@ -9,7 +9,7 @@ public class Menu {
 
     }
 
-    public ArrayList<AllMenuOptions> getOptionList() {
+    public List<AllMenuOptions> getOptionList() {
         return optionList.getList();
     }
 

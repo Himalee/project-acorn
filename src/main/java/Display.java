@@ -123,7 +123,7 @@ public class Display {
 
     public void menu(Menu menu) {
         StringBuilder formattedMenu = new StringBuilder();
-        ArrayList<AllMenuOptions> options = menu.getOptionList();
+        List<AllMenuOptions> options = menu.getOptionList();
         for (AllMenuOptions option : options) {
             formattedMenu.append(option.getDescription());
             formattedMenu.append(" (select ");
