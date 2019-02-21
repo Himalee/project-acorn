@@ -16,6 +16,7 @@ public enum AllMenuOptions {
     COST("c", "Update cost", updateOpportunityMenu()),
     USER_NAME("r", "Update user name", updateOpportunityMenu()),
     STAGE("s", "Update stage", updateOpportunityMenu()),
+    DATE("t", "Update date", updateOpportunityMenu()),
     YES("y", "Yes", confirmationMenu()),
     NO("n", "No", confirmationMenu());
 

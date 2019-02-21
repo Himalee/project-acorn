@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ class PostgresCommunicator implements DatabaseCommunicator {
     }
 
     public void writeToDatabase(Opportunity opportunity) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name, stage, opportunity_uuid) VALUES ('%s', '%s', %d, '%s', '%s', '%s');", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName(), opportunity.getStage(), opportunity.getUuid());
+        String sqlQuery = String.format("INSERT INTO OPPORTUNITIES (name, description, proposed_cost, user_name, stage, opportunity_uuid, opportunity_date) VALUES ('%s', '%s', %d, '%s', '%s', '%s', TO_DATE('%s', 'dd/mm/yyyy'));", opportunity.getName(), opportunity.getDescription(), opportunity.getProposedCost(), opportunity.getUserName(), opportunity.getStage(), opportunity.getUuid(), opportunity.getDate());
         executeQuery(sqlQuery);
     }
 
@@ -37,8 +39,13 @@ class PostgresCommunicator implements DatabaseCommunicator {
     }
 
     public void updateOpportunityStringField(Opportunity opportunity, String columnName, String update) throws SQLException, ClassNotFoundException {
-        String sqlQuery = String.format("UPDATE opportunities SET %s = '%s' WHERE id = %d;", columnName, update, opportunity.getId());
-        executeQuery(sqlQuery);
+        StringBuilder sqlQuery = new StringBuilder();
+        if (isColumnDate(columnName)) {
+            sqlQuery.append(String.format("UPDATE opportunities SET %s = TO_DATE('%s', 'dd/mm/yyyy') WHERE id = %d;", columnName, update, opportunity.getId()));
+        } else {
+            sqlQuery.append(String.format("UPDATE opportunities SET %s = '%s' WHERE id = %d;", columnName, update, opportunity.getId()));
+        }
+        executeQuery(sqlQuery.toString());
     }
 
     public void updateOpportunityNumericField(Opportunity opportunity, String columnName, int update) throws SQLException, ClassNotFoundException {
@@ -77,11 +84,22 @@ class PostgresCommunicator implements DatabaseCommunicator {
         String userName = resultSet.getString(TableColumns.USER_NAME.getColumnName());
         String stage = resultSet.getString(TableColumns.STAGE.getColumnName());
         String uuid = resultSet.getString(TableColumns.OPPORTUNITY_UUID.getColumnName());
-        return new Opportunity(name, description, proposedCost, userName, stage, uuid);
+        String date = formatDate(resultSet);
+        return new Opportunity(name, description, proposedCost, userName, stage, uuid, date);
     }
 
     private void setOpportunityId(Opportunity opportunity, ResultSet resultSet) throws SQLException {
         opportunity.setId(Integer.parseInt(resultSet.getString(TableColumns.ID.getColumnName())));
+    }
+
+    private String formatDate(ResultSet resultSet) throws SQLException {
+        Date date = resultSet.getDate(TableColumns.DATE.getColumnName());
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(date);
+    }
+
+    private boolean isColumnDate(String columnName) {
+       return columnName.equals(TableColumns.DATE.getColumnName());
     }
 }
 

@@ -50,7 +50,7 @@ public class BudgetTracker {
     }
 
     private Opportunity createNewOpportunity() {
-        return new Opportunity(getName(), getDescription(), getProposedCost(), getUserName(), getStage(), generateUuid());
+        return new Opportunity(getName(), getDescription(), getProposedCost(), getUserName(), getStage(), generateUuid(), getDate());
     }
 
     private String getUserName(){
@@ -81,6 +81,11 @@ public class BudgetTracker {
 
     private String generateUuid() {
         return UUID.randomUUID().toString();
+    }
+
+    private String getDate() {
+        display.getOpportunityDate();
+        return display.getDate();
     }
 
     private List<Opportunity> searchBy(int userChoiceId) throws SQLException, ClassNotFoundException {
@@ -126,6 +131,10 @@ public class BudgetTracker {
             case STAGE:
                 String stage = getStage();
                 updateStringField(oldOpportunity, TableColumns.STAGE.getColumnName(), stage);
+                break;
+            case DATE:
+                String date = getDate();
+                updateStringField(oldOpportunity, TableColumns.DATE.getColumnName(), date);
                 break;
         }
         List<Opportunity> updatedList = searchBy(oldOpportunity.getId());

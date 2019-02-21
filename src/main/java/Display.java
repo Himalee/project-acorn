@@ -1,9 +1,13 @@
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Display {
 
     private CommandLineInterface cli;
     private Validator validator;
+    private static final int DECIMAL_PLACES = 2;
+    private static final String CURRENCY = "£";
 
     public Display(CommandLineInterface cli, Validator validator) {
         this.cli = cli;
@@ -42,10 +46,11 @@ public class Display {
             presentableOpportunities.append(". ");
             presentableOpportunities.append(opportunity.getName() + "\n");
             presentableOpportunities.append(opportunity.getDescription() + "\n");
-            presentableOpportunities.append(opportunity.getProposedCost() + "\n");
+            BigDecimal cost = formatCost(String.valueOf(opportunity.getProposedCost()));
+            presentableOpportunities.append(CURRENCY + cost + "\n");
             presentableOpportunities.append(opportunity.getUserName() + "\n");
             presentableOpportunities.append(opportunity.getStage() + "\n");
-
+            presentableOpportunities.append(opportunity.getDate() + "\n");
         }
         return presentableOpportunities.toString();
     }
@@ -118,7 +123,7 @@ public class Display {
 
     public void menu(Menu menu) {
         StringBuilder formattedMenu = new StringBuilder();
-        ArrayList<AllMenuOptions> options = menu.getOptionList();
+        List<AllMenuOptions> options = menu.getOptionList();
         for (AllMenuOptions option : options) {
             formattedMenu.append(option.getDescription());
             formattedMenu.append(" (select ");
@@ -136,6 +141,24 @@ public class Display {
 
     public void areYouSure() {
         cli.present(Message.confirm());
+    }
+
+    public String getDate() {
+        String userInput = getUserInputString();
+        while (!validator.date(userInput)) {
+            cli.present(Message.enterOpportunityDate());
+            userInput = getUserInputString();
+        }
+        return userInput;
+    }
+
+    public void getOpportunityDate() {
+        cli.present(Message.enterOpportunityDate());
+    }
+
+    private BigDecimal formatCost(String cost) {
+        BigInteger d = new BigInteger(cost);
+        return new BigDecimal(d, DECIMAL_PLACES);
     }
 }
 

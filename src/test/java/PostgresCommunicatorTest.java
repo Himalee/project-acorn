@@ -20,7 +20,8 @@ public class PostgresCommunicatorTest {
         String userName = "Himalee";
         String stage = "Approved";
         String uuid = "1234";
-        return new Opportunity(name, description, cost, userName, stage, uuid);
+        String date = "01-01-2019";
+        return new Opportunity(name, description, cost, userName, stage, uuid, date);
     }
 
     private Opportunity updatedOpportunityStringField(String columnName, String update) throws SQLException, ClassNotFoundException {
@@ -137,6 +138,16 @@ public class PostgresCommunicatorTest {
         databaseCommunicator.deleteOpportunity(opportunity);
 
         assertFalse(databaseCommunicator.doesRowExist(uuid));
+    }
+
+    @Test
+    public void getOpportunityFromDatabase_updateDate() throws SQLException, ClassNotFoundException {
+        String update = "01-02-2019";
+        Opportunity updatedOpportunity = updatedOpportunityStringField(TableColumns.DATE.getColumnName(), update);
+
+        Assert.assertEquals(update, updatedOpportunity.getDate());
+
+        tearDown();
     }
 
     public void tearDown() throws SQLException, ClassNotFoundException {

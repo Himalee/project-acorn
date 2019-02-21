@@ -30,18 +30,18 @@ public class DisplayTest {
         Display display = new Display(cli, validator);
 
         List<Opportunity> opportunities = new ArrayList<>();
-        Opportunity oppOne = new Opportunity("hello", "world", 120, "himalee", "approved", "abc");
+        Opportunity oppOne = new Opportunity("hello", "world", 120, "himalee", "approved", "abc", "01-01-2019");
         oppOne.setId(1);
-        Opportunity oppTwo = new Opportunity("foo", "bar", 140, "tailor", "approved", "def");
+        Opportunity oppTwo = new Opportunity("foo", "bar", 140, "tailor", "approved", "def", "01-01-2019");
         oppTwo.setId(2);
-        Opportunity oppThree = new Opportunity("goodbye", "world", 150, "becca", "approved", "ghi");
+        Opportunity oppThree = new Opportunity("goodbye", "world", 150, "becca", "approved", "ghi", "01-01-2019");
         oppThree.setId(11);
         opportunities.add(oppOne);
         opportunities.add(oppTwo);
         opportunities.add(oppThree);
 
         display.opportunities(opportunities);
-        String expectedOutput = "1. hello\nworld\n120\nhimalee\napproved\n2. foo\nbar\n140\ntailor\napproved\n11. goodbye\nworld\n150\nbecca\napproved\n\n";
+        String expectedOutput = "1. hello\nworld\n£1.20\nhimalee\napproved\n01-01-2019\n2. foo\nbar\n£1.40\ntailor\napproved\n01-01-2019\n11. goodbye\nworld\n£1.50\nbecca\napproved\n01-01-2019\n\n";
 
         Assert.assertEquals(expectedOutput, outContent.toString());
     }
@@ -123,5 +123,15 @@ public class DisplayTest {
         display.menu(opportunityStages);
 
         Assert.assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    public void invalidOpportunityDateUserInput_displayDatePrompt() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        CommandLineInterface cli = createNewCLI(outContent, "123-12-2018\n01/01/2019\n05-06-2019");
+        Display display = new Display(cli, validator);
+
+        display.getDate();
+        Assert.assertThat(outContent.toString(), containsString("Please enter the date"));
     }
 }

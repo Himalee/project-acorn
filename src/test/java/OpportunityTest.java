@@ -14,7 +14,8 @@ public class OpportunityTest {
         String userName = "Himalee";
         String stage = "approved";
         String uuid = "1234abc";
-        opportunity = new Opportunity(name, description, proposedCost, userName, stage, uuid);
+        String date = "01-01-2019";
+        opportunity = new Opportunity(name, description, proposedCost, userName, stage, uuid, date);
 
     }
 

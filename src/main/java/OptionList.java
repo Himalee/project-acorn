@@ -1,14 +1,15 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class OptionList {
 
-    private final ArrayList<AllMenuOptions> list;
+    private final List<AllMenuOptions> list;
 
     public OptionList() {
         this.list = new ArrayList<>();
     }
 
-    public ArrayList<AllMenuOptions> getList() {
+    public List<AllMenuOptions> getList() {
         return list;
     }
 

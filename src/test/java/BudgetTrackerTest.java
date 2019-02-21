@@ -23,6 +23,7 @@ public class BudgetTrackerTest {
     private static final String UPDATE_USER_NAME = "r";
     private static final String UPDATE_STAGE = "s";
     private static final String DELETE_OPPORTUNITY = "x";
+    private static final String UPDATE_DATE = "t";
     private Validator validator;
 
     public Display createNewDisplay(ByteArrayOutputStream outContent, String simulatedUserInput) {
@@ -52,7 +53,8 @@ public class BudgetTrackerTest {
         String newUserName = "Himalee";
         String newOpportunityName = "Black girl tech sponsorship";
         String newOpportunityDescription = "Offer paid internships";
-        String simulatedUserInput = String.format("%s\n%s\n%s\n123.45\n%s\n%s\n", ADD_NEW_OPPORTUNITY_TO_DATABASE, newOpportunityName, newOpportunityDescription, newUserName, TO_BE_DISCUSSED);
+        String newDate = "01-01-2019";
+        String simulatedUserInput = String.format("%s\n%s\n%s\n123.45\n%s\n%s\n%s\n", ADD_NEW_OPPORTUNITY_TO_DATABASE, newOpportunityName, newOpportunityDescription, newUserName, TO_BE_DISCUSSED, newDate);
         Display display = createNewDisplay(outContent, simulatedUserInput);
 
         budgetTracker = new BudgetTracker(display, databaseCommunicator);
@@ -68,7 +70,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_displayOpportunityBasedOnId() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Hello", "World", 1400, "HelloWorld", "Approved", "123");
+        Opportunity opportunity = new Opportunity("Hello", "World", 1400, "HelloWorld", "Approved", "123", "01-01-2019");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -80,7 +82,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        Assert.assertThat(output, containsString("Hello\nWorld\n1400\nHelloWorld\nApproved"));
+        Assert.assertThat(output, containsString("Hello\nWorld\n£14.00\nHelloWorld\nApproved\n01-01-2019"));
 
         tearDown();
     }
@@ -88,7 +90,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateOpportunityName() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Foo", "Bar", 1200, "FooBar", "Expired", "456");
+        Opportunity opportunity = new Opportunity("Foo", "Bar", 1200, "FooBar", "Expired", "456", "01-01-2019");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -101,7 +103,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. GoodbyeWorld\nBar\n1200\nFooBar\nExpired", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. GoodbyeWorld\nBar\n£12.00\nFooBar\nExpired\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -111,7 +113,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateOpportunityDescription() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Host meet up", "In Spring 2019", 1400, "Burt Macklin", "Approved", "789");
+        Opportunity opportunity = new Opportunity("Host meet up", "In Spring 2019", 1400, "Burt Macklin", "Approved", "789", "01-01-2019");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -124,7 +126,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Host meet up\nIn Spring 2019\n1400\nBurt Macklin\nApproved", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Host meet up\nIn Spring 2019\n£14.00\nBurt Macklin\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -134,7 +136,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateOpportunityCost() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Host Code First Girls", "8 week course", 12000, "Leslie K", "Approved", "101112");
+        Opportunity opportunity = new Opportunity("Host Code First Girls", "8 week course", 12000, "Leslie K", "Approved", "101112", "01-01-2019");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -146,7 +148,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Host Code First Girls\n8 week course\n13000\nLeslie K\nApproved", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Host Code First Girls\n8 week course\n£130.00\nLeslie K\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -156,7 +158,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateUserName() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Ben", "Approved", "131415");
+        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Ben", "Approved", "131415", "01-01-2019");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -169,7 +171,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nApril Ludgate\nApproved", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n£155.00\nApril Ludgate\nApproved\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -179,7 +181,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_updateStage() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Tom", "Approved", "161718");
+        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Tom", "Approved", "161718", "01-01-2019");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -192,7 +194,7 @@ public class BudgetTrackerTest {
         budgetTracker.start();
 
         String output = outContent.toString();
-        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n15500\nTom\nExpired", lastSavedOpportunityID);
+        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n£155.00\nTom\nExpired\n01-01-2019", lastSavedOpportunityID);
 
         Assert.assertThat(output, containsString(expectedOutput));
 
@@ -202,7 +204,7 @@ public class BudgetTrackerTest {
     @Test
     public void createNewBudgetTracker_deleteOpportunity() throws SQLException, ClassNotFoundException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Opportunity opportunity = new Opportunity("Sponsorship", "Summer", 15500, "Tom H", "Approved", "19221abc1234");
+        Opportunity opportunity = new Opportunity("Sponsorship", "Summer", 15500, "Tom H", "Approved", "19221abc1234", "01-01-2019");
         databaseCommunicator.writeToDatabase(opportunity);
         ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
         rs.next();
@@ -216,17 +218,38 @@ public class BudgetTrackerTest {
 
         String output = outContent.toString();
         Assert.assertThat(output, containsString("Deleted"));
+    }
+
+    @Test
+    public void createNewBudgetTracker_updateDate() throws SQLException, ClassNotFoundException {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        Opportunity opportunity = new Opportunity("Code retreat", "Winter 2019", 15500, "Ben", "Approved", "131415", "01-05-2019");
+        databaseCommunicator.writeToDatabase(opportunity);
+        ResultSet rs = testHelper.getResultSetForLastSavedOpportunity();
+        rs.next();
+        int lastSavedOpportunityID = Integer.parseInt(rs.getString(TableColumns.ID.getColumnName()));
+        String newDate = "01-02-2019";
+        String simulatedUserInput = String.format("%s\n%d\n%s\n%s\ny\n", UPDATE_OPPORTUNITY, lastSavedOpportunityID, UPDATE_DATE, newDate);
+        Display display = createNewDisplay(outContent, simulatedUserInput);
+        budgetTracker = new BudgetTracker(display, databaseCommunicator);
+
+        budgetTracker.start();
+
+        String output = outContent.toString();
+        String expectedOutput = String.format("%d. Code retreat\nWinter 2019\n£155.00\nBen\nApproved\n01-02-2019", lastSavedOpportunityID);
+
+        Assert.assertThat(output, containsString(expectedOutput));
 
         tearDown();
     }
 
     public void tearDown() throws SQLException, ClassNotFoundException {
         Connection connection = databaseCommunicator.getConnection();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
-        rs.next();
-        String lastSavedOpportunityUUID = rs.getString("opportunity_uuid");
-        stmt.executeUpdate(String.format("DELETE FROM opportunities WHERE opportunity_uuid='%s'", lastSavedOpportunityUUID));
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM opportunities ORDER BY ID DESC LIMIT 1");
+        resultSet.next();
+        String lastSavedOpportunityUUID = resultSet.getString("opportunity_uuid");
+        statement.executeUpdate(String.format("DELETE FROM opportunities WHERE opportunity_uuid='%s'", lastSavedOpportunityUUID));
         connection.close();
     }
 }
