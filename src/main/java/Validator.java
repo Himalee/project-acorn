@@ -4,7 +4,7 @@ import java.util.List;
 public class Validator {
 
     public boolean menuChoice(String choice, String menuType) {
-        List possibleMenuCommands = new ArrayList();
+        List<String> possibleMenuCommands = new ArrayList<>();
         AllMenuOptions[] allMenuOptions = AllMenuOptions.values();
         for (AllMenuOptions option : allMenuOptions) {
             if (option.getType().equals(menuType)) {
