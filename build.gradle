@@ -39,6 +39,10 @@ run {
     standardInput = System.in
 }
 
+test {
+    environment "TESTDBURL", System.getenv("TESTDBURL")
+}
+
 task migrateproductiondb(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
     url = System.getenv("PRODDBURL")
     user = System.getenv("DBUSERNAME")
