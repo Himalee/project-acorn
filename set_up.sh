@@ -1,15 +1,17 @@
 #!/bin/bash
 
-# Ask the user for a username
-echo Hello, please enter a username to access your database:
-read username
+# Database username
+username=projectacornuser
 
-# Set up postgresql credentials as environment variables
+# Set up postgresql username as environment variable
 export DBUSERNAME=$username
 
+# Create postgres user
+psql -c "CREATE USER $username;"
+
 # Create postgresql database
-createdb project_acorn
-createdb project_acorn_test
+createdb -O $username project_acorn
+createdb -O $username project_acorn_test
 
 # Set up postgresql database urls as environment variables
 export TESTDBURL=jdbc:postgresql://localhost:5432/project_acorn_test
