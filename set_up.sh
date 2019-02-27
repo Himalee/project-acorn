@@ -1,17 +1,23 @@
 #!/bin/bash
 
-# Database username
-username=projectacornuser
+# Start psql server
+brew services start postgresql
 
 # Set up postgresql username as environment variable
-export DBUSERNAME=$username
+export DBUSERNAME=projectacornuser
 
 # Create postgres user
-psql -c "CREATE USER $username;"
+psql -c "CREATE USER projectacornuser;"
 
 # Create postgresql database
-createdb -O $username project_acorn
-createdb -O $username project_acorn_test
+createdb -O projectacornuser project_acorn
+createdb -O projectacornuser project_acorn_test
+
+# Grant database privileges
+psql -c "grant all privileges on database project_acorn to projectacornuser;"
+psql -c "grant all privileges on database project_acorn_test to projectacornuser;"
+psql -c "GRANT USAGE ON SCHEMA public TO projectacornuser;"
+psql -c "ALTER USER projectacornuser WITH SUPERUSER;"
 
 # Set up postgresql database urls as environment variables
 export TESTDBURL=jdbc:postgresql://localhost:5432/project_acorn_test

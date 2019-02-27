@@ -28,8 +28,8 @@ Users have the ability to:
 #### Running instructions
 
 1. Clone the repository
-2. Run shell script by running `$ . ./set_up.sh` 
-3. In your terminal, navigate into the repository
+2. In your terminal, navigate into the repository
+3. Run shell script by running `$ . ./set_up.sh` 
 4. Run the test suite by running `$ ./gradlew test`
 5. Start the app by running `$ gradle --console plain run`
 
